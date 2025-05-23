@@ -1,0 +1,14 @@
+type: object
+description: Represents a link to a related entity or collection, typically used in the `_links` section.
+properties:
+    href:
+        type: string
+        format: uri
+        readOnly: true
+        description: API endpoint for the related collection/entity.
+    title:
+        type: string
+        readOnly: true
+        description: Optional descriptive title for the link.
+required:
+    - href

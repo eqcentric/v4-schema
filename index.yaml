@@ -1,0 +1,26 @@
+openapi: "3.0.0"
+info:
+  version: 4.0.0
+  title: Makini API
+  description: Unified API for industrial systems
+servers:
+  - url: https://api.makini.io/v4
+paths:
+  /:
+    get:
+      summary: Server information
+      operationId: showServerInformation
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+components:
+  schemas:
+    $ref: "schemas/_index.yaml"

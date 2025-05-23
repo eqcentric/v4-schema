@@ -1,0 +1,6 @@
+iEntity:
+    $ref: "./iEntity.yaml"
+iRelationLink:
+    $ref: "./iRelationLink.yaml"
+iRelation:
+    $ref: "./iRelation.yaml"

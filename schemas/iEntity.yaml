@@ -1,0 +1,65 @@
+type: object
+description: Base interface for all entities, with system fields and meta-information.
+properties:
+    key:
+        type: string
+        description: Unique identifier within Makini data model.
+        readOnly: true
+        example: "000000001234567890abcdef1234567890abcdef"
+    code:
+        type: string
+        description: Short code/identifier for the entity, often user-defined and unique within a context (like Organization).
+        example: "ACME"
+    _idValue:
+        type: string
+        description: System/source-specific identifier for the entity (e.g., database primary key, external system ID).
+        readOnly: true
+        example: "ORG-456"
+    _displayValue:
+        type: string
+        description: Human-readable representation, often derived from name or code.
+        readOnly: true
+        example: "Acme Corporation"
+    _source:
+        type: string
+        description: Name of entity/table/endpoint in the source
+        readOnly: true
+        example: "entities"
+    _createdAt:
+        type: string
+        format: date-time
+        readOnly: true
+        description: Timestamp when the entity was created in the system.
+    _updatedAt:
+        type: string
+        format: date-time
+        readOnly: true
+        description: Timestamp when the entity was last updated in the system.
+    _deletedAt:
+        type: string
+        format: date-time
+        nullable: true
+        readOnly: true
+        description: Timestamp when the entity was soft-deleted (if applicable). Null if not deleted.
+    _implements:
+        type: array
+        items:
+            type: string
+            readOnly: true
+            description: List of interfaces/sub-types implemented by this entity instance. Helps in understanding the available fields/capabilities.
+        example: ["iEntity"]
+    _links:
+        type: object
+        description: >
+            Object containing link relations for navigating to related entities or collections, especially large ones not included as nested objects. Keys are relation types (rel), values are iRelationLink objects.
+        additionalProperties:
+        $ref: "./iRelationLink.yaml"
+required:
+    - key
+    - code
+    - _idValue
+    - _displayValue
+    - _source
+    - _createdAt
+    - _updatedAt
+    - _implements
