@@ -23,4 +23,13 @@ paths:
                     example: ok
 components:
   schemas:
-    $ref: "schemas/_index.yaml"
+    # === Core ===
+    iEntity:
+      $ref: "./schemas/core/iEntity.yaml"
+    iRelationLink:
+      $ref: "./schemas/core/iRelationLink.yaml"
+    iRelation:
+      $ref: "./schemas/core/iRelation.yaml"
+    # === Address ===
+    Address:
+      $ref: "./schemas/Address.yaml"

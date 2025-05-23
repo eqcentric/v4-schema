@@ -1,0 +1,66 @@
+description: Represents a physical mailing, billing, or operational address. Inherits standard entity fields.
+allOf:
+  - $ref: "#/components/schemas/iEntity"
+  - type: object
+    properties:
+      country:
+        type: string
+        description: Country name or ISO 3166-1 alpha-2/alpha-3 code.
+        example: "USA" # Or "US"
+      state:
+        type: string
+        description: State, province, region, or administrative area.
+        example: "CA"
+      city:
+        type: string
+        description: Name of the city, town, or locality.
+        example: "San Francisco"
+      addressLines:
+        type: array
+        items:
+          type: string
+          description: Array containing street address lines (e.g., street number, name, suite, apt).
+          example: ["123 Main St", "Suite 456"]
+      postalCode:
+        type: string
+        description: Postal or ZIP code.
+        example: "94105"
+      geoLocation:
+        type: object
+        description: Optional geographic coordinates using GeoJSON Point format [longitude, latitude].
+        required:
+          - type
+          - coordinates
+        properties:
+          type:
+            type: string
+            description: The GeoJSON type, must be "Point".
+            enum: [Point]
+            example: "Point"
+          coordinates:
+            type: array
+            minItems: 2
+            maxItems: 2
+            items:
+              type: number
+              format: double
+              description: Array containing [longitude, latitude] coordinates.
+              example: [-122.4194, 37.7749]
+      recipient:
+        type: string
+        description: Optional name of the person or entity intended to receive mail at this address (if different from the owning entity).
+        example: "Jane Smith, Purchasing Dept."
+      phone:
+        type: string
+        description: Optional phone number associated specifically with this address/recipient.
+        example: "+1-415-555-5555"
+      email:
+        type: string
+        format: email
+        description: Optional email address associated specifically with this address/recipient.
+        example: "shipping.sf@example.com"
+      isActive:
+        type: boolean
+        description: Flag indicating if the address is currently valid and usable.
+        example: true
+        default: true
