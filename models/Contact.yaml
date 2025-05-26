@@ -35,5 +35,5 @@ allOf:
     address:
         description: Optional reference to the primary physical/mailing address of the contact. Can be a relation or embedded object.
         oneOf:
-        - $ref: "#/components/schemas/iRelation"
+        - $ref: "#/components/schemas/cRelation"
         - $ref: "#/components/schemas/Address"
