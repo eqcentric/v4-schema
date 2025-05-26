@@ -1,0 +1,57 @@
+description: >
+  Defines a specific option for sourcing/purchasing an item from a particular supplier (vendor), including price, lead time, and units. Inherits standard entity fields.
+allOf:
+- $ref: "#/components/schemas/iEntity"
+- type: object
+  properties:
+    item:
+        description: Reference to the Item this supply option relates to. Required.
+        oneOf:
+        - $ref: "#/components/schemas/iRelation"
+        - $ref: "#/components/schemas/cEntity"
+    vendor:
+        description: Reference to the Partner (vendor) providing this item under these terms. Required.
+        oneOf:
+        - $ref: "#/components/schemas/iRelation"
+        - $ref: "#/components/schemas/Partner"
+    vendorItemCode:
+        type: string
+        description: Optional item code or part number used by the vendor for this item.
+        example: "SUPPLIER-PART-ABC"
+    minimumOrderQuantity:
+        type: number
+        format: double
+        description: Optional minimum quantity required when ordering this item from this supplier using this option. Unit matches orderUom.
+        example: 100
+    # orderUom:
+    #   description: Unit of measure used when ordering this item from this supplier (might differ from stocking UoM, e.g., buy in Cases, stock in Eaches). Required.
+    #   oneOf:
+    #   - $ref: "#/components/schemas/iRelation"
+    #   - $ref: "#/components/schemas/UnitOfMeasure"
+    leadTimeDays:
+        type: integer
+        description: Expected lead time in days from placing an order to receiving the goods from this supplier.
+        example: 14
+    purchasePrice:
+        type: number
+        format: double
+        description: The price per 'orderUom' when purchasing from this supplier under this option. Required.
+        example: 5.50
+    # currency:
+    #   description: Currency of the purchase price. Required.
+    #   oneOf:
+    #   - $ref: "#/components/schemas/iRelation"
+    #   - $ref: "#/components/schemas/Currency"
+    isPreferred:
+        type: boolean
+        description: Flag indicating if this is the preferred supplier/option for purchasing this item.
+        default: false
+    validFrom:
+        type: string
+        format: date
+        description: Optional date from which this supply option/price is effective.
+    validTo:
+        type: string
+        format: date
+        nullable: true
+        description: Optional date until which this supply option/price is effective. Null if open-ended.

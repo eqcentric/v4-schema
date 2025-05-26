@@ -1,0 +1,13 @@
+description: >
+  Represents a text note, annotation, or comment assigned to an entity for documentation, clarification, collaboration, or communication. 
+  Each note may include author, timestamp, context/category, and may reference attachments or related entities.
+allOf:
+- $ref: "#/components/schemas/cEntity"
+- type: object
+  properties:
+    subject:
+      type: string
+      description: Optional subject or brief title for the note
+    content:
+      type: string
+      description: The full text content of the note

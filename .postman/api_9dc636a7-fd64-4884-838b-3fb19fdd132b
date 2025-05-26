@@ -15,13 +15,20 @@ rootDirectory = postman/collections
 [config.relations.apiDefinition]
 files[] = {"path":"index.yaml","metaData":{}}
 files[] = {"path":"models/Address.yaml","metaData":{}}
+files[] = {"path":"models/Asset.yaml","metaData":{}}
 files[] = {"path":"models/Contact.yaml","metaData":{}}
 files[] = {"path":"models/core/Collection.yaml","metaData":{}}
 files[] = {"path":"models/core/Entity.yaml","metaData":{}}
 files[] = {"path":"models/core/Link.yaml","metaData":{}}
 files[] = {"path":"models/core/Relation.yaml","metaData":{}}
+files[] = {"path":"models/interfaces/Taxonomy.yaml","metaData":{}}
+files[] = {"path":"models/Note.yaml","metaData":{}}
 files[] = {"path":"models/Organization.yaml","metaData":{}}
+files[] = {"path":"models/Site.yaml","metaData":{}}
+files[] = {"path":"models/SupplyOption.yaml","metaData":{}}
+files[] = {"path":"models/taxonomy/AssetClassification.yaml","metaData":{}}
 files[] = {"path":"models/traits/BusinessEntity.yaml","metaData":{}}
+files[] = {"path":"models/traits/SupplyItem.yaml","metaData":{}}
 files[] = {"path":"responses/organizations/listOrganizations.yaml","metaData":{}}
 
 [config.relations.apiDefinition.metaData]

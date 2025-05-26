@@ -1,0 +1,21 @@
+description: Represents an operational site, potentially containing multiple buildings or areas.
+allOf:
+- $ref: "#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Name of the location.
+      example: "Main Warehouse SF"
+    description:
+      type: string
+      description: Detailed description
+    isActive:
+      type: boolean
+      description: Flag indicating if the location is currently operational or in use.
+      default: true
+    organization:
+      description: Reference to the primary Organization this site belongs to.
+      oneOf:
+        - $ref: "#/components/schemas/cRelation"
+        - $ref: "#/components/schemas/Organization"

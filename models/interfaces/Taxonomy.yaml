@@ -1,0 +1,33 @@
+description: Base schema for all taxonomy entries (classification values). Provides common fields like code, name, description, hierarchy, and status. Inherits standard entity fields.
+allOf:
+- $ref: "#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Human-readable name or label for the taxonomy value. Required.
+      example: "Warehouse"
+    description:
+      type: string
+      description: Detailed description
+    type:
+      type: string
+      description: Type of taxonomy item in Makini data model
+      example: criticality
+    sourceType:
+      type: string
+      description: Type of taxonomy item in source data model
+      example: criticalityType
+    parent: # For hierarchical taxonomies (e.g., nested categories)
+      description: Optional reference to a parent taxonomy entry within the same taxonomy type, creating a hierarchy.
+      oneOf:
+        - $ref: "#/components/schemas/cRelation"
+        - $ref: "#/components/schemas/iTaxonomy"
+    sortOrder:
+      type: integer
+      description: Optional integer value used for sorting or ordering taxonomy entries, e.g., in dropdown lists.
+      example: 10
+    isActive:
+      type: boolean
+      description: Flag indicating if this taxonomy value is currently active and available for selection/use.
+      default: true

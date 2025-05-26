@@ -1,0 +1,7 @@
+type: object
+description: Represents an item that can be sourced from vendors including procurement details.
+properties:
+  supplyOptions:
+    type: array
+    items:
+      $ref: "#/components/models/SupplyOption"

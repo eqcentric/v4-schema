@@ -24,6 +24,11 @@ components:
       $ref: "./models/core/Relation.yaml"
     cCollection:
       $ref: "./models/core/Collection.yaml"
+    # === Taxonomy ===
+    iTaxonomy:
+      $ref: "./models/interfaces/Taxonomy.yaml"
+    AssetClassification:
+      $ref: "./models/taxonomy/AssetClassification.yaml"
     # === Business ===
     tBusinessEntity:
       $ref: "./models/traits/BusinessEntity.yaml"
@@ -33,6 +38,19 @@ components:
       $ref: "./models/Contact.yaml"
     Organization:
       $ref: "./models/Organization.yaml"
+    # === Operational ===
+    Site:
+      $ref: "./models/Site.yaml"
+    Asset:
+      $ref: "./models/Asset.yaml"
+    # === Inventory ===
+    tSupplyItem:
+      $ref: "./models/traits/SupplyItem.yaml"
+    SupplyOption:
+      $ref: "./models/SupplyOption.yaml"
+    # === Misc ===
+    Note:
+      $ref: "./models/Note.yaml"
   responses:
     listOrganizations:
         $ref: "./responses/organizations/listOrganizations.yaml"
