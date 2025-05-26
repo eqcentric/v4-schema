@@ -1,0 +1,29 @@
+description: Represents a recognized currency, typically following ISO 4217 standards. Inherits standard entity fields.
+allOf:
+- $ref: "#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Full name of the currency.
+      example: "United States Dollar"
+    symbol:
+      type: string
+      description: Common symbol representation of the currency.
+      example: "$"
+    decimalPlaces:
+      type: integer
+      description: Number of decimal places typically used for this currency.
+      example: 2
+    isActive:
+      type: boolean
+      description: Whether this currency is currently active or usable for transactions.
+      default: true
+    _links:
+      type: object
+      properties:
+        exchangeRates:
+          $ref: "#/components/schemas/cLink"
+          description: Link to the collection of exchange rates involving this currency.
+      additionalProperties:
+        $ref: "#/components/schemas/cLink"

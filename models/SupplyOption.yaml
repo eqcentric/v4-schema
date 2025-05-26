@@ -1,7 +1,7 @@
 description: >
   Defines a specific option for sourcing/purchasing an item from a particular supplier (vendor), including price, lead time, and units. Inherits standard entity fields.
 allOf:
-- $ref: "#/components/schemas/iEntity"
+- $ref: "#/components/schemas/cEntity"
 - type: object
   properties:
     item:
@@ -10,10 +10,10 @@ allOf:
         - $ref: "#/components/schemas/iRelation"
         - $ref: "#/components/schemas/cEntity"
     vendor:
-        description: Reference to the Partner (vendor) providing this item under these terms. Required.
+        description: Reference to the vendor providing this item under these terms. Required.
         oneOf:
-        - $ref: "#/components/schemas/iRelation"
-        - $ref: "#/components/schemas/Partner"
+        - $ref: "#/components/schemas/cRelation"
+        - $ref: "#/components/schemas/Vendor"
     vendorItemCode:
         type: string
         description: Optional item code or part number used by the vendor for this item.

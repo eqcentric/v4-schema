@@ -30,14 +30,20 @@ components:
     AssetClassification:
       $ref: "./models/taxonomy/AssetClassification.yaml"
     # === Business ===
-    tBusinessEntity:
-      $ref: "./models/traits/BusinessEntity.yaml"
+    tAddressable:
+      $ref: "./models/traits/Addressable.yaml"
+    Currency:
+      $ref: "./models/Currency.yaml"
     Address:
       $ref: "./models/Address.yaml"
     Contact:
       $ref: "./models/Contact.yaml"
     Organization:
       $ref: "./models/Organization.yaml"
+    Partner:
+      $ref: "./models/Partner.yaml"
+    Vendor:
+      $ref: "./models/Vendor.yaml"
     # === Operational ===
     Site:
       $ref: "./models/Site.yaml"

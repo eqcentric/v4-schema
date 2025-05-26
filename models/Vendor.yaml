@@ -1,0 +1,4 @@
+description: >
+  Represents an external vendor that provides raw materials, components, or wholesale goods.
+allOf:
+- $ref: "#/components/schemas/Partner"

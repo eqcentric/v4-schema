@@ -1,0 +1,42 @@
+description: >
+  Represents an external or internal business partner, such as a customer, supplier, vendor, carrier, etc. 
+  Inherits iEntity and iBusinessEntity fields.
+allOf:
+- $ref: "#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Name of the partner company or entity.
+      example: "Supplier Co."
+    organization:
+      description: Optional reference to the primary internal Organization this partner interacts with or belongs to (e.g., if representing an internal division as a partner).
+      oneOf:
+        - $ref: "#/components/schemas/cRelation"
+        - $ref: "#/components/schemas/Organization"
+    currency:
+      description: Default or primary currency used by the partner.
+      oneOf:
+      - $ref: "#/components/schemas/cRelation"
+      - $ref: "#/components/schemas/Currency"
+    legalName:
+      type: string
+      description: Official registered legal name of the partner entity, if applicable.
+      example: "Supplier Company Ltd."
+    isActive:
+      type: boolean
+      description: Flag indicating if the partnership is currently active.
+      default: true
+    isPerson:
+      type: boolean
+      description: Flag indicating if the partner is a person.
+      default: false
+    partnerSince:
+      type: string
+      format: date
+      description: Date when the partnership began.
+    partnerEndDate:
+      type: string
+      format: date
+      nullable: true
+      description: Date when the partnership ended or is scheduled to end (if applicable).
