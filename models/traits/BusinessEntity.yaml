@@ -1,0 +1,47 @@
+type: object
+description: Interface for entities that typically have addresses and contacts associated (e.g., Organizations, Partners, Locations)
+properties:
+  addresses:
+    type: array
+    items:
+      allOf:
+        - oneOf:
+          - $ref: "#/components/schemas/cRelation"
+          - $ref: "#/components/schemas/Address"
+        - type: object
+          properties:
+            isDefault:
+              type: boolean
+              description: True if this is the default address overall for this entity.
+              default: false
+            isShippingAddress:
+              type: boolean
+              description: True if this address can be used for shipping purposes.
+              default: false
+            isBillingAddress:
+              type: boolean
+              description: True if this address can be used for billing purposes.
+              default: false
+    description: List of addresses associated with this entity with usage flags.
+  contacts:
+    type: array
+    items:
+      allOf:
+        - oneOf:
+          - $ref: "#/components/schemas/cRelation"
+          - $ref: "#/components/schemas/Contact"
+        - type: object
+          properties:
+            isPrimary:
+              type: boolean
+              description: True if this is the primary contact overall for this entity.
+              default: false
+            isBillingContact:
+              type: boolean
+              description: True if this contact handles billing inquiries.
+              default: false
+            isShippingContact:
+              type: boolean
+              description: True if this contact handles shipping inquiries.
+              default: false
+    description: List of contacts associated with this entity with role flags.

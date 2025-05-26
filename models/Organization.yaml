@@ -1,0 +1,40 @@
+description: Represents a legal entity, company, or internal business unit treated as a primary top-level organizational entity.
+allOf:
+- $ref: "#/components/schemas/cEntity"
+- $ref: "#/components/schemas/tBusinessEntity"
+- type: object
+  properties:
+    name:
+        type: string
+        description: Common or display name of the organization.
+        example: "Acme Corporation"
+    legalName:
+        type: string
+        description: Official registered legal name of the organization.
+        example: "Acme Corporation Inc."
+    # currency:
+    #   description: Default or primary currency used by the organization. Can be a relation or embedded object.
+    #   oneOf:
+    #   - $ref: "#/components/schemas/cRelation"
+    #   - $ref: "#/components/schemas/Currency"
+    isActive:
+        type: boolean
+        description: Flag indicating if the organization is currently operational.
+        default: true
+    _links:
+        type: object
+        properties:
+        # partners:
+        #   $ref: "#/components/schemas/cLink"
+        #   description: Link to the collection of Partners associated with this Organization.
+        # businessUnits:
+        #   $ref: "#/components/schemas/cLink"
+        #   description: Link to the collection of Business Units belonging to this Organization.
+        # assets:
+        #   $ref: "#/components/schemas/cLink"
+        #   description: Link to the collection of Assets owned or managed by this Organization.
+        # locations:
+        #   $ref: "#/components/schemas/cLink"
+        #   description: Link to the collection of Locations associated with this Organization.
+        additionalProperties:
+        $ref: "#/components/schemas/cLink"

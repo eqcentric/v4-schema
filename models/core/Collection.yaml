@@ -1,0 +1,21 @@
+type: object
+properties:
+  data:
+    type: array
+    items:
+      $ref: "#/components/schemas/cEntity"
+  _links:
+    type: object
+    additionalProperties:
+      $ref: "#/components/schemas/coreLink"
+  _meta:
+    type: object
+    properties:
+      count:
+        type: integer
+      total:
+        type: integer
+      prevCursor:
+        type: string
+      nextCursor:
+        type: string

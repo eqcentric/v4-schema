@@ -1,11 +1,11 @@
 type: object
 description: Base interface for all entities, with system fields and meta-information.
 properties:
-  key:
+  id:
     type: string
-    description: Unique identifier within Makini data model.
-    readOnly: true
+    description: Unique entity identifier within Makini data model
     example: "000000001234567890abcdef1234567890abcdef"
+    readOnly: true
   code:
     type: string
     description: Short code/identifier for the entity, often user-defined and unique within a context (like Organization).
@@ -44,22 +44,20 @@ properties:
   _implements:
     type: array
     items:
-        type: string
-        readOnly: true
-        description: List of interfaces/sub-types implemented by this entity instance. Helps in understanding the available fields/capabilities.
+      type: string
+      readOnly: true
+    description: List of interfaces/sub-types implemented by this entity instance. Helps in understanding the available fields/capabilities.
     example: ["iEntity"]
   _links:
     type: object
-    description: >
-        Object containing link relations for navigating to related entities or collections, especially large ones not included as nested objects. Keys are relation types (rel), values are iRelationLink objects.
     additionalProperties:
-      $ref: "#/components/schemas/iRelationLink"
+      $ref: "#/components/schemas/coreLink"
 required:
-  - key
-  - code
-  - _idValue
-  - _displayValue
-  - _source
-  - _createdAt
-  - _updatedAt
-  - _implements
+- id
+- code
+- _idValue
+- _displayValue
+- _source
+- _createdAt
+- _updatedAt
+- _implements

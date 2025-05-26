@@ -6,9 +6,15 @@ properties:
     format: uri
     readOnly: true
     description: API endpoint for the related collection/entity.
+  rel:
+    type: string
+    description: The name of the related entity collection.
+    readOnly: true
+    example: "assets"
   title:
     type: string
     readOnly: true
     description: Optional descriptive title for the link.
 required:
   - href
+  - rel

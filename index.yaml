@@ -6,30 +6,33 @@ info:
 servers:
   - url: https://api.makini.io/v4
 paths:
-  /:
+  /organizations:
     get:
-      summary: Server information
-      operationId: showServerInformation
+      summary: Get list of organizations
+      operationId: listOrganizations
       responses:
         '200':
-          description: Expected response to a valid request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: ok
+          $ref: "#/components/responses/listOrganizations"
 components:
   schemas:
     # === Core ===
-    iEntity:
-      $ref: "./schemas/core/iEntity.yaml"
-    iRelationLink:
-      $ref: "./schemas/core/iRelationLink.yaml"
-    iRelation:
-      $ref: "./schemas/core/iRelation.yaml"
-    # === Address ===
+    cEntity:
+      $ref: "./models/core/Entity.yaml"
+    cLink:
+      $ref: "./models/core/Link.yaml"
+    cRelation:
+      $ref: "./models/core/Relation.yaml"
+    cCollection:
+      $ref: "./models/core/Collection.yaml"
+    # === Business ===
+    tBusinessEntity:
+      $ref: "./models/traits/BusinessEntity.yaml"
     Address:
-      $ref: "./schemas/Address.yaml"
+      $ref: "./models/Address.yaml"
+    Contact:
+      $ref: "./models/Contact.yaml"
+    Organization:
+      $ref: "./models/Organization.yaml"
+  responses:
+    listOrganizations:
+        $ref: "./responses/organizations/listOrganizations.yaml"

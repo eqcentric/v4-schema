@@ -1,12 +1,12 @@
 type: object
 description: Relationship between entities. Represents a reference when the full object isn't embedded.
 properties:
-  key:
+  id:
     type: string
     description: Foreign key of the related entity.
     readOnly: true
     example: "000000001234567890abcdef1234567890abcdef"
-  target:
+  rel:
     type: string
     description: The name of the related entity collection.
     readOnly: true
@@ -16,8 +16,8 @@ properties:
     format: uri
     description: Reference/API endpoint for this relation.
     readOnly: true
-    example: "/api/v1/assets/asset-789"
+    example: "/api/v1/assets/000000001234567890abcdef1234567890abcdef"
 required:
-  - key
-  - target
+  - id
+  - rel
   - href

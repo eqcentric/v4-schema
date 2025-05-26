@@ -14,10 +14,15 @@ rootDirectory = postman/collections
 
 [config.relations.apiDefinition]
 files[] = {"path":"index.yaml","metaData":{}}
-files[] = {"path":"schemas/Address.yaml","metaData":{}}
-files[] = {"path":"schemas/core/iEntity.yaml","metaData":{}}
-files[] = {"path":"schemas/core/iRelation.yaml","metaData":{}}
-files[] = {"path":"schemas/core/iRelationLink.yaml","metaData":{}}
+files[] = {"path":"models/Address.yaml","metaData":{}}
+files[] = {"path":"models/Contact.yaml","metaData":{}}
+files[] = {"path":"models/core/Collection.yaml","metaData":{}}
+files[] = {"path":"models/core/Entity.yaml","metaData":{}}
+files[] = {"path":"models/core/Link.yaml","metaData":{}}
+files[] = {"path":"models/core/Relation.yaml","metaData":{}}
+files[] = {"path":"models/Organization.yaml","metaData":{}}
+files[] = {"path":"models/traits/BusinessEntity.yaml","metaData":{}}
+files[] = {"path":"responses/organizations/listOrganizations.yaml","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
 type = openapi:3
