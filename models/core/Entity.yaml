@@ -51,7 +51,7 @@ properties:
   _links:
     type: object
     additionalProperties:
-      $ref: "#/components/schemas/coreLink"
+      $ref: "#/components/schemas/cLink"
 required:
 - id
 - code

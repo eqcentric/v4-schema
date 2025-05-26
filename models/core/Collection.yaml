@@ -7,7 +7,7 @@ properties:
   _links:
     type: object
     additionalProperties:
-      $ref: "#/components/schemas/coreLink"
+      $ref: "#/components/schemas/cLink"
   _meta:
     type: object
     properties:
