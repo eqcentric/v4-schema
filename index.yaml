@@ -44,7 +44,13 @@ components:
       $ref: "./models/Partner.yaml"
     Vendor:
       $ref: "./models/Vendor.yaml"
+    BusinessUnit:
+      $ref: "./models/BusinessUnit.yaml"
     # === Operational ===
+    tDepreciable:
+      $ref: "./models/traits/Depreciable.yaml"
+    tUnderWarranty:
+      $ref: "./models/traits/UnderWarranty.yaml"
     Site:
       $ref: "./models/Site.yaml"
     Asset:

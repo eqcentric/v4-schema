@@ -1,0 +1,51 @@
+description: >
+  Trait providing fields for assets that are subject to financial depreciation.
+type: object
+properties:
+  installationDate:
+    type: string
+    format: date
+    description: Date the asset was installed or placed in service (often starts depreciation).
+  purchaseInfo:
+    type: object
+    properties:
+      purchaseDate:
+        type: string
+        format: date
+        description: Date the asset was purchased.
+      price:
+        type: number
+        format: double
+        description: Original purchase price or acquisition cost.
+      poNumber:
+        type: string
+        description: Purchase Order number related to the acquisition.
+      currency:
+        description: Currency of the purchase price.
+        oneOf:
+          - $ref: "#/components/schemas/cRelation"
+          - $ref: "#/components/schemas/Currency"
+    description: Details about the purchase of the asset.
+  depreciationMethod:
+    type: string
+    description: Method used for calculating depreciation (e.g., 'Straight Line', 'Double Declining Balance').
+    example: "Straight Line"
+  usefulLifeMonths:
+    type: number
+    format: double
+    description: Estimated useful life of the asset for depreciation purposes.
+    example: 120
+  salvageValue:
+    type: number
+    format: double
+    description: Estimated residual value of the asset at the end of its useful life. Currency matches purchaseInfo.currency or requires context.
+    example: 1000.00
+  replacementCost:
+    type: number
+    format: double
+    description: Estimated cost to replace the asset currently. Currency matches purchaseInfo.currency or requires context.
+    example: 25000.00
+  plannedReplacementDate:
+    type: string
+    format: date
+    description: Optional planned date for replacing the asset based on its lifecycle.

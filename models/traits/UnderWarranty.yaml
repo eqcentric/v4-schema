@@ -1,0 +1,28 @@
+type: object
+description: >
+  Trait providing fields for entities currently under a warranty agreement.
+properties:
+  warrantyInfo:
+    type: object
+    description: Details of the warranty coverage for this entity.
+    properties:
+      name:
+        type: string
+        description: Optional name or identifier for the warranty agreement/policy.
+        example: "Extended 3-Year Parts & Labor"
+      vendor: # The provider of the warranty (might be manufacturer or third party)
+        description: Reference to the Vendor providing the warranty coverage.
+        oneOf:
+          - $ref: "#/components/schemas/cRelation"
+          - $ref: "#/components/schemas/Vendor"
+      startDate:
+        type: string
+        format: date
+        description: Date when the warranty coverage started.
+      expirationDate:
+        type: string
+        format: date
+        description: Date when the warranty coverage expires.
+      coverageDescription:
+        type: string
+        description: Brief description of what the warranty covers (e.g., 'Parts only', 'Full coverage').
