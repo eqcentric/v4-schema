@@ -1,0 +1,63 @@
+description: >
+  Represents a specific physical instance or homogeneous stack of an Inventory Item held within a StockStorage unit 
+  (e.g., a specific batch on a pallet, a set of serial numbers in a bin). Inherits standard entity fields.
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    inventoryItem:
+      description: The inventory item this instance represents
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/InventoryItem"
+    location:
+      description: The storage location where this item resides
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/tStorageLocation"
+    storage:
+      description: The storage unit containing this item
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/StockStorage"
+        - $ref: "../index.yaml#/components/schemas/StockItem"
+    quantityOnHand:
+      type: number
+      format: double
+      description: Total quantity physically present
+    quantityAvailable:
+      type: number
+      format: double
+      description: Quantity available for allocation (on hand minus reserved)
+    quantityReserved:
+      type: number
+      format: double
+      description: Quantity reserved for orders or transfers
+    quantityInTransit:
+      type: number
+      format: double
+      description: Quantity currently in transit to this location
+    uom:
+      description: Unit of measure for all quantity fields
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+    batchNumber:
+      type: string
+      description: Batch or lot number for this item
+    serialNumbers:
+      type: array
+      items:
+        type: string
+      description: List of serial numbers for this item
+    lpnNumber:
+      type: string
+      description: License Plate Number (LPN) for this item
+    expiryDate:
+      type: string
+      format: date
+      description: Expiry date for this item
+  required:
+    - inventoryItem
+    - location
+    - uom

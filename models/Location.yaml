@@ -1,0 +1,31 @@
+description: Represents a physical or logical location within the system.
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Name of the location
+      example: "Warehouse A"
+    isActive:
+      type: boolean
+      description: Indicates if the location is currently active
+      default: true
+    organization:
+      description: Organization that owns or manages this location
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"
+    parent:
+      description: Parent location in a hierarchy (e.g., building, floor, zone)
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Location"
+    businessUnit:
+      description: Business unit primarily associated with this location
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+  required:
+    - name
+    - organization

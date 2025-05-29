@@ -68,15 +68,25 @@ components:
     Asset:
       $ref: "models/Asset.yaml"
     # === Inventory ===
+    tStorageLocation:
+      $ref: "models/traits/StorageLocation.yaml"
     tSupplyItem:
       $ref: "models/traits/SupplyItem.yaml"
     SupplyOption:
       $ref: "models/SupplyOption.yaml"
+    InventoryItem:
+      $ref: "models/InventoryItem.yaml"
+    StockStorage:
+      $ref: "models/StockStorage.yaml"
+    StockItem:
+      $ref: "models/StockItem.yaml"
     # === Misc ===
     Note:
       $ref: "models/Note.yaml"
     UnitOfMeasure:
       $ref: "models/UnitOfMeasure.yaml"
+    Location:
+      $ref: "models/Location.yaml"
   responses:
     listOrganizations:
         $ref: "responses/organizations/listOrganizations.yaml"

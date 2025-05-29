@@ -1,0 +1,35 @@
+description: >
+  Trait providing warehouse-specific fields for locations that function as storage facilities.
+type: object
+properties:
+  totalCapacity:
+    type: object
+    properties:
+      squareFootage:
+        type: number
+        format: double
+        description: Total warehouse square footage
+      squareFootageUom:
+        description: Unit of measure for square footage
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/UnitOfMeasure"
+      palletPositions:
+        type: integer
+        description: Total number of pallet positions
+      dockDoors:
+        type: integer
+        description: Number of dock doors
+    description: Overall warehouse capacity metrics
+  operationalHours:
+    type: string
+    description: Standard operational hours
+    example: "Mon-Fri 6AM-10PM"
+  isTemperatureControlled:
+    type: boolean
+    description: Whether the warehouse has temperature control capabilities
+    default: false
+  isHazmatCertified:
+    type: boolean
+    description: Whether the warehouse is certified for hazardous materials
+    default: false

@@ -1,0 +1,24 @@
+description: >
+  Central definition of an item that can be stocked, purchased, sold, manufactured, consumed, or expensed. 
+  It combines the base entity and inventory item concepts and can optionally include properties from 
+  various facets (Sales, Purchase, Manufactured, etc.) via `anyOf` composition, indicating its role(s).
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Name or title of the inventory item
+      example: "M8 Hex Bolt"
+    description:
+      type: string
+      description: Detailed description of the inventory item
+      example: "8mm stainless steel hex bolt, 50mm length"
+    uom:
+      description: Unit of measure for this inventory item
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+  required:
+    - name
+    - uom

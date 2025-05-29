@@ -1,0 +1,52 @@
+description: >
+  Represents a physical or logical unit used for storing inventory (e.g., bin, shelf location, pallet, container, LPN). 
+  Can be nested (e.g., bin on shelf). May hold aggregated quantities or contain discrete StockItems. 
+  Inherits standard entity fields.
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    inventoryItem:
+      description: The inventory item stored in this location
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/InventoryItem"
+    location:
+      description: The storage location where this unit resides
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/tStorageLocation"
+    quantityOnHand:
+      type: number
+      format: double
+      description: Total quantity physically present
+    quantityAvailable:
+      type: number
+      format: double
+      description: Quantity available for allocation (on hand minus reserved)
+    quantityReserved:
+      type: number
+      format: double
+      description: Quantity reserved for orders or transfers
+    quantityInTransit:
+      type: number
+      format: double
+      description: Quantity currently in transit to this location
+    uom:
+      description: Unit of measure for all quantity fields
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+    parent:
+      description: Parent storage unit in a hierarchy (e.g., shelf containing bins)
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/StockStorage"
+    maxCapacity:
+      type: number
+      format: double
+      description: Maximum quantity that can be stored in this unit
+  required:
+    - inventoryItem
+    - location
+    - uom
