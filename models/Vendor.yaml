@@ -1,4 +1,4 @@
 description: >
   Represents an external vendor that provides raw materials, components, or wholesale goods.
 allOf:
-- $ref: "#/components/schemas/Partner"
+- $ref: "../index.yaml#/components/schemas/Partner"

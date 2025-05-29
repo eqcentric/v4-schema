@@ -1,0 +1,28 @@
+description: Represents a unit of measure used throughout the system for quantities, dimensions, and other measurable attributes.
+allOf:
+- $ref: "../index.yaml#/components/schemas/iTaxonomy"
+- type: object
+  properties:
+    symbol:
+      type: string
+      description: Standard symbol or abbreviation for the unit
+      example: "kg"
+    dimension:
+      type: string
+      description: Physical dimension category (length, mass, time, volume, etc.)
+      example: "mass"
+    baseUnit:
+      description: Reference to the base unit in this dimension for conversion
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+    conversionFactor:
+      type: number
+      format: double
+      description: Factor to convert this unit to the base unit
+      example: 1000  # for kg to g
+    conversionOffset:
+      type: number
+      format: double
+      description: Offset for conversion (used for temperature conversions)
+      default: 0

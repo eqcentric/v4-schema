@@ -3,10 +3,10 @@ content:
   application/json:
     schema:
       allOf:
-        - $ref: "#/components/schemas/cCollection"
+        - $ref: "../../index.yaml#/components/schemas/cCollection"
         - type: object
           properties:
             data:
               type: array
               items:
-                $ref: "#/components/schemas/Organization"
+                $ref: "../../index.yaml#/components/schemas/Organization"

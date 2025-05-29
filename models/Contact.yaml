@@ -1,6 +1,6 @@
 description: Represents a contact person or potentially a contact point within an organization. Inherits standard entity fields.
 allOf:
-- $ref: "#/components/schemas/cEntity"
+- $ref: "../index.yaml#/components/schemas/cEntity"
 - type: object
   properties:
     firstName:
@@ -35,5 +35,5 @@ allOf:
     address:
         description: Optional reference to the primary physical/mailing address of the contact. Can be a relation or embedded object.
         oneOf:
-        - $ref: "#/components/schemas/cRelation"
-        - $ref: "#/components/schemas/Address"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Address"

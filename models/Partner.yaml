@@ -2,7 +2,7 @@ description: >
   Represents an external or internal business partner, such as a customer, supplier, vendor, carrier, etc. 
   Inherits iEntity and iBusinessEntity fields.
 allOf:
-- $ref: "#/components/schemas/cEntity"
+- $ref: "../index.yaml#/components/schemas/cEntity"
 - type: object
   properties:
     name:
@@ -12,13 +12,13 @@ allOf:
     organization:
       description: Optional reference to the primary internal Organization this partner interacts with or belongs to (e.g., if representing an internal division as a partner).
       oneOf:
-        - $ref: "#/components/schemas/cRelation"
-        - $ref: "#/components/schemas/Organization"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"
     currency:
       description: Default or primary currency used by the partner.
       oneOf:
-      - $ref: "#/components/schemas/cRelation"
-      - $ref: "#/components/schemas/Currency"
+      - $ref: "../index.yaml#/components/schemas/cRelation"
+      - $ref: "../index.yaml#/components/schemas/Currency"
     legalName:
       type: string
       description: Official registered legal name of the partner entity, if applicable.

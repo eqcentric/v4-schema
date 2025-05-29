@@ -1,7 +1,7 @@
 description: >
         Represents a physical, logical, or financial asset owned or managed by the organization. Base type for specific asset classes. Inherits standard entity fields. Includes optional mixin interfaces via `anyOf`.
 allOf:
-- $ref: "#/components/schemas/cEntity"
+- $ref: "../index.yaml#/components/schemas/cEntity"
 - type: object
   properties:
     name:
@@ -27,51 +27,51 @@ allOf:
     organization:
       description: Reference to the Organization that owns or is primarily responsible for the asset.
       oneOf:
-        - $ref: "#/components/schemas/iRelation"
-        - $ref: "#/components/schemas/Organization"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"
     site:
       description: Optional reference to the primary Site where the asset is located.
       oneOf:
-        - $ref: "#/components/schemas/iRelation"
-        - $ref: "#/components/schemas/Site"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Site"
     # location:
     #   description: Optional reference to the specific Location (possibly more granular than Site) where the asset is currently situated.
     #   oneOf:
-    #     - $ref: "#/components/schemas/iRelation"
-    #     - $ref: "#/components/schemas/Location"
+    #     - $ref: "../index.yaml#/components/schemas/iRelation"
+    #     - $ref: "../index.yaml#/components/schemas/Location"
     parent:
       description: Optional reference to a parent asset in a hierarchy (e.g., engine part of a vehicle).
       oneOf:
-        - $ref: "#/components/schemas/iRelation"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
         # Self-reference is correct here
-        - $ref: "#/components/schemas/Asset"
+        - $ref: "../index.yaml#/components/schemas/Asset"
     manufacturer:
       description: Optional reference to the Partner or Organization that manufactured the asset.
       oneOf:
-        - $ref: "#/components/schemas/iRelation"
-        - $ref: "#/components/schemas/Partner"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Partner"
     # businessUnit:
     #   description: Optional reference to the Business Unit primarily associated with or responsible for the asset.
     #   oneOf:
-    #     - $ref: "#/components/schemas/iRelation"
-    #     - $ref: "#/components/schemas/BusinessUnit"
+    #     - $ref: "../index.yaml#/components/schemas/iRelation"
+    #     - $ref: "../index.yaml#/components/schemas/BusinessUnit"
     # customer:
     #   description: Optional reference to the Partner (customer) associated with the asset (e.g., leased equipment).
     #   oneOf:
-    #     - $ref: "#/components/schemas/iRelation"
-    #     - $ref: "#/components/schemas/Partner"
+    #     - $ref: "../index.yaml#/components/schemas/iRelation"
+    #     - $ref: "../index.yaml#/components/schemas/Partner"
     criticality:
       description: Optional classification of the asset's criticality to operations. Uses taxonomy.
       oneOf:
-        - $ref: "#/components/schemas/cRelation"
-        - $ref: "#/components/schemas/AssetClassification"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/AssetClassification"
     classifications:
       type: array
       items:
         description: Reference to a classification entry defining the asset's category, type, class, etc. Uses taxonomy.
         oneOf:
-          - $ref: "#/components/schemas/cRelation"
-          - $ref: "#/components/schemas/AssetClassification"
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AssetClassification"
       description: >
         List of classifications applying to this asset (e.g., defining its class, type, group). Allows multiple classification hierarchies.
     notes:
@@ -79,8 +79,8 @@ allOf:
       items:
         allOf:
         - oneOf:
-          - $ref: "#/components/schemas/cRelation"
-          - $ref: "#/components/schemas/Note"
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Note"
         - type: object
           properties:
             key:

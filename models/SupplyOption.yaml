@@ -1,19 +1,19 @@
 description: >
   Defines a specific option for sourcing/purchasing an item from a particular supplier (vendor), including price, lead time, and units. Inherits standard entity fields.
 allOf:
-- $ref: "#/components/schemas/cEntity"
+- $ref: "../index.yaml#/components/schemas/cEntity"
 - type: object
   properties:
     item:
         description: Reference to the Item this supply option relates to. Required.
         oneOf:
-        - $ref: "#/components/schemas/iRelation"
-        - $ref: "#/components/schemas/cEntity"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/cEntity"
     vendor:
         description: Reference to the vendor providing this item under these terms. Required.
         oneOf:
-        - $ref: "#/components/schemas/cRelation"
-        - $ref: "#/components/schemas/Vendor"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Vendor"
     vendorItemCode:
         type: string
         description: Optional item code or part number used by the vendor for this item.

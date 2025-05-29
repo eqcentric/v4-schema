@@ -13,8 +13,8 @@ properties:
       vendor: # The provider of the warranty (might be manufacturer or third party)
         description: Reference to the Vendor providing the warranty coverage.
         oneOf:
-          - $ref: "#/components/schemas/cRelation"
-          - $ref: "#/components/schemas/Vendor"
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Vendor"
       startDate:
         type: string
         format: date

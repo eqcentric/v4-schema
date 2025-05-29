@@ -23,8 +23,8 @@ properties:
       currency:
         description: Currency of the purchase price.
         oneOf:
-          - $ref: "#/components/schemas/cRelation"
-          - $ref: "#/components/schemas/Currency"
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Currency"
     description: Details about the purchase of the asset.
   depreciationMethod:
     type: string

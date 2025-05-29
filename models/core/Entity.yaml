@@ -51,7 +51,7 @@ properties:
   _links:
     type: object
     additionalProperties:
-      $ref: "#/components/schemas/cLink"
+      $ref: "../../index.yaml#/components/schemas/cLink"
 required:
 - id
 - code

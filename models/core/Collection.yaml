@@ -3,11 +3,11 @@ properties:
   data:
     type: array
     items:
-      $ref: "#/components/schemas/cEntity"
+      $ref: "../../index.yaml#/components/schemas/cEntity"
   _links:
     type: object
     additionalProperties:
-      $ref: "#/components/schemas/cLink"
+      $ref: "../../index.yaml#/components/schemas/cLink"
   _meta:
     type: object
     properties:

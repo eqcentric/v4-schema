@@ -1,6 +1,6 @@
 description: Represents an operational site, potentially containing multiple buildings or areas.
 allOf:
-- $ref: "#/components/schemas/cEntity"
+- $ref: "../index.yaml#/components/schemas/cEntity"
 - type: object
   properties:
     name:
@@ -17,5 +17,5 @@ allOf:
     organization:
       description: Reference to the primary Organization this site belongs to.
       oneOf:
-        - $ref: "#/components/schemas/cRelation"
-        - $ref: "#/components/schemas/Organization"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"

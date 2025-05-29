@@ -3,6 +3,9 @@ info:
   version: 4.0.0
   title: Makini API
   description: Unified API for industrial systems
+  license:
+    name: Makini Proprietary License
+    url: https://www.makini.io/legal#terms
 servers:
   - url: https://api.makini.io/v4
 paths:
@@ -10,59 +13,70 @@ paths:
     get:
       summary: Get list of organizations
       operationId: listOrganizations
+      security:
+        - bearerAuth: []
       responses:
         '200':
           $ref: "#/components/responses/listOrganizations"
+        '401':
+          description: Unauthorized
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     # === Core ===
     cEntity:
-      $ref: "./models/core/Entity.yaml"
+      $ref: "models/core/Entity.yaml"
     cLink:
-      $ref: "./models/core/Link.yaml"
+      $ref: "models/core/Link.yaml"
     cRelation:
-      $ref: "./models/core/Relation.yaml"
+      $ref: "models/core/Relation.yaml"
     cCollection:
-      $ref: "./models/core/Collection.yaml"
+      $ref: "models/core/Collection.yaml"
     # === Taxonomy ===
     iTaxonomy:
-      $ref: "./models/interfaces/Taxonomy.yaml"
+      $ref: "models/interfaces/Taxonomy.yaml"
     AssetClassification:
-      $ref: "./models/taxonomy/AssetClassification.yaml"
+      $ref: "models/taxonomy/AssetClassification.yaml"
     # === Business ===
     tAddressable:
-      $ref: "./models/traits/Addressable.yaml"
+      $ref: "models/traits/Addressable.yaml"
     Currency:
-      $ref: "./models/Currency.yaml"
+      $ref: "models/Currency.yaml"
     Address:
-      $ref: "./models/Address.yaml"
+      $ref: "models/Address.yaml"
     Contact:
-      $ref: "./models/Contact.yaml"
+      $ref: "models/Contact.yaml"
     Organization:
-      $ref: "./models/Organization.yaml"
+      $ref: "models/Organization.yaml"
     Partner:
-      $ref: "./models/Partner.yaml"
+      $ref: "models/Partner.yaml"
     Vendor:
-      $ref: "./models/Vendor.yaml"
+      $ref: "models/Vendor.yaml"
     BusinessUnit:
-      $ref: "./models/BusinessUnit.yaml"
+      $ref: "models/BusinessUnit.yaml"
     # === Operational ===
     tDepreciable:
-      $ref: "./models/traits/Depreciable.yaml"
+      $ref: "models/traits/Depreciable.yaml"
     tUnderWarranty:
-      $ref: "./models/traits/UnderWarranty.yaml"
+      $ref: "models/traits/UnderWarranty.yaml"
     Site:
-      $ref: "./models/Site.yaml"
+      $ref: "models/Site.yaml"
     Asset:
-      $ref: "./models/Asset.yaml"
+      $ref: "models/Asset.yaml"
     # === Inventory ===
     tSupplyItem:
-      $ref: "./models/traits/SupplyItem.yaml"
+      $ref: "models/traits/SupplyItem.yaml"
     SupplyOption:
-      $ref: "./models/SupplyOption.yaml"
+      $ref: "models/SupplyOption.yaml"
     # === Misc ===
     Note:
-      $ref: "./models/Note.yaml"
+      $ref: "models/Note.yaml"
+    UnitOfMeasure:
+      $ref: "models/UnitOfMeasure.yaml"
   responses:
     listOrganizations:
-        $ref: "./responses/organizations/listOrganizations.yaml"
+        $ref: "responses/organizations/listOrganizations.yaml"

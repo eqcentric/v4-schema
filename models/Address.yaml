@@ -1,6 +1,6 @@
 description: Represents a physical mailing, billing, or operational address. Inherits standard entity fields.
 allOf:
-  - $ref: "#/components/schemas/cEntity"
+  - $ref: "../index.yaml#/components/schemas/cEntity"
   - type: object
     properties:
       country:

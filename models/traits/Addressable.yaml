@@ -6,8 +6,8 @@ properties:
     items:
       allOf:
         - oneOf:
-          - $ref: "#/components/schemas/cRelation"
-          - $ref: "#/components/schemas/Address"
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Address"
         - type: object
           properties:
             isDefault:
@@ -28,8 +28,8 @@ properties:
     items:
       allOf:
         - oneOf:
-          - $ref: "#/components/schemas/cRelation"
-          - $ref: "#/components/schemas/Contact"
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Contact"
         - type: object
           properties:
             isPrimary:

@@ -4,4 +4,4 @@ properties:
   supplyOptions:
     type: array
     items:
-      $ref: "#/components/models/SupplyOption"
+      $ref: "../../index.yaml#/components/schemas/SupplyOption"

@@ -1,6 +1,6 @@
 description: Represents an organizational sub-entity, often defined by function, geography, product line, or other business segmentation. Inherits standard entity fields.
 allOf:
-- $ref: "#/components/schemas/cEntity"
+- $ref: "../index.yaml#/components/schemas/cEntity"
 - type: object
   properties:
     name:
@@ -10,18 +10,18 @@ allOf:
     parent:
       description: Optional reference to a parent business unit in a hierarchy.
       oneOf:
-        - $ref: "#/components/schemas/cRelation"
-        - $ref: "#/components/schemas/BusinessUnit"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/BusinessUnit"
     organization:
       description: Reference to the primary Organization this business unit belongs to.
       oneOf:
-        - $ref: "#/components/schemas/cRelation"
-        - $ref: "#/components/schemas/Organization"
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"
     # businessUnitType:
     #   description: Classification of the business unit type. Uses taxonomy.
     #   oneOf:
-    #     - $ref: "#/components/schemas/iRelation"
-    #     - $ref: "#/components/schemas/BusinessUnitType" # References a taxonomy
+    #     - $ref: "../index.yaml#/components/schemas/iRelation"
+    #     - $ref: "../index.yaml#/components/schemas/BusinessUnitType" # References a taxonomy
     isActive:
       type: boolean
       description: Flag indicating if this business unit is currently operational.

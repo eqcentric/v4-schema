@@ -1,5 +1,4 @@
 description: >
         Generic taxonomy for classifying assets into categories, classes, types, or groups (e.g., 'Vehicles', 'IT Equipment', 'Production Machinery'). Can be hierarchical and potentially used multiple times per asset via the `classifications` array on Asset.
 allOf:
-  - $ref: "#/components/schemas/iTaxonomy"
-  
+  - $ref: "../../index.yaml#/components/schemas/iTaxonomy"

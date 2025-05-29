@@ -1,6 +1,6 @@
 description: Represents a recognized currency, typically following ISO 4217 standards. Inherits standard entity fields.
 allOf:
-- $ref: "#/components/schemas/cEntity"
+- $ref: "../index.yaml#/components/schemas/cEntity"
 - type: object
   properties:
     name:
@@ -23,7 +23,7 @@ allOf:
       type: object
       properties:
         exchangeRates:
-          $ref: "#/components/schemas/cLink"
+          $ref: "../index.yaml#/components/schemas/cLink"
           description: Link to the collection of exchange rates involving this currency.
       additionalProperties:
-        $ref: "#/components/schemas/cLink"
+        $ref: "../index.yaml#/components/schemas/cLink"
