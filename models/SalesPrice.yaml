@@ -1,0 +1,59 @@
+description: >
+  Defines a specific sales price for an item, potentially dependent on quantity, price level, currency, and effective dates. 
+  Inherits standard entity fields.
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Name or description of this price (e.g., "Standard Price", "Bulk Discount")
+      example: "Standard Price"
+    inventoryItem:
+      description: The inventory item this price applies to
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/InventoryItem"
+    minQuantity:
+      type: number
+      format: double
+      description: Minimum quantity for this price to apply
+    price:
+      type: number
+      format: double
+      description: Price per unit
+    currency:
+      description: Currency of the price
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Currency"
+    uom:
+      description: Unit of measure for the price
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+    taxCode:
+      type: string
+      description: Tax code applicable to this price
+    taxRate:
+      type: number
+      format: double
+      description: Tax rate (percentage)
+    isTaxIncluded:
+      type: boolean
+      description: Indicates if tax is included in the price
+      default: false
+    validFrom:
+      type: string
+      format: date
+      description: Start date for this price to be effective
+    validTo:
+      type: string
+      format: date
+      description: End date for this price to be effective (null if open-ended)
+  required:
+    - name
+    - inventoryItem
+    - price
+    - currency
+    - uom

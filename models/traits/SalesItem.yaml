@@ -1,0 +1,27 @@
+type: object
+description: >
+  Trait adding sales-specific attributes to an item. Includes price levels and additional external identifiers.
+properties:
+  priceLevels:
+    type: array
+    items:
+      oneOf:
+        - $ref: "../../index.yaml#/components/schemas/cRelation"
+        - $ref: "../../index.yaml#/components/schemas/SalesPrice"
+    description: Array of relations to SalesPrice entities, defining various price levels for this item.
+  identifiers:
+    type: object
+    description: >
+      Additional external identifiers relevant for sales (e.g., EAN, UPC, GTIN, MPN). 
+      Extends base identifiers.
+    properties:
+      upc:
+        type: string
+      ean:
+        type: string
+      gtin:
+        type: string
+      mpn:
+        type: string
+    additionalProperties:
+      type: string

@@ -58,6 +58,8 @@ components:
       $ref: "models/Vendor.yaml"
     BusinessUnit:
       $ref: "models/BusinessUnit.yaml"
+    SalesPrice:
+      $ref: "models/SalesPrice.yaml"
     # === Operational ===
     tDepreciable:
       $ref: "models/traits/Depreciable.yaml"
@@ -70,8 +72,10 @@ components:
     # === Inventory ===
     tStorageLocation:
       $ref: "models/traits/StorageLocation.yaml"
-    tSupplyItem:
-      $ref: "models/traits/SupplyItem.yaml"
+    tPurchaseItem:
+      $ref: "models/traits/PurchaseItem.yaml"
+    tSalesItem:
+      $ref: "models/traits/SalesItem.yaml"
     SupplyOption:
       $ref: "models/SupplyOption.yaml"
     InventoryItem:

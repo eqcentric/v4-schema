@@ -23,11 +23,19 @@ allOf:
         format: double
         description: Optional minimum quantity required when ordering this item from this supplier using this option. Unit matches orderUom.
         example: 100
-    # orderUom:
-    #   description: Unit of measure used when ordering this item from this supplier (might differ from stocking UoM, e.g., buy in Cases, stock in Eaches). Required.
-    #   oneOf:
-    #   - $ref: "#/components/schemas/iRelation"
-    #   - $ref: "#/components/schemas/UnitOfMeasure"
+    uom:
+        description: Unit of measure for the supply item
+        oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+    packageUom:
+        description: Unit of measure for the packaging of the supply item
+        oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+    packageQuantity:
+        type: number
+        description: Quantity of supply items per package
     leadTimeDays:
         type: integer
         description: Expected lead time in days from placing an order to receiving the goods from this supplier.
@@ -37,11 +45,11 @@ allOf:
         format: double
         description: The price per 'orderUom' when purchasing from this supplier under this option. Required.
         example: 5.50
-    # currency:
-    #   description: Currency of the purchase price. Required.
-    #   oneOf:
-    #   - $ref: "#/components/schemas/iRelation"
-    #   - $ref: "#/components/schemas/Currency"
+    currency:
+        description: Currency of the purchase price. Required.
+        oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Currency"
     isPreferred:
         type: boolean
         description: Flag indicating if this is the preferred supplier/option for purchasing this item.

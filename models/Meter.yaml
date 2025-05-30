@@ -1,0 +1,50 @@
+description: >
+  Represents a sensor, gauge, or counter that measures usage, condition, or quantity, 
+  often associated with one or more assets. Inherits standard entity fields.
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Name or identifier of the meter
+    assignedAssets:
+      type: array
+      description: Assets this meter is assigned to
+      items:
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Asset"
+    initialReading:
+      type: number
+      format: double
+      description: Initial reading value when the meter was installed or reset
+    uom:
+      description: Unit of measure for the meter readings
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+    lastReadingValue:
+      type: number
+      format: double
+      description: Most recent reading value
+    lastReadingAt:
+      type: string
+      format: date-time
+      description: Timestamp of the most recent reading
+    rolloverPoint:
+      type: number
+      format: double
+      description: Value at which the meter rolls over to zero (if applicable)
+    meterType:
+      type: string
+      description: Type of meter (e.g., gauge, counter, sensor)
+      example: "counter"
+    isActive:
+      type: boolean
+      description: Whether the meter is currently active
+      default: true
+  required:
+    - name
+    - uom
+    - meterType
