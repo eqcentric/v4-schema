@@ -1,0 +1,29 @@
+description: >
+  Represents a generic transaction.
+allOf:
+  - $ref: "../../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      organization:
+        description: Relation to Organization.
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Organization"
+      businessUnit:
+        description: Relation to BusinessUnit.
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/BusinessUnit"
+      startedAt:
+        type: string
+        format: date-time
+        description: The date and time the transaction started.
+      endedAt:
+        type: string
+        format: date-time
+        description: The date and time the transaction ended.
+      status:
+        description: Relation to iTaxonomy.
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/iTaxonomy"

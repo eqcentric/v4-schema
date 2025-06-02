@@ -1,0 +1,49 @@
+description: >
+  Represents a historical record of work performed on a task, including status changes and time tracking.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - type: object
+    properties:
+      task:
+        description: Reference to the task that this history record is associated with.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/WorkTask"
+      status:
+        description: Reference to the status of the work.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/WorkOrderStatus"
+      estimatedWorkHours:
+        type: number
+        format: float
+        description: Estimated number of work hours required to complete the task.
+      actualWorkHours:
+        type: number
+        format: float
+        description: Actual number of work hours spent on the task.
+      approvedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the work was approved.
+      dueAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the work is due to be completed.
+      scheduledAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the work is scheduled to be performed.
+      completedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the work was completed.
+      closedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the work was closed.

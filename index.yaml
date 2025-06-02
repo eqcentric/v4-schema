@@ -41,6 +41,10 @@ components:
       $ref: "models/interfaces/Taxonomy.yaml"
     AssetClassification:
       $ref: "models/taxonomy/AssetClassification.yaml"
+    WorkOrderStatus:
+      $ref: "models/taxonomy/WorkOrderStatus.yaml"
+    WorkOrderClassification:
+      $ref: "models/taxonomy/WorkOrderClassification.yaml"
     # === Business ===
     tAddressable:
       $ref: "models/traits/Addressable.yaml"
@@ -56,6 +60,8 @@ components:
       $ref: "models/Partner.yaml"
     Vendor:
       $ref: "models/Vendor.yaml"
+    Customer:
+      $ref: "models/Customer.yaml"
     BusinessUnit:
       $ref: "models/BusinessUnit.yaml"
     SalesPrice:
@@ -84,6 +90,13 @@ components:
       $ref: "models/StockStorage.yaml"
     StockItem:
       $ref: "models/StockItem.yaml"
+    # === Transactional ===
+    iTransaction:
+      $ref: "models/interfaces/iTransaction.yaml"
+    WorkTask:
+      $ref: "models/WorkTask.yaml"
+    WorkHistory:
+      $ref: "models/WorkHistory.yaml"
     # === Misc ===
     Note:
       $ref: "models/Note.yaml"
@@ -91,6 +104,10 @@ components:
       $ref: "models/UnitOfMeasure.yaml"
     Location:
       $ref: "models/Location.yaml"
+    Meter:
+      $ref: "models/Meter.yaml"
+    MeterReading:
+      $ref: "models/MeterReading.yaml"
   responses:
     listOrganizations:
         $ref: "responses/organizations/listOrganizations.yaml"

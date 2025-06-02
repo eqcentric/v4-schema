@@ -1,0 +1,4 @@
+description: >
+  Taxonomy for classifying work orders into categories, types, or groups (e.g., 'Preventive Maintenance', 'Corrective Maintenance', 'Emergency Repair'). Can be hierarchical and potentially used multiple times per work order via the `classifications` array.
+allOf:
+  - $ref: "../../index.yaml#/components/schemas/iTaxonomy"

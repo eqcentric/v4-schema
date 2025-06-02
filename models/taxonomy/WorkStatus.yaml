@@ -1,0 +1,4 @@
+description: >
+  Taxonomy for classifying work order statuses (e.g., 'Draft', 'Approved', 'In Progress', 'Completed', 'Closed').
+allOf:
+  - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
