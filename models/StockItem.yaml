@@ -57,6 +57,22 @@ allOf:
       type: string
       format: date
       description: Expiry date for this item
+    accounts:
+      type: array
+      items:
+        allOf:
+          - oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/Account"
+          - type: object
+            properties:
+              key:
+                type: string
+                description: Key or identifier for this account relationship.
+              name:
+                type: string
+                description: Name or description of this account relationship.
+      description: List of accounts associated with this stock item, with additional relationship metadata.
   required:
     - inventoryItem
     - location

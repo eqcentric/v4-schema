@@ -26,6 +26,11 @@ allOf:
       oneOf:
         - $ref: "../index.yaml#/components/schemas/cRelation"
         - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+    account:
+      description: Optional reference to the primary Account associated with the vendor.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Account"
   required:
     - name
     - organization

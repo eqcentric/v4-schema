@@ -1,0 +1,111 @@
+description: >
+  Represents a user account for system access and authentication. May be associated with an Employee but can also exist independently (service accounts, external users, etc.).
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    organization:
+      description: Reference to the Organization this user belongs to.
+      readOnly: true
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"
+    username:
+      type: string
+      description: Unique username for this user account.
+      example: "jsmith"
+      readOnly: true
+    groups:
+      type: array
+      items:
+        type: string
+      description: List of groups or roles assigned to this user.
+      example: ["IT Administrators", "Inventory Managers"]
+      readOnly: true
+    employee:
+      description: Optional reference to the Employee associated with this user account.
+      readOnly: true
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Employee"
+    isServiceAccount:
+      type: boolean
+      description: Indicates if this is a service account (not associated with a person).
+      default: false
+      readOnly: true
+    email:
+      type: string
+      format: email
+      description: Email address associated with this user account.
+      example: "john.smith@example.com"
+      readOnly: true
+    isActive:
+      type: boolean
+      description: Indicates if this user account is currently active.
+      default: true
+      readOnly: true
+    activatedAt:
+      type: string
+      format: date-time
+      nullable: true
+      description: Date and time when this user account was activated.
+      readOnly: true
+    deactivatedAt:
+      type: string
+      format: date-time
+      nullable: true
+      description: Date and time when this user account was deactivated.
+      readOnly: true
+    lastLoginAt:
+      type: string
+      format: date-time
+      nullable: true
+      description: Date and time of the last successful login.
+      readOnly: true
+    failedLoginAttempts:
+      type: integer
+      description: Number of consecutive failed login attempts.
+      default: 0
+      readOnly: true
+    isLocked:
+      type: boolean
+      description: Indicates if this user account is locked due to security policies.
+      default: false
+      readOnly: true
+    lockedAt:
+      type: string
+      format: date-time
+      nullable: true
+      description: Date and time when this user account was locked.
+      readOnly: true
+    passwordChangedAt:
+      type: string
+      format: date-time
+      nullable: true
+      description: Date and time when the password was last changed.
+      readOnly: true
+    passwordExpiresAt:
+      type: string
+      format: date-time
+      nullable: true
+      description: Date and time when the current password will expire.
+      readOnly: true
+    mfaEnabled:
+      type: boolean
+      description: Indicates if multi-factor authentication is enabled for this user.
+      default: false
+      readOnly: true
+    authProvider:
+      type: string
+      description: Authentication provider for this user.
+      example: "local"
+      default: "local"
+      readOnly: true
+    externalId:
+      type: string
+      description: Identifier in an external system or directory service.
+      example: "CN=JSmith,OU=Users,DC=example,DC=com"
+      readOnly: true
+  required:
+    - organization
+    - username

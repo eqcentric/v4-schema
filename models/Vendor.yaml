@@ -2,3 +2,10 @@ description: >
   Represents an external vendor that provides raw materials, components, or wholesale goods.
 allOf:
 - $ref: "../index.yaml#/components/schemas/Partner"
+- type: object
+  properties:
+    account:
+      description: Optional reference to the primary Account associated with the vendor.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Account"

@@ -1,6 +1,11 @@
 type: object
 description: Represents an item that can be sourced from vendors including procurement details.
 properties:
+  purchaseAccount:
+    description: Optional reference to the Account used for purchasing this item.
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Account"
   supplyOptions:
     type: array
     items:

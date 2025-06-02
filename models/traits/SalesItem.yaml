@@ -9,6 +9,11 @@ properties:
         - $ref: "../../index.yaml#/components/schemas/cRelation"
         - $ref: "../../index.yaml#/components/schemas/SalesPrice"
     description: Array of relations to SalesPrice entities, defining various price levels for this item.
+  salesAccount:
+    description: Optional reference to the Account used for sales of this item.
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Account"
   identifiers:
     type: object
     description: >

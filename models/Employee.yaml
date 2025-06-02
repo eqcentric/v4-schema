@@ -1,0 +1,50 @@
+description: >
+  Represents an employee of an organization. Extends Contact with employment-specific details.
+allOf:
+- $ref: "../index.yaml#/components/schemas/Contact"
+- type: object
+  properties:
+    organization:
+      description: Reference to the Organization that employs this person.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"
+    businessUnit:
+      description: Reference to the Business Unit this employee belongs to.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+    manager:
+      description: Reference to the employee's manager.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Employee"
+    employmentType:
+      type: string
+      description: Type of employment (e.g., Full-time, Part-time, Contract, Temporary).
+      example: "Full-time"
+    hireDate:
+      type: string
+      format: date
+      description: Date when the employee was hired.
+    terminationDate:
+      type: string
+      format: date
+      nullable: true
+      description: Date when the employee's employment was terminated (if applicable).
+    isActive:
+      type: boolean
+      description: Flag indicating if the employee is currently active.
+      default: true
+    payrollAccount:
+      description: Reference to the Account used for payroll for this employee.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Account"
+    emergencyContact:
+      description: Reference to the emergency contact for this employee.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Contact"
+  required:
+    - organization

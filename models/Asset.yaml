@@ -50,16 +50,21 @@ allOf:
       oneOf:
         - $ref: "../index.yaml#/components/schemas/cRelation"
         - $ref: "../index.yaml#/components/schemas/Partner"
-    # businessUnit:
-    #   description: Optional reference to the Business Unit primarily associated with or responsible for the asset.
-    #   oneOf:
-    #     - $ref: "../index.yaml#/components/schemas/iRelation"
-    #     - $ref: "../index.yaml#/components/schemas/BusinessUnit"
-    # customer:
-    #   description: Optional reference to the Partner (customer) associated with the asset (e.g., leased equipment).
-    #   oneOf:
-    #     - $ref: "../index.yaml#/components/schemas/iRelation"
-    #     - $ref: "../index.yaml#/components/schemas/Partner"
+    account:
+      description: Optional reference to the primary Account associated with the asset.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Account"
+    businessUnit:
+      description: Optional reference to the Business Unit primarily associated with or responsible for the asset.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+    customer:
+      description: Optional reference to the Partner (customer) associated with the asset (e.g., leased equipment).
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Customer"
     criticality:
       description: Optional classification of the asset's criticality to operations. Uses taxonomy.
       oneOf:

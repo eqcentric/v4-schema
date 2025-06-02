@@ -1,0 +1,59 @@
+description: >
+  Represents a financial account used for tracking monetary transactions.
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    organization:
+      description: Reference to the Organization that owns or is primarily responsible for the account.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"
+    businessUnit:
+      description: Currency used for this account.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+    parent:
+      description: Optional reference to a parent account in a hierarchy.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Account"
+    name:
+      type: string
+      description: Name of the account.
+      example: "Operating Expenses"
+    description:
+      type: string
+      description: Detailed description of the account's purpose or usage.
+    currency:
+      description: Currency used for this account.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Currency"
+    balance:
+      type: number
+      format: float
+      description: Current balance of the account.
+      readOnly: true
+      example: 5000.00
+    creditLimit:
+      type: number
+      format: float
+      description: Maximum credit limit for this account, if applicable.
+      readOnly: true
+      example: 10000.00
+    isActive:
+      type: boolean
+      description: Flag indicating if the account is currently active.
+      default: true
+    activatedAt:
+      type: string
+      format: date-time
+      nullable: true
+      description: Date and time when the account was activated.
+    expiresAt:
+      type: string
+      format: date-time
+      nullable: true
+      description: Date and time when the account expires or is scheduled to be deactivated.

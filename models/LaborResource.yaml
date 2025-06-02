@@ -1,0 +1,68 @@
+description: >
+  Represents a labor resource that can be assigned to work tasks. May be an individual, crew, or contractor.
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Name of the labor resource.
+      example: "Maintenance Crew A"
+    description:
+      type: string
+      description: Detailed description of the labor resource.
+    organization:
+      description: Reference to the Organization this labor resource belongs to.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Organization"
+    businessUnit:
+      description: Reference to the Business Unit this labor resource is associated with.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+    employee:
+      description: Reference to the Employee if this is an individual labor resource.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Employee"
+    supervisor:
+      description: Reference to the labor resource that supervises this resource.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/LaborResource"
+    members:
+      type: array
+      description: List of employees that make up this labor resource (for crews).
+      items:
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+    vendor:
+      description: Reference to the Vendor if this is a contractor resource.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Vendor"
+    laborRate:
+      type: number
+      format: float
+      description: Standard hourly rate for this labor resource.
+      example: 75.00
+    overtimeRate:
+      type: number
+      format: float
+      description: Overtime hourly rate for this labor resource.
+      example: 112.50
+    currency:
+      description: Currency used for labor rates.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Currency"
+    account:
+      description: Reference to the Account used for labor costs.
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/Account"
+  required:
+    - name
+    - organization
