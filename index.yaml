@@ -103,8 +103,8 @@ components:
       $ref: "models/interfaces/iTransaction.yaml"
     WorkTask:
       $ref: "models/WorkTask.yaml"
-    WorkHistory:
-      $ref: "models/WorkHistory.yaml"
+    WorkOrder:
+      $ref: "models/WorkOrder.yaml"
     # === Misc ===
     Note:
       $ref: "models/Note.yaml"
