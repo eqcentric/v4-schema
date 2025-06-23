@@ -1,5 +1,5 @@
 description: >
-  Represents a historical record of work performed on a task, including status changes and time tracking.
+  Represents a historical or active record of work performed on a task, including status changes and time tracking.
 allOf:
   - $ref: "../index.yaml#/components/schemas/iTransaction"
   - type: object
