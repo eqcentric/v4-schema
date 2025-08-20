@@ -45,6 +45,10 @@ components:
       $ref: "models/taxonomy/WorkStatus.yaml"
     WorkClassification:
       $ref: "models/taxonomy/WorkClassification.yaml"
+    PurchaseOrderLineStatus:
+      $ref: "models/taxonomy/PurchaseOrderLineStatus.yaml"
+    PurchaseOrderStatus:
+      $ref: "models/taxonomy/PurchaseOrderStatus.yaml"
     # === Business ===
     tAddressable:
       $ref: "models/traits/Addressable.yaml"
@@ -101,6 +105,14 @@ components:
     # === Transactional ===
     iTransaction:
       $ref: "models/interfaces/iTransaction.yaml"
+    tInbound:
+      $ref: "models/traits/Inbound.yaml"
+    tOrderHeader:
+      $ref: "models/traits/OrderHeader.yaml"
+    PurchaseOrder:
+      $ref: "models/PurchaseOrder.yaml"
+    PurchaseOrderLineItem:
+      $ref: "models/PurchaseOrderLineItem.yaml"
     WorkTask:
       $ref: "models/WorkTask.yaml"
     WorkOrder:

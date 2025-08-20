@@ -1,0 +1,20 @@
+description: >
+  Taxonomy for purchase order line item status values.
+allOf:
+  - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  - type: object
+    properties:
+      examples:
+        type: array
+        items:
+          type: string
+        readOnly: true
+        description: Common status values for purchase order line items
+        example: 
+          - "Pending"
+          - "Ordered"
+          - "Partially Received"
+          - "Received"
+          - "Cancelled"
+          - "Backordered"
+          - "Invoiced"

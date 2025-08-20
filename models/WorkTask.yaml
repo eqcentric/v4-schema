@@ -42,6 +42,6 @@ allOf:
           description: Reference to a classification entry defining the task's category, type, etc.
           oneOf:
             - $ref: "../index.yaml#/components/schemas/cRelation"
-            - $ref: "../index.yaml#/components/schemas/WorkOrderClassification"
+            - $ref: "../index.yaml#/components/schemas/WorkClassification"
         description: >
           List of classifications applying to this task (e.g., defining its type, priority). Allows multiple classification hierarchies.

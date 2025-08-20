@@ -13,7 +13,7 @@ allOf:
         description: Reference to the status of the work.
         oneOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
-          - $ref: "../index.yaml#/components/schemas/WorkOrderStatus"
+          - $ref: "../index.yaml#/components/schemas/WorkStatus"
       estimatedWorkHours:
         type: number
         format: float

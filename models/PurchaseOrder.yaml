@@ -1,0 +1,56 @@
+description: >
+  Represents a purchase order for procuring goods or services from a vendor.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - $ref: "../index.yaml#/components/schemas/tInbound"
+  - $ref: "../index.yaml#/components/schemas/tOrderHeader"
+  - type: object
+    properties:
+      source:
+        description: Vendor providing the goods or services
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Vendor"
+      location:
+        description: Inventory location receiving the order
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Location"
+      totalAmount:
+        type: number
+        format: decimal
+        description: Total amount of the purchase order
+        example: 1250.00
+      currency:
+        description: Currency for the purchase order amounts
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      notes:
+        type: array
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/Note"
+        description: Additional notes or comments related to the purchase order
+      approvedBy:
+        description: Employee who approved the purchase order
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      approvedAt:
+        type: string
+        format: date-time
+        description: The date and time when the purchase order was approved
+      lineItems:
+        type: array
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/PurchaseOrderLineItem"
+        description: Line items associated with this purchase order
+      status:
+        description: Current status of the purchase order
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/PurchaseOrderStatus"
