@@ -1,0 +1,71 @@
+OrderResource:
+  allOf:
+    - $ref: "../index.yaml#/components/schemas/cEntity"
+    - $ref: "../index.yaml#/components/schemas/tOrderItem"
+    - type: object
+      properties:
+        equipment:
+          nullable: true
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/Asset"
+          description: Specific equipment/tool if resource type is equipment
+        vendor:
+          nullable: true
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/Vendor"
+          description: External vendor if resource type is service
+        laborPool:
+          nullable: true
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+          description: Department or team providing the labor
+        labor:
+          nullable: true
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/LaborResource"
+          description: Specific labor resource utilized
+        workWindow:
+          type: object
+          nullable: true
+          properties:
+            startTime:
+              type: string
+              format: date-time
+            endTime:
+              type: string
+              format: date-time
+          description: Time window when resource is needed
+        quantity:
+          type: number
+          format: double
+          description: Required quantity
+        quantityAllocated:
+          type: number
+          format: double
+          description: Quantity currently allocated/reserved
+          default: 0
+        quantityConsumed:
+          type: number
+          format: double
+          description: Quantity actually used/consumed
+          default: 0
+        unitOfMeasure:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+        estimatedCost:
+          type: number
+          format: decimal
+          nullable: true
+        actualCost:
+          type: number
+          format: decimal
+          nullable: true
+        currency:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/Currency"

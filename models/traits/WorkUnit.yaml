@@ -1,0 +1,88 @@
+type: object
+description: >
+  Common fields for work orders, complex tasks, and PM templates
+properties:
+  title:
+    type: string
+    nullable: false
+  description:
+    type: string
+    nullable: true
+  target:
+    nullable: true
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Asset"
+      - $ref: "../../index.yaml#/components/schemas/Site"
+      - $ref: "../../index.yaml#/components/schemas/Location"
+  secondaryTargets:
+    type: array
+    nullable: true
+    items:
+      oneOf:
+        - $ref: "../../index.yaml#/components/schemas/cRelation"
+        - $ref: "../../index.yaml#/components/schemas/Asset"
+        - $ref: "../../index.yaml#/components/schemas/Site"
+        - $ref: "../../index.yaml#/components/schemas/Location"
+  assignment:
+    type: object
+    nullable: true
+    properties:
+      primary:
+        nullable: true
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Employee"
+      members:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../../index.yaml#/components/schemas/cRelation"
+            - $ref: "../../index.yaml#/components/schemas/Employee"
+      supervisor:
+        nullable: true
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/Employee"
+  status:
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/WorkStatus"
+  estimatedWorkHours:
+    type: number
+    format: float
+    description: Estimated duration in hours
+  actualWorkHours:
+    type: number
+    format: float
+    description: Actual number of work hours spent on the task.
+  approvedAt:
+    type: string
+    format: date-time
+    nullable: true
+    description: Date and time when the work was approved.
+  dueAt:
+    type: string
+    format: date-time
+    nullable: true
+    description: Date and time when the work is due to be completed.
+  scheduledAt:
+    type: string
+    format: date-time
+    nullable: true
+    description: Date and time when the work is scheduled to be performed.
+  completedAt:
+    type: string
+    format: date-time
+    nullable: true
+    description: Date and time when the work was completed.
+  closedAt:
+    type: string
+    format: date-time
+    nullable: true
+    description: Date and time when the work was closed.
+  priority:
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/WorkClassification"

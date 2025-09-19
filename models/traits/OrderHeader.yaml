@@ -1,10 +1,21 @@
 type: object
 description: Interface for entities that represent order headers with common order properties
 properties:
-  orderNumber:
-    type: string
-    description: Unique identifier for the order
-    example: "PO-2024-001"
+  organization:
+    description: Reference to the primary Organization this order belongs to.
+    oneOf:
+      - $ref: "../index.yaml#/components/schemas/cRelation"
+      - $ref: "../index.yaml#/components/schemas/Organization"
+  customer:
+    description: Reference to customer this order is executed for.
+    oneOf:
+      - $ref: "../index.yaml#/components/schemas/cRelation"
+      - $ref: "../index.yaml#/components/schemas/Customer"
+  vendor:
+    description: Vendor providing the goods or services
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Vendor"
   orderDate:
     type: string
     format: date-time

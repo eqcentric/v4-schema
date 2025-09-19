@@ -6,11 +6,6 @@ allOf:
   - $ref: "../index.yaml#/components/schemas/tOrderHeader"
   - type: object
     properties:
-      source:
-        description: Vendor providing the goods or services
-        oneOf:
-          - $ref: "../../index.yaml#/components/schemas/cRelation"
-          - $ref: "../../index.yaml#/components/schemas/Vendor"
       location:
         description: Inventory location receiving the order
         oneOf:

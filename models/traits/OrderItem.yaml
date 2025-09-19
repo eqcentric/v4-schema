@@ -1,0 +1,26 @@
+type: object
+description: Interface for entities that represent order items
+properties:
+  order:
+    description: Reference to the order this line belongs to.
+    oneOf:
+      - $ref: "../index.yaml#/components/schemas/cRelation"
+      - $ref: "../index.yaml#/components/schemas/tOrderHeader"
+  vendor:
+    nullable: true
+    description: Vendor providing the goods or services
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Vendor"
+  lineNo:
+    type: string
+    description: Line number
+  name:
+    type: string
+    nullable: false
+  description:
+    type: string
+    nullable: true
+required:
+  - orderNumber
+  - orderDate

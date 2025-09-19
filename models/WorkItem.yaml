@@ -1,0 +1,15 @@
+description: >
+  Simple checklist item without full work unit capabilities
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      title:
+        type: string
+        nullable: false
+      description:
+        type: string
+        nullable: true
+      isCompleted:
+        type: boolean
+        default: false

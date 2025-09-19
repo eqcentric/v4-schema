@@ -109,6 +109,10 @@ components:
       $ref: "models/traits/Inbound.yaml"
     tOrderHeader:
       $ref: "models/traits/OrderHeader.yaml"
+    tOrderItem:
+      $ref: "models/traits/OrderItem.yaml"
+    tWorkUnit:
+      $ref: "models/traits/WorkUnit.yaml"
     PurchaseOrder:
       $ref: "models/PurchaseOrder.yaml"
     PurchaseOrderLineItem:
