@@ -1,0 +1,27 @@
+type: object
+description: >
+  Trait for entities that can be consumed or used up in work orders, production orders, 
+  or other operational processes. Includes materials, parts, supplies, and consumable assets.
+properties:
+  consumptionUom:
+    description: Default unit of measure for consumption tracking
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/UnitOfMeasure"
+  consumptionAccount:
+    description: GL account for consumption/expense recognition
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Account"
+  isLotTracked:
+    type: boolean
+    description: Indicates if this item requires lot/batch tracking when consumed
+    default: false
+  isSerialTracked:
+    type: boolean
+    description: Indicates if this item requires serial number tracking when consumed
+    default: false
+  shelfLifeDays:
+    type: integer
+    description: Shelf life in days for perishable or time-sensitive items
+    nullable: true

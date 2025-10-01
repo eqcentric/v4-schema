@@ -1,0 +1,18 @@
+description: >
+  Taxonomy for payment status values (e.g., pending, approved, cleared, success, failed, refunded, etc.).
+allOf:
+  - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  - type: object
+    properties:
+      isFinal:
+        type: boolean
+        description: Flag indicating if this is a final/terminal status (cannot transition further).
+        default: false
+      isSuccess:
+        type: boolean
+        description: Flag indicating if this status represents a successful payment.
+        default: false
+      allowsRefund:
+        type: boolean
+        description: Flag indicating if refunds are allowed from this status.
+        default: false

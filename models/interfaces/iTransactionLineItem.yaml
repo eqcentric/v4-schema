@@ -1,0 +1,84 @@
+description: >
+  Base interface for transaction line items. Represents a single line item within a transaction 
+  document (Invoice, Bill, PurchaseOrder, etc.) containing details about a specific item being 
+  transacted including quantities, pricing, and tax information.
+allOf:
+  - $ref: "../../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      transaction:
+        description: Reference to the parent transaction document
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/iTransaction"
+      item:
+        description: Reference to any entity being transacted (check _implements for tPurchaseItem, tSalesItem, etc.)
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/cEntity"
+      uom:
+        description: Unit of measure for this line item
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/UnitOfMeasure"
+      lineNo:
+        type: string
+        description: Line number within the transaction document
+        example: "1"
+      description:
+        type: string
+        description: Description of the line item (can override item description)
+        example: "M8 Hex Bolt - Stainless Steel, 50mm length"
+      quantity:
+        type: number
+        format: decimal
+        description: Quantity of the item
+        example: 100.00
+      unitPrice:
+        type: number
+        format: decimal
+        description: Price per unit
+        example: 2.50
+      amount:
+        type: number
+        format: decimal
+        description: Line amount before tax (typically quantity × unitPrice)
+        example: 250.00
+      taxAmount:
+        type: number
+        format: decimal
+        description: Tax amount for this line item
+        example: 25.00
+        default: 0.00
+      taxRate:
+        type: number
+        format: decimal
+        description: Tax rate applied to this line item (as percentage)
+        example: 10.00
+      taxIncluded:
+        type: boolean
+        description: Indicates if tax is included in the unit price
+        example: false
+        default: false
+      discountAmount:
+        type: number
+        format: decimal
+        description: Discount amount applied to this line item
+        example: 10.00
+        default: 0.00
+      discountPercent:
+        type: number
+        format: decimal
+        description: Discount percentage applied
+        example: 5.00
+      totalAmount:
+        type: number
+        format: decimal
+        description: Total amount including tax and discount
+        example: 265.00
+        readOnly: true
+    required:
+      - item
+      - lineNo
+      - quantity
+      - unitPrice

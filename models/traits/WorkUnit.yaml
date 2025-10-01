@@ -9,21 +9,19 @@ properties:
     type: string
     nullable: true
   target:
+    description: Primary entity this work is performed on (must implement tWorkTarget trait)
     nullable: true
     oneOf:
       - $ref: "../../index.yaml#/components/schemas/cRelation"
-      - $ref: "../../index.yaml#/components/schemas/Asset"
-      - $ref: "../../index.yaml#/components/schemas/Site"
-      - $ref: "../../index.yaml#/components/schemas/Location"
+      - $ref: "../../index.yaml#/components/schemas/cEntity"
   secondaryTargets:
+    description: Additional entities this work affects (must implement tWorkTarget trait)
     type: array
     nullable: true
     items:
       oneOf:
         - $ref: "../../index.yaml#/components/schemas/cRelation"
-        - $ref: "../../index.yaml#/components/schemas/Asset"
-        - $ref: "../../index.yaml#/components/schemas/Site"
-        - $ref: "../../index.yaml#/components/schemas/Location"
+        - $ref: "../../index.yaml#/components/schemas/cEntity"
   assignment:
     type: object
     nullable: true

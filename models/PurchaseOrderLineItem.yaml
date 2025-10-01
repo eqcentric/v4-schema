@@ -1,8 +1,9 @@
 description: >
   Represents an individual line item within a purchase order, containing details about 
-  a specific item being purchased including quantities, pricing, and delivery information.
+  a specific item being purchased including quantities, pricing, delivery information,
+  and receiving tracking. Links to the parent PurchaseOrder.
 allOf:
-  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - $ref: "../index.yaml#/components/schemas/iTransactionLineItem"
   - type: object
     properties:
       purchaseOrder:
@@ -10,11 +11,11 @@ allOf:
         oneOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
           - $ref: "../index.yaml#/components/schemas/PurchaseOrder"
-      item:
-        description: Reference to the inventory item being purchased
+      purchaseAccount:
+        description: GL account for expense/asset recognition
         oneOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
-          - $ref: "../index.yaml#/components/schemas/InventoryItem"
+          - $ref: "../index.yaml#/components/schemas/Account"
       vendor:
         description: Reference to the vendor for this line item
         oneOf:
@@ -24,23 +25,10 @@ allOf:
         type: string
         description: Vendor's specific item code or SKU for this item
         example: "VND-12345-ABC"
-      uom:
-        description: Unit of measure for this line item
-        oneOf:
-          - $ref: "../index.yaml#/components/schemas/cRelation"
-          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
-      lineNumber:
-        type: integer
-        description: Sequential line number within the purchase order
-        example: 1
-      description:
-        type: string
-        description: Optional description override for this line item
-        example: "M8 Hex Bolt - Stainless Steel, 50mm length"
       quantityOrdered:
         type: number
         format: decimal
-        description: Quantity being ordered
+        description: Quantity being ordered (mirrors base quantity field)
         example: 100.00
       quantityReceived:
         type: number
@@ -48,28 +36,6 @@ allOf:
         description: Quantity that has been received
         example: 75.00
         default: 0.00
-      unitPrice:
-        type: number
-        format: decimal
-        description: Price per unit
-        example: 2.50
-      taxAmount:
-        type: number
-        format: decimal
-        description: Tax amount for this line item
-        example: 25.00
-        default: 0.00
-      taxIncluded:
-        type: boolean
-        description: Indicates if tax is included in the unit price
-        example: false
-        default: false
-      lineAmount:
-        type: number
-        format: decimal
-        description: Total amount for this line (typically quantityOrdered × unitPrice)
-        example: 250.00
-        readOnly: true
       status:
         description: Status of this purchase order line item
         oneOf:
@@ -80,9 +46,8 @@ allOf:
         format: date
         description: Requested delivery date for this line item
         example: "2024-12-15"
+      notes:
+        type: string
+        description: Additional notes specific to this line item
     required:
       - purchaseOrder
-      - item
-      - quantityOrdered
-      - unitPrice
-      - lineNumber

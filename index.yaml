@@ -49,9 +49,17 @@ components:
       $ref: "models/taxonomy/PurchaseOrderLineStatus.yaml"
     PurchaseOrderStatus:
       $ref: "models/taxonomy/PurchaseOrderStatus.yaml"
+    PaymentType:
+      $ref: "models/taxonomy/PaymentType.yaml"
+    PaymentStatus:
+      $ref: "models/taxonomy/PaymentStatus.yaml"
     # === Business ===
     tAddressable:
       $ref: "models/traits/Addressable.yaml"
+    tConsumable:
+      $ref: "models/traits/Consumable.yaml"
+    tWorkTarget:
+      $ref: "models/traits/WorkTarget.yaml"
     Currency:
       $ref: "models/Currency.yaml"
     Address:
@@ -78,6 +86,8 @@ components:
       $ref: "models/BusinessUnit.yaml"
     SalesPrice:
       $ref: "models/SalesPrice.yaml"
+    PaymentMethod:
+      $ref: "models/PaymentMethod.yaml"
     # === Operational ===
     tDepreciable:
       $ref: "models/traits/Depreciable.yaml"
@@ -105,8 +115,14 @@ components:
     # === Transactional ===
     iTransaction:
       $ref: "models/interfaces/iTransaction.yaml"
+    iTransactionLineItem:
+      $ref: "models/interfaces/iTransactionLineItem.yaml"
     tInbound:
       $ref: "models/traits/Inbound.yaml"
+    tOutbound:
+      $ref: "models/traits/Outbound.yaml"
+    tPaymentBase:
+      $ref: "models/traits/PaymentBase.yaml"
     tOrderHeader:
       $ref: "models/traits/OrderHeader.yaml"
     tOrderItem:
@@ -117,12 +133,28 @@ components:
       $ref: "models/PurchaseOrder.yaml"
     PurchaseOrderLineItem:
       $ref: "models/PurchaseOrderLineItem.yaml"
+    Invoice:
+      $ref: "models/Invoice.yaml"
+    InvoiceLineItem:
+      $ref: "models/InvoiceLineItem.yaml"
+    Bill:
+      $ref: "models/Bill.yaml"
+    BillLineItem:
+      $ref: "models/BillLineItem.yaml"
+    PaymentInbound:
+      $ref: "models/PaymentInbound.yaml"
+    PaymentOutbound:
+      $ref: "models/PaymentOutbound.yaml"
     WorkTask:
       $ref: "models/WorkTask.yaml"
     WorkOrder:
       $ref: "models/WorkOrder.yaml"
     ProductionOrder:
       $ref: "models/ProductionOrder.yaml"
+    MaintenanceTrigger:
+      $ref: "models/MaintenanceTrigger.yaml"
+    MaintenanceTemplate:
+      $ref: "models/MaintenanceTemplate.yaml"
     # === Misc ===
     Note:
       $ref: "models/Note.yaml"

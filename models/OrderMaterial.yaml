@@ -1,52 +1,52 @@
-OrderMaterial:
-  allOf:
-    - $ref: "../index.yaml#/components/schemas/cEntity"
-    - $ref: "../index.yaml#/components/schemas/tOrderItem"
-    - type: object
-      properties:
-        order:
-          oneOf:
-            - $ref: "../index.yaml#/components/schemas/cRelation"
-            - $ref: "../index.yaml#/components/schemas/tOrderHeader"
-        inventoryItem:
-          oneOf:
-            - $ref: "../index.yaml#/components/schemas/cRelation"
-            - $ref: "../index.yaml#/components/schemas/InventoryItem"
-        stockLocation:
-          nullable: true
-          oneOf:
-            - $ref: "../index.yaml#/components/schemas/cRelation"
-            - $ref: "../index.yaml#/components/schemas/Location"
-        batchNumber:
-          type: string
-          nullable: true
-        quantity:
-          type: number
-          format: double
-          description: Required quantity
-        quantityAllocated:
-          type: number
-          format: double
-          description: Quantity currently allocated/reserved
-          default: 0
-        quantityConsumed:
-          type: number
-          format: double
-          description: Quantity actually used/consumed
-          default: 0
-        unitOfMeasure:
-          oneOf:
-            - $ref: "../index.yaml#/components/schemas/cRelation"
-            - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
-        estimatedCost:
-          type: number
-          format: decimal
-          nullable: true
-        actualCost:
-          type: number
-          format: decimal
-          nullable: true
-        currency:
-          oneOf:
-            - $ref: "../index.yaml#/components/schemas/cRelation"
-            - $ref: "../index.yaml#/components/schemas/Currency"
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - $ref: "../index.yaml#/components/schemas/tOrderItem"
+  - type: object
+    properties:
+      order:
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/tOrderHeader"
+      item:
+        description: Reference to consumable entity (must implement tConsumable trait)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/cEntity"
+      stockLocation:
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Location"
+      batchNumber:
+        type: string
+        nullable: true
+      quantity:
+        type: number
+        format: double
+        description: Required quantity
+      quantityAllocated:
+        type: number
+        format: double
+        description: Quantity currently allocated/reserved
+        default: 0
+      quantityConsumed:
+        type: number
+        format: double
+        description: Quantity actually used/consumed
+        default: 0
+      unitOfMeasure:
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      estimatedCost:
+        type: number
+        format: decimal
+        nullable: true
+      actualCost:
+        type: number
+        format: decimal
+        nullable: true
+      currency:
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"

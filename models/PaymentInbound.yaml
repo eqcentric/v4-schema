@@ -1,0 +1,17 @@
+description: >
+  Represents an inbound payment transaction where money is received. 
+  The receiving organization is specified in the `organization` field from iTransaction.
+  The payment source (customer, student, partner) is specified in the `source` field from tInbound.
+  Use `relatedTransactions` to link to Invoice entities.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - $ref: "../index.yaml#/components/schemas/tInbound"
+  - $ref: "../index.yaml#/components/schemas/tPaymentBase"
+  - type: object
+    properties:
+      authorizationCode:
+        type: string
+        description: Authorization code from payment processor (for card payments).
+      cardSwipe:
+        type: string
+        description: Card swipe data for card-present transactions.

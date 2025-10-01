@@ -55,25 +55,26 @@ allOf:
       tasks:
         type: array
         items:
-          type: object
-          properties:
-            allOf:
-              - type: object
-                properties:
-                  order:
-                    type: integer
-                    description: Execution order within the production order
-              - oneOf:
-                - $ref: "../index.yaml#/components/schemas/cRelation"    # Reference to external task
-                - $ref: "../index.yaml#/components/schemas/WorkItem"     # Simple checklist item
-                - $ref: "../index.yaml#/components/schemas/WorkTask"     # Complex task with full tWorkUnit capabilities
+          allOf:
+            - type: object
+              properties:
+                order:
+                  type: integer
+                  description: Execution order within the production order
+            - oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"    # Reference to external task
+              - $ref: "../index.yaml#/components/schemas/WorkItem"     # Simple checklist item
+              - $ref: "../index.yaml#/components/schemas/WorkTask"     # Complex task with full tWorkUnit capabilities
       
       # Links structure similar to WorkOrder
       _links:
         type: object
         properties:
-          materials: $ref: "../../index.yaml#/components/schemas/cLink" # OrderMaterial
-          resources: $ref: "../../index.yaml#/components/schemas/cLink" # OrderResource
-          output: $ref: "../../index.yaml#/components/schemas/cLink"    # Link to output inventory item
+          materials:
+            $ref: "../../index.yaml#/components/schemas/cLink" # OrderMaterial
+          resources:
+            $ref: "../../index.yaml#/components/schemas/cLink" # OrderResource
+          output:
+            $ref: "../../index.yaml#/components/schemas/cLink"    # Link to output inventory item
         additionalProperties:
           $ref: "../../index.yaml#/components/schemas/cLink"

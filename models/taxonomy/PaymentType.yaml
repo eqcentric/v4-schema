@@ -1,0 +1,23 @@
+description: >
+  Taxonomy for payment types and categories (e.g., deposit, refund, sponsor, payroll, etc.).
+allOf:
+  - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  - type: object
+    properties:
+      category:
+        type: string
+        description: High-level category for grouping payment types.
+        enum:
+          - income
+          - expense
+          - transfer
+          - adjustment
+        example: "income"
+      isRefundable:
+        type: boolean
+        description: Flag indicating if this payment type can be refunded.
+        default: true
+      requiresApproval:
+        type: boolean
+        description: Flag indicating if payments of this type require approval.
+        default: false

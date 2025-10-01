@@ -1,0 +1,110 @@
+description: >
+  Template for preventive maintenance defining what work should be performed, on which targets, 
+  with what resources, and when it should be triggered. Acts as a blueprint for generating 
+  scheduled work orders.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - $ref: "../index.yaml#/components/schemas/tWorkUnit"
+  - type: object
+    properties:
+      # Template identification
+      templateNumber:
+        type: string
+        description: Unique template identifier
+        example: "PM-001"
+      
+      # What work to perform (inherited from tWorkUnit: title, description, target, assignment, etc.)
+      
+      # Maintenance classification
+      maintenanceType:
+        description: Type or category of maintenance
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/WorkClassification"
+      
+      # When to trigger
+      triggers:
+        type: array
+        description: Triggers that determine when work orders are created from this template
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/MaintenanceTrigger"
+      
+      # Task checklist (inherited from tWorkUnit if WorkOrder/WorkTask structure is reused)
+      tasks:
+        type: array
+        nullable: true
+        description: Predefined task checklist for this maintenance
+        items:
+          allOf:
+            - type: object
+              properties:
+                order:
+                  type: integer
+                  description: Execution order of this task
+            - oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/WorkItem"
+      
+      # Additional metadata
+      isActive:
+        type: boolean
+        description: Whether this template is currently active for scheduling
+        default: true
+      
+      category:
+        description: Maintenance category for grouping/filtering
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/WorkClassification"
+      
+      safetyNotes:
+        type: string
+        description: Safety instructions or warnings for this maintenance
+      
+      procedureDocument:
+        type: string
+        format: uri
+        nullable: true
+        description: Link to detailed procedure documentation
+      
+      # Usage tracking
+      lastGeneratedAt:
+        type: string
+        format: date-time
+        nullable: true
+        readOnly: true
+        description: Date/time when a work order was last generated from this template
+      
+      totalWorkOrdersGenerated:
+        type: integer
+        readOnly: true
+        default: 0
+        description: Count of work orders created from this template
+      
+      averageCompletionHours:
+        type: number
+        format: double
+        nullable: true
+        readOnly: true
+        description: Average actual hours to complete work orders from this template
+      
+      # Links to generated work orders
+      _links:
+        type: object
+        properties:
+          workOrders:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to work orders generated from this template
+          materials:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to OrderMaterial - standard materials/parts required for this maintenance
+          resources:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to OrderResource - standard labor, tools, or equipment required for this maintenance
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - templateNumber

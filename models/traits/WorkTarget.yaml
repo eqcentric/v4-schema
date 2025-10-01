@@ -1,0 +1,21 @@
+type: object
+description: >
+  Trait for entities that can be targets of work orders, maintenance, repairs, or other 
+  service activities. Typically physical or logical assets, locations, or equipment that 
+  require operational attention.
+properties:
+  operationalStatus:
+    type: string
+    description: Current operational status of the target
+    enum:
+      - operational
+      - down
+      - maintenance
+      - standby
+      - decommissioned
+    example: "operational"
+  criticality:
+    description: Criticality level for prioritizing work on this target
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/iTaxonomy"

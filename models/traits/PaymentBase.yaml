@@ -1,0 +1,145 @@
+type: object
+description: >
+  Base interface for payment transactions containing common payment properties.
+properties:
+  paymentNumber:
+    type: string
+    description: Document number or payment identifier (e.g., Payment #, INV-384).
+    example: "PMT-2024-001"
+  referenceNumber:
+    type: string
+    description: External reference number or check number for the payment.
+    example: "CHK-12345"
+  secondReference:
+    type: string
+    description: Additional reference field for payment tracking.
+  account:
+    description: Bank account or financial account used for the payment transaction.
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Account"
+  location:
+    description: Physical location or branch where payment was processed.
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Location"
+  paymentType:
+    description: The type or category of the payment.
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/PaymentType"
+  paymentMethod:
+    description: Detailed payment method used for the transaction.
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/PaymentMethod"
+  transactionDate:
+    type: string
+    format: date-time
+    description: The date and time when the payment transaction occurred.
+  completedAt:
+    type: string
+    format: date-time
+    description: The date and time when the payment was completed or received.
+  clearedAt:
+    type: string
+    format: date-time
+    nullable: true
+    description: Date and time when the payment cleared the bank or was confirmed.
+  dueAt:
+    type: string
+    format: date-time
+    nullable: true
+    description: Due date and time for the payment (if applicable).
+  amount:
+    type: number
+    format: decimal
+    description: The total monetary value of the payment.
+    example: 1250.00
+  appliedAmount:
+    type: number
+    format: decimal
+    description: Amount that has been applied to invoices or bills.
+    readOnly: true
+    example: 1200.00
+  unappliedAmount:
+    type: number
+    format: decimal
+    description: Amount that has not yet been applied to any invoices or bills.
+    readOnly: true
+    example: 50.00
+  refundedAmount:
+    type: number
+    format: decimal
+    description: Total amount that has been refunded from this payment.
+    readOnly: true
+    example: 0.00
+  bankCharges:
+    type: number
+    format: decimal
+    description: Bank charges or transaction fees associated with the payment.
+    example: 10.00
+  settlementDiscount:
+    type: number
+    format: decimal
+    description: Settlement discount applied to the payment.
+    example: 25.00
+  currency:
+    description: The ISO 4217 currency code for the payment amount.
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Currency"
+  exchangeRate:
+    type: number
+    format: decimal
+    description: Exchange rate used for currency conversion at the time of payment.
+    example: 1.0
+  bankExchangeRate:
+    type: number
+    format: decimal
+    description: Bank's exchange rate for the transaction.
+    example: 1.0
+  balance:
+    type: number
+    format: decimal
+    description: Current balance in the account after this payment.
+    readOnly: true
+    example: 500.00
+  consolidatedBalance:
+    type: number
+    format: decimal
+    description: Consolidated balance across related accounts or hierarchy.
+    readOnly: true
+  paymentStatus:
+    description: Current status of the payment.
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/PaymentStatus"
+  checkNumber:
+    type: string
+    description: Check number for check payments.
+  softDescriptor:
+    type: string
+    description: Soft descriptor that appears on customer's statement.
+  description:
+    type: string
+    description: Detailed description of the payment transaction.
+    example: "Payment received from customer"
+  overrideDescription:
+    type: string
+    description: Override description associated with the payment.
+  notes:
+    type: array
+    items:
+      allOf:
+      - oneOf:
+        - $ref: "../../index.yaml#/components/schemas/cRelation"
+        - $ref: "../../index.yaml#/components/schemas/Note"
+      - type: object
+        properties:
+          key:
+            type: string
+    description: Notes and comments related to the payment with optional key identifiers.
+required:
+  - amount
+  - currency

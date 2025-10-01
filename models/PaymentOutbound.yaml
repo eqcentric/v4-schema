@@ -1,0 +1,9 @@
+description: >
+  Represents an outbound payment transaction where money is sent. 
+  The sending organization is specified in the `organization` field from iTransaction.
+  The payment destination (vendor, supplier, employee) is specified in the `destination` field from tOutbound.
+  Use `relatedTransactions` to link to Bill entities.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - $ref: "../index.yaml#/components/schemas/tOutbound"
+  - $ref: "../index.yaml#/components/schemas/tPaymentBase"

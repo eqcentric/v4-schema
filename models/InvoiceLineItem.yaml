@@ -1,0 +1,27 @@
+description: >
+  Represents an individual line item within an invoice, containing details about 
+  a specific item being sold including quantities, pricing, and accounting information.
+  Links to the parent Invoice and includes sales-specific attributes.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransactionLineItem"
+  - type: object
+    properties:
+      invoice:
+        description: Reference to the parent invoice
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Invoice"
+      salesAccount:
+        description: GL account for revenue recognition
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      itemCode:
+        type: string
+        description: Item code or SKU for this line
+        example: "ITM-12345"
+      notes:
+        type: string
+        description: Additional notes specific to this line item
+    required:
+      - invoice

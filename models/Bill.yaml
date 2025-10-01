@@ -1,0 +1,96 @@
+description: >
+  Represents an inbound bill or invoice received from vendors/suppliers for goods or services purchased.
+  The receiving organization is specified in the `organization` field.
+  The vendor/sender is specified in the `source` field from tInbound.
+  Use `relatedTransactions` to link to PaymentInbound entities.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - $ref: "../index.yaml#/components/schemas/tInbound"
+  - type: object
+    properties:
+      billNumber:
+        type: string
+        description: Unique bill number or vendor invoice number.
+        example: "BILL-2024-001"
+      billDate:
+        type: string
+        format: date-time
+        description: Date when the bill was received or issued by vendor.
+      dueDate:
+        type: string
+        format: date-time
+        description: Date when payment is due.
+      totalAmount:
+        type: number
+        format: decimal
+        description: Total amount of the bill including tax.
+        example: 2500.00
+      subtotal:
+        type: number
+        format: decimal
+        description: Subtotal before tax and other charges.
+        example: 2000.00
+      taxAmount:
+        type: number
+        format: decimal
+        description: Total tax amount.
+        example: 400.00
+      discountAmount:
+        type: number
+        format: decimal
+        description: Total discount applied.
+        example: 100.00
+      paidAmount:
+        type: number
+        format: decimal
+        description: Amount already paid toward this bill.
+        readOnly: true
+        example: 1000.00
+      balanceAmount:
+        type: number
+        format: decimal
+        description: Remaining balance due.
+        readOnly: true
+        example: 1500.00
+      currency:
+        description: Currency for the bill amounts.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      billStatus:
+        description: Current status of the bill.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      paymentTerms:
+        type: string
+        description: Payment terms for the bill (e.g., "Net 30", "Due on receipt").
+        example: "Net 30"
+      poNumber:
+        type: string
+        description: Purchase order number reference.
+      vendorInvoiceNumber:
+        type: string
+        description: Vendor's original invoice number.
+      description:
+        type: string
+        description: Description or memo for the bill.
+      lineItems:
+        type: array
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/BillLineItem"
+        description: Line items on the bill.
+      notes:
+        type: array
+        items:
+          allOf:
+          - oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/Note"
+          - type: object
+            properties:
+              key:
+                type: string
+        description: Notes related to the bill.

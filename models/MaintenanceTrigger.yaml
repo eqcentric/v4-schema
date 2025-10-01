@@ -1,0 +1,144 @@
+description: >
+  Defines when preventive maintenance should be triggered. Supports single occurrence, 
+  schedule-based (recurring), counter-based (meter reading), or custom triggers.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name or title of the trigger
+        example: "Monthly HVAC Inspection"
+      description:
+        type: string
+        description: Detailed description of the trigger conditions
+      triggerType:
+        type: string
+        description: Type of trigger mechanism
+        enum:
+          - single
+          - schedule
+          - counter
+          - custom
+        example: "schedule"
+      
+      # For single triggers
+      triggerDate:
+        type: string
+        format: date-time
+        nullable: true
+        description: Specific date/time for single occurrence triggers
+      
+      # For schedule-based triggers
+      schedule:
+        type: object
+        nullable: true
+        description: Schedule configuration for recurring triggers
+        properties:
+          frequency:
+            type: string
+            description: Frequency of recurrence
+            enum:
+              - daily
+              - weekly
+              - monthly
+              - quarterly
+              - semi-annually
+              - annually
+            example: "monthly"
+          interval:
+            type: integer
+            description: Interval multiplier (e.g., every 2 weeks, every 3 months)
+            default: 1
+            example: 1
+          dayOfWeek:
+            type: integer
+            nullable: true
+            description: Day of week for weekly schedules (0=Sunday, 6=Saturday)
+            minimum: 0
+            maximum: 6
+          dayOfMonth:
+            type: integer
+            nullable: true
+            description: Day of month for monthly schedules (1-31)
+            minimum: 1
+            maximum: 31
+          monthOfYear:
+            type: integer
+            nullable: true
+            description: Month of year for annual schedules (1-12)
+            minimum: 1
+            maximum: 12
+          startDate:
+            type: string
+            format: date
+            description: Date when the schedule becomes active
+          endDate:
+            type: string
+            format: date
+            nullable: true
+            description: Date when the schedule expires (null = no end date)
+          timeOfDay:
+            type: string
+            pattern: '^([0-1][0-9]|2[0-3]):[0-5][0-9]$'
+            description: Preferred time of day for scheduling (HH:MM format)
+            example: "09:00"
+      
+      # For counter-based triggers
+      counter:
+        type: object
+        nullable: true
+        description: Counter/meter-based trigger configuration
+        properties:
+          meter:
+            description: Reference to the meter being monitored
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/Meter"
+          threshold:
+            type: number
+            format: double
+            description: Counter value that triggers maintenance
+            example: 10000
+          unit:
+            description: Unit of measure for the counter threshold
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+          resetOnCompletion:
+            type: boolean
+            description: Whether to reset the counter after maintenance is completed
+            default: false
+      
+      # Metadata
+      isActive:
+        type: boolean
+        description: Whether this trigger is currently active
+        default: true
+      leadTimeDays:
+        type: integer
+        nullable: true
+        description: Number of days before trigger date to create work order
+        example: 7
+      gracePeriodDays:
+        type: integer
+        nullable: true
+        description: Number of days after trigger date before maintenance is overdue
+        example: 3
+      
+      lastTriggeredAt:
+        type: string
+        format: date-time
+        nullable: true
+        readOnly: true
+        description: Date/time when this trigger last created a work order
+      nextTriggerAt:
+        type: string
+        format: date-time
+        nullable: true
+        readOnly: true
+        description: Calculated date/time when this trigger will next fire
+    
+    required:
+      - name
+      - triggerType

@@ -27,3 +27,27 @@ allOf:
         oneOf:
           - $ref: "../../index.yaml#/components/schemas/cRelation"
           - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+      relatedTransactions:
+        type: array
+        items:
+          allOf:
+            - oneOf:
+                - $ref: "../../index.yaml#/components/schemas/cRelation"
+                - $ref: "../../index.yaml#/components/schemas/iTransaction"
+            - type: object
+              properties:
+                relation:
+                  type: string
+                  description: Type of relationship between transactions.
+                  enum:
+                    - next
+                    - previous
+                    - link
+                  example: "link"
+              required:
+                - relation
+        description: >
+          Related transactions with their relationship type.
+          - 'next': Sequential transaction that follows this one (e.g., payment follows invoice)
+          - 'previous': Sequential transaction that preceded this one (e.g., invoice before payment)
+          - 'link': General association without sequence (e.g., related orders, split payments)

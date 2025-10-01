@@ -1,0 +1,32 @@
+description: >
+  Represents an individual line item within a bill, containing details about 
+  a specific item being purchased including quantities, pricing, and accounting information.
+  Links to the parent Bill and includes purchase-specific attributes.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransactionLineItem"
+  - type: object
+    properties:
+      bill:
+        description: Reference to the parent bill
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Bill"
+      purchaseAccount:
+        description: GL account for expense/asset recognition
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      vendor:
+        description: Reference to the vendor for this line item
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Vendor"
+      vendorItemCode:
+        type: string
+        description: Vendor's specific item code or SKU for this item
+        example: "VND-12345-ABC"
+      notes:
+        type: string
+        description: Additional notes specific to this line item
+    required:
+      - bill

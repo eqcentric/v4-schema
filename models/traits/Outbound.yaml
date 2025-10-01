@@ -1,8 +1,8 @@
 type: object
-description: Interface for entities that represent inbound transactions or operations (e.g., Purchase Orders, Receipts)
+description: Interface for entities that represent outbound transactions or operations (e.g., Sales Orders, Shipments, Payments to Vendors)
 properties:
-  source:
-    description: Partner providing the goods or services (vendor, supplier, etc.)
+  destination:
+    description: Customer or partner receiving the goods, services, or payment
     oneOf:
       - $ref: "../../index.yaml#/components/schemas/cRelation"
       - $ref: "../../index.yaml#/components/schemas/Partner"
@@ -17,4 +17,4 @@ properties:
       - $ref: "../../index.yaml#/components/schemas/cRelation"
       - $ref: "../../index.yaml#/components/schemas/Address"
 required:
-  - source
+  - destination

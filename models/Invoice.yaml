@@ -1,0 +1,93 @@
+description: >
+  Represents an outbound invoice issued to customers for goods or services provided.
+  The issuing organization is specified in the `organization` field.
+  The customer/recipient is specified in the `destination` field from tOutbound.
+  Use `relatedTransactions` to link to PaymentOutbound entities.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - $ref: "../index.yaml#/components/schemas/tOutbound"
+  - type: object
+    properties:
+      invoiceNumber:
+        type: string
+        description: Unique invoice number or identifier.
+        example: "INV-2024-001"
+      invoiceDate:
+        type: string
+        format: date-time
+        description: Date when the invoice was issued.
+      dueDate:
+        type: string
+        format: date-time
+        description: Date when payment is due.
+      totalAmount:
+        type: number
+        format: decimal
+        description: Total amount of the invoice including tax.
+        example: 1250.00
+      subtotal:
+        type: number
+        format: decimal
+        description: Subtotal before tax and other charges.
+        example: 1000.00
+      taxAmount:
+        type: number
+        format: decimal
+        description: Total tax amount.
+        example: 200.00
+      discountAmount:
+        type: number
+        format: decimal
+        description: Total discount applied.
+        example: 50.00
+      paidAmount:
+        type: number
+        format: decimal
+        description: Amount already paid toward this invoice.
+        readOnly: true
+        example: 500.00
+      balanceAmount:
+        type: number
+        format: decimal
+        description: Remaining balance due.
+        readOnly: true
+        example: 750.00
+      currency:
+        description: Currency for the invoice amounts.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      invoiceStatus:
+        description: Current status of the invoice.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      paymentTerms:
+        type: string
+        description: Payment terms for the invoice (e.g., "Net 30", "Due on receipt").
+        example: "Net 30"
+      poNumber:
+        type: string
+        description: Purchase order number reference.
+      description:
+        type: string
+        description: Description or memo for the invoice.
+      lineItems:
+        type: array
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/InvoiceLineItem"
+        description: Line items on the invoice.
+      notes:
+        type: array
+        items:
+          allOf:
+          - oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/Note"
+          - type: object
+            properties:
+              key:
+                type: string
+        description: Notes related to the invoice.
