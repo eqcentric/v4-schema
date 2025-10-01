@@ -121,6 +121,8 @@ components:
       $ref: "models/WorkTask.yaml"
     WorkOrder:
       $ref: "models/WorkOrder.yaml"
+    ProductionOrder:
+      $ref: "models/ProductionOrder.yaml"
     # === Misc ===
     Note:
       $ref: "models/Note.yaml"
