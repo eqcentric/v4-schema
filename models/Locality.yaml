@@ -1,0 +1,132 @@
+description: >
+  Represents a geographic locality within a country - regions, states, provinces, cities, districts, 
+  neighborhoods, or any other administrative or geographic subdivision. Supports hierarchical nesting 
+  for complex geographic structures.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name of the locality
+        example: "California"
+      
+      localityType:
+        description: Type/level of this locality (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      country:
+        description: Country this locality belongs to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Country"
+      
+      parent:
+        description: Parent locality in the geographic hierarchy (e.g., city within state, district within city)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Locality"
+      
+      isoCode:
+        type: string
+        nullable: true
+        description: ISO 3166-2 subdivision code (for states/provinces) or other standardized code
+        example: "US-CA"
+      
+      postalCodes:
+        type: array
+        nullable: true
+        items:
+          type: string
+        description: Postal/ZIP codes associated with this locality
+        example: ["90001", "90002", "90003"]
+      
+      latitude:
+        type: number
+        format: double
+        nullable: true
+        description: Latitude coordinate for the locality center
+        example: 34.0522
+      
+      longitude:
+        type: number
+        format: double
+        nullable: true
+        description: Longitude coordinate for the locality center
+        example: -118.2437
+      
+      population:
+        type: integer
+        nullable: true
+        description: Population count (if applicable)
+        example: 3979576
+      
+      area:
+        type: number
+        format: double
+        nullable: true
+        description: Area in square kilometers (if applicable)
+        example: 1302.15
+      
+      timezone:
+        type: string
+        nullable: true
+        description: Primary timezone identifier (IANA timezone database)
+        example: "America/Los_Angeles"
+      
+      alternativeNames:
+        type: array
+        nullable: true
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Alternative name
+            language:
+              type: string
+              description: Language code for this name (ISO 639-1)
+            type:
+              type: string
+              description: Type of alternative name
+              enum:
+                - official
+                - historical
+                - colloquial
+                - short
+                - abbreviation
+          required:
+            - name
+        description: Alternative names for this locality in different languages or contexts
+        example:
+          - name: "Los Ángeles"
+            language: "es"
+            type: "official"
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if the locality is currently active/recognized
+        default: true
+      
+      _links:
+        type: object
+        properties:
+          children:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to child localities within this locality
+          parent:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to parent locality
+          country:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to country
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - name
+      - country

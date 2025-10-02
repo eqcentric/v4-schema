@@ -1,0 +1,174 @@
+type: object
+description: >
+  Trait for entities representing individual persons with personal identification information.
+  Provides common fields for names, contact information, and personal identifiers.
+  Can be implemented by Contact, Employee, Customer (if person), and other person-based entities.
+properties:
+  firstName:
+    type: string
+    description: First name or given name of the person
+    example: "John"
+  
+  lastName:
+    type: string
+    description: Last name or family name of the person
+    example: "Doe"
+  
+  middleName:
+    type: string
+    nullable: true
+    description: Middle name or initial of the person
+    example: "Michael"
+  
+  displayName:
+    type: string
+    nullable: true
+    description: Preferred display name (if different from first/last name combination)
+    example: "Johnny Doe"
+  
+  salutation:
+    type: string
+    nullable: true
+    description: Honorific or title prefix
+    example: "Dr."
+    enum:
+      - Mr.
+      - Mrs.
+      - Ms.
+      - Dr.
+      - Prof.
+  
+  suffix:
+    type: string
+    nullable: true
+    description: Name suffix
+    example: "Jr."
+  
+  email:
+    type: string
+    format: email
+    nullable: true
+    description: Primary email address
+    example: "john.doe@example.com"
+  
+  phone:
+    type: string
+    nullable: true
+    description: Primary phone number
+    example: "+1-212-555-1212"
+  
+  mobilePhone:
+    type: string
+    nullable: true
+    description: Mobile phone number
+    example: "+1-212-555-1213"
+  
+  dateOfBirth:
+    type: string
+    format: date
+    nullable: true
+    description: Date of birth
+  
+  gender:
+    nullable: true
+    description: Gender (taxonomy with sourceType for connection-specific values)
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  
+  genderIdentity:
+    nullable: true
+    description: Gender identity (taxonomy with sourceType for connection-specific values)
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  
+  pronouns:
+    nullable: true
+    description: Preferred pronouns (taxonomy with sourceType for connection-specific values)
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  
+  nationalId:
+    type: string
+    nullable: true
+    description: National identification number (SSN, NIN, etc.)
+  
+  primaryCitizenship:
+    description: Primary country of citizenship
+    nullable: true
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/Country"
+  
+  passportNumber:
+    type: string
+    nullable: true
+    description: Passport number for international identification
+  
+  preferredLanguage:
+    type: string
+    nullable: true
+    description: Preferred language code (ISO 639-1)
+    example: "en"
+  
+  addresses:
+    type: array
+    nullable: true
+    items:
+      allOf:
+        - oneOf:
+            - $ref: "../../index.yaml#/components/schemas/cRelation"
+            - $ref: "../../index.yaml#/components/schemas/Address"
+        - type: object
+          properties:
+            addressType:
+              type: string
+              description: Type of address
+              enum:
+                - primary
+                - billing
+                - shipping
+                - home
+                - work
+                - other
+              example: "primary"
+    description: List of addresses associated with the person
+  
+  photoUrl:
+    type: string
+    format: uri
+    nullable: true
+    description: URL to person's profile photo or avatar
+  
+  maritalStatus:
+    nullable: true
+    description: Marital status (taxonomy with sourceType for connection-specific values)
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  
+  religiousAffiliation:
+    nullable: true
+    description: Religious affiliation (taxonomy with sourceType for connection-specific values)
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  
+  ethnicity:
+    nullable: true
+    description: Ethnicity or ethnic group (taxonomy with sourceType for connection-specific values)
+    oneOf:
+      - $ref: "../../index.yaml#/components/schemas/cRelation"
+      - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  
+  socialProfiles:
+    type: object
+    nullable: true
+    additionalProperties:
+      type: string
+    description: Social media profile URLs or handles keyed by platform
+    example:
+      linkedin: "https://linkedin.com/in/johndoe"
+      twitter: "@johndoe"

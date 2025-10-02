@@ -1,0 +1,13 @@
+description: >
+  Taxonomy for classifying locality types and administrative levels (e.g., 'State', 'Province', 
+  'City', 'District', 'County', 'Municipality', 'Neighborhood', 'Region', 'Prefecture').
+  Supports both standardized values and connection-specific administrative divisions.
+allOf:
+  - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+  - type: object
+    properties:
+      level:
+        type: integer
+        nullable: true
+        description: Hierarchical level (1=country, 2=region/state, 3=city, 4=district, etc.)
+        example: 2

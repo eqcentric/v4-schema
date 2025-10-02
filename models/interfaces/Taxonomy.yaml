@@ -31,3 +31,12 @@ allOf:
       type: boolean
       description: Flag indicating if this taxonomy value is currently active and available for selection/use.
       default: true
+    
+    related:
+      type: array
+      nullable: true
+      items:
+        oneOf:
+          - $ref: "../../index.yaml#/components/schemas/cRelation"
+          - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
+      description: Related taxonomy entries (e.g., equivalent codes in different systems, related categories)

@@ -1,0 +1,135 @@
+description: >
+  Represents a student enrolled in an educational institution with academic and administrative information.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - $ref: "../index.yaml#/components/schemas/tPerson"
+  - type: object
+    properties:
+      type:
+        description: Student type classification (e.g., full-time, part-time, graduate, undergraduate)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      startedOn:
+        type: string
+        format: date
+        description: Date when the student started their studies
+      
+      administrativePeriod:
+        description: Current administrative period for the student
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      residencies:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              description: Residency type (e.g., on-campus, off-campus, commuter, international)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            startedAt:
+              type: string
+              format: date-time
+              description: When this residency status started
+            administrativePeriod:
+              description: Administrative period for this residency
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: List of residency statuses over time
+      
+      academicLevels:
+        type: array
+        items:
+          type: object
+          properties:
+            level:
+              description: Academic level (e.g., freshman, sophomore, junior, senior, graduate)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            classification:
+              description: Academic classification or standing
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: List of academic levels and classifications
+      
+      advisors:
+        type: array
+        items:
+          type: object
+          properties:
+            advisor:
+              description: Faculty advisor or counselor
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/tPerson"
+            type:
+              description: Type of advisor (e.g., academic, thesis, faculty)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            priority:
+              description: Priority level of advisor (e.g., primary, secondary)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            startAcademicPeriod:
+              description: Academic period when advisor relationship started
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+            startedAt:
+              type: string
+              format: date
+              description: Date when advisor relationship started
+        description: List of academic advisors with their details
+      
+      cohorts:
+        type: array
+        items:
+          type: object
+          properties:
+            cohort:
+              description: Student cohort membership
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/StudentCohort"
+            status:
+              description: Status within the cohort (e.g., active, inactive, graduated)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            startedAt:
+              type: string
+              format: date
+              description: Date when student joined the cohort
+            startAdministrativePeriod:
+              description: Administrative period when student joined the cohort
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: List of cohort memberships
+      
+      academicStandings:
+        type: array
+        items:
+          type: object
+          properties:
+            academicPeriod:
+              description: Academic period for this standing
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+            standing:
+              description: Academic standing (e.g., good standing, probation, dean's list, suspended)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: List of academic standings over time

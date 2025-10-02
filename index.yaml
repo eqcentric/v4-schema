@@ -53,15 +53,23 @@ components:
       $ref: "models/taxonomy/PaymentType.yaml"
     PaymentStatus:
       $ref: "models/taxonomy/PaymentStatus.yaml"
+    LocalityType:
+      $ref: "models/taxonomy/LocalityType.yaml"
     # === Business ===
     tAddressable:
       $ref: "models/traits/Addressable.yaml"
+    tPerson:
+      $ref: "models/traits/Person.yaml"
     tConsumable:
       $ref: "models/traits/Consumable.yaml"
     tWorkTarget:
       $ref: "models/traits/WorkTarget.yaml"
     Currency:
       $ref: "models/Currency.yaml"
+    Country:
+      $ref: "models/Country.yaml"
+    Locality:
+      $ref: "models/Locality.yaml"
     Address:
       $ref: "models/Address.yaml"
     Contact:
@@ -114,9 +122,9 @@ components:
       $ref: "models/StockItem.yaml"
     # === Transactional ===
     iTransaction:
-      $ref: "models/interfaces/iTransaction.yaml"
+      $ref: "models/interfaces/Transaction.yaml"
     iTransactionLineItem:
-      $ref: "models/interfaces/iTransactionLineItem.yaml"
+      $ref: "models/interfaces/TransactionLineItem.yaml"
     tInbound:
       $ref: "models/traits/Inbound.yaml"
     tOutbound:
@@ -166,6 +174,22 @@ components:
       $ref: "models/Meter.yaml"
     MeterReading:
       $ref: "models/MeterReading.yaml"
+    AcademicProgram:
+      $ref: "models/AcademicProgram.yaml"
+    AcademicPeriod:
+      $ref: "models/AcademicPeriod.yaml"
+    AcademicAdmission:
+      $ref: "models/AcademicAdmission.yaml"
+    AcademicCourse:
+      $ref: "models/AcademicCourse.yaml"
+    AcademicSection:
+      $ref: "models/AcademicSection.yaml"
+    Student:
+      $ref: "models/Student.yaml"
+    StudentCohort:
+      $ref: "models/StudentCohort.yaml"
+    StudentCourseTransfer:
+      $ref: "models/StudentCourseTransfer.yaml"
   responses:
     listOrganizations:
         $ref: "responses/organizations/listOrganizations.yaml"

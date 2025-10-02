@@ -48,6 +48,14 @@ properties:
       readOnly: true
     description: List of interfaces/sub-types implemented by this entity instance. Helps in understanding the available fields/capabilities.
     example: ["iEntity"]
+  attributes:
+    type: object
+    additionalProperties: true
+    nullable: true
+    description: Additional attributes specific to this entity type or source system. Used for connection-specific or domain-specific data that doesn't fit standard fields.
+    example:
+      customField1: "value"
+      sourceSystemId: "12345"
   _links:
     type: object
     additionalProperties:

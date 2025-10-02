@@ -1,0 +1,61 @@
+description: >
+  Represents a cohort of students grouped together for academic or administrative purposes (e.g., by entry year, program, or track).
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name or identifier for the cohort
+        example: "Class of 2024"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the cohort
+      
+      startOn:
+        type: string
+        format: date
+        description: Date when the cohort started
+      
+      endOn:
+        type: string
+        format: date
+        nullable: true
+        description: Date when the cohort ended or is expected to end
+      
+      initialAcademicPeriod:
+        description: Initial academic period for the cohort
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+      
+      finalAcademicPeriod:
+        description: Final academic period for the cohort
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+      
+      program:
+        description: Academic program associated with the cohort
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicProgram"
+      
+      organization:
+        description: Educational institution or organization
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Organization"
+      
+      _links:
+        type: object
+        properties:
+          students:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to the collection of Students in this cohort
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"

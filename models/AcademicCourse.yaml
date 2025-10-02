@@ -1,0 +1,125 @@
+description: >
+  Represents an academic course offered by an educational institution. Defines the course catalog 
+  entry with metadata about the course structure, delivery, and requirements. Used in student 
+  information systems like Ellucian Banner, Workday Student, or similar platforms.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      title:
+        type: string
+        description: Title or name of the course
+        example: "Introduction to Computer Science"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the course content and objectives
+        example: "Fundamental concepts of computer science including algorithms, data structures, and programming principles."
+      
+      subject:
+        description: Subject area or discipline (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      academicLevels:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Academic levels at which this course is offered (taxonomy with sourceType for connection-specific values)
+      
+      gradeSchemes:
+        description: Grading scheme used for this course (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      instructionalMethods:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Methods of instruction for this course (taxonomy with sourceType for connection-specific values)
+      
+      institutionUnits:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+        description: Departments, schools, or colleges offering this course
+      
+      schedulingStartOn:
+        type: string
+        format: date
+        nullable: true
+        description: Date when this course becomes available for scheduling
+        example: "2024-01-01"
+      
+      schedulingEndOn:
+        type: string
+        format: date
+        nullable: true
+        description: Date when this course is no longer available for scheduling
+        example: "2025-12-31"
+      
+      creditHours:
+        type: number
+        format: double
+        nullable: true
+        description: Number of credit hours for this course
+        example: 3.0
+      
+      contactHours:
+        type: number
+        format: double
+        nullable: true
+        description: Number of contact/instruction hours per week
+        example: 4.0
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if the course is currently active in the catalog
+        default: true
+      
+      prerequisites:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/AcademicCourse"
+        description: Prerequisite courses required before enrollment
+      
+      corequisites:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/AcademicCourse"
+        description: Courses that must be taken concurrently
+      
+      _links:
+        type: object
+        properties:
+          sections:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to course sections (scheduled offerings of this course)
+          programs:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to academic programs that include this course
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - title

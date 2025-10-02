@@ -1,0 +1,124 @@
+description: >
+  Represents an academic period, term, semester, quarter, or session within an academic calendar.
+  Supports hierarchical nesting for complex academic structures (e.g., sub-terms within terms).
+  Used in academic/educational systems like Ellucian Banner, Workday Student, or similar platforms.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      title:
+        type: string
+        description: Full title or name of the academic period
+        example: "Fall Semester 2024"
+      
+      category:
+        description: Category or type of academic period (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      startOn:
+        type: string
+        format: date
+        nullable: true
+        description: Start date of the academic period
+        example: "2024-09-01"
+      
+      endOn:
+        type: string
+        format: date
+        nullable: true
+        description: End date of the academic period
+        example: "2024-12-20"
+      
+      censusDates:
+        type: array
+        nullable: true
+        items:
+          type: string
+          format: date
+        description: Important census or snapshot dates for enrollment reporting and financial aid
+        example: ["2024-09-15", "2024-10-15"]
+      
+      parent:
+        description: Parent academic period in hierarchy (e.g., sub-term within term, term within academic year)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the academic period
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if the period is currently active
+        default: true
+      
+      registrationStartOn:
+        type: string
+        format: date
+        nullable: true
+        description: Date when registration opens for this period
+        example: "2024-04-01"
+      
+      registrationEndOn:
+        type: string
+        format: date
+        nullable: true
+        description: Date when registration closes for this period
+        example: "2024-09-05"
+      
+      addDropDeadline:
+        type: string
+        format: date
+        nullable: true
+        description: Last date to add or drop courses without penalty
+        example: "2024-09-15"
+      
+      withdrawalDeadline:
+        type: string
+        format: date
+        nullable: true
+        description: Last date to withdraw from courses
+        example: "2024-11-15"
+      
+      gradesDueOn:
+        type: string
+        format: date
+        nullable: true
+        description: Date when final grades are due
+        example: "2024-12-27"
+      
+      academicYear:
+        type: string
+        nullable: true
+        description: Academic year this period belongs to
+        example: "2024-2025"
+      
+      financialAidYear:
+        type: string
+        nullable: true
+        description: Financial aid year associated with this period
+        example: "2024-2025"
+      
+      _links:
+        type: object
+        properties:
+          children:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to sub-periods within this period
+          courses:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to courses offered during this period
+          enrollments:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to student enrollments for this period
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - title

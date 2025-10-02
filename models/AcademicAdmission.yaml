@@ -1,0 +1,159 @@
+description: >
+  Represents an academic admission record tracking a student's application, admission, and potential 
+  matriculation to an academic program. Used in student information systems like Ellucian Banner, 
+  Workday Student, or similar platforms.
+  
+  Note: This entity extends iTransaction but uses the 'decision' field instead of the inherited 'status' 
+  field for admission-specific workflow states. The 'status' field from iTransaction should not be used.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - type: object
+    properties:
+      academicPeriod:
+        description: Academic period for which admission is granted
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+      
+      academicProgram:
+        description: Academic program to which the student is admitted
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicProgram"
+      
+      school:
+        description: School, college, or academic unit granting admission
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      student:
+        description: Reference to the student (Contact or Employee with student role)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Contact"
+      
+      appliedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the application was submitted
+      
+      admittedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when admission was granted
+      
+      matriculatedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the student matriculated (enrolled/confirmed attendance)
+      
+      decidedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the admission decision was made
+      
+      type:
+        description: Type or category of admission (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      residencyType:
+        description: Residency status for tuition purposes (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      admissionPopulation:
+        description: Admission population or cohort (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      academicLoad:
+        description: Academic load classification (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      notes:
+        type: array
+        nullable: true
+        items:
+          allOf:
+            - oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Note"
+            - type: object
+              properties:
+                key:
+                  type: string
+                  description: Optional key to categorize the note
+                  example: "admissions_decision"
+        description: Notes related to the admission
+      
+      withdrawal:
+        type: object
+        nullable: true
+        description: Withdrawal information if the student withdrew their application or enrollment
+        properties:
+          withdrawnAt:
+            type: string
+            format: date-time
+            description: Date and time when withdrawal occurred
+          reason:
+            type: string
+            nullable: true
+            description: Reason for withdrawal
+            example: "Accepted offer at another institution"
+          institutionAttended:
+            type: string
+            nullable: true
+            description: Name of institution attended instead (if applicable)
+            example: "State University"
+        required:
+          - withdrawnAt
+      
+      decisionLetter:
+        type: string
+        format: uri
+        nullable: true
+        description: URL or reference to the admission decision letter
+      
+      applicationFee:
+        type: number
+        format: decimal
+        nullable: true
+        description: Application fee amount paid
+      
+      currency:
+        description: Currency for financial fields
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      _links:
+        type: object
+        properties:
+          documents:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to admission documents (transcripts, letters, etc.)
+          enrollments:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to course enrollments if matriculated
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"

@@ -1,0 +1,289 @@
+description: >
+  Represents an instance of a course that is used to group students. A section is associated with an academic period and includes scheduling, enrollment, and instructional details.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - type: object
+    properties:
+      course:
+        description: The course this section is an instance of
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicCourse"
+      
+      academicPeriod:
+        description: The academic term/period when this section is offered
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+      
+      number:
+        type: string
+        description: A numbering scheme or sequence that distinguishes between multiple sections of the same course
+        example: "01"
+      
+      code:
+        type: string
+        description: Human-readable identifier for the section, often unique within an academic period (e.g., CRN)
+        example: "10001"
+      
+      title:
+        type: string
+        description: The title of the section
+        example: "Introduction to Computer Science"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the section
+      
+      startOn:
+        type: string
+        format: date
+        description: The starting date at which a section may be scheduled to be taken
+      
+      endOn:
+        type: string
+        format: date
+        description: The ending date at which a section may no longer be scheduled to be taken
+      
+      duration:
+        type: object
+        nullable: true
+        properties:
+          value:
+            type: number
+            description: The duration value
+            example: 16
+          unit:
+            description: The unit of measurement for the duration (e.g., weeks, days)
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+        description: The scheme for calculating the duration of a section
+      
+      censusDates:
+        type: array
+        nullable: true
+        items:
+          type: string
+          format: date
+        description: The dates at which the section's enrollment/headcount is determined
+      
+      academicLevels:
+        type: array
+        nullable: true
+        items:
+          description: The levels of academic progress that can be associated with this section
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Academic levels for this section (e.g., undergraduate, graduate)
+      
+      courseLevels:
+        type: array
+        nullable: true
+        items:
+          description: Course level classification
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: The levels of the course
+      
+      location:
+        description: The primary location where the section's meetings will be held
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Location"
+      
+      instructionalMethods:
+        type: array
+        items:
+          description: The method, style, or format in which the section is taught (e.g., lecture, lab, online)
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Instructional methods used for this section
+      
+      instructionalDeliveryMethod:
+        description: The delivery method of instruction (e.g., face-to-face, web, hybrid)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      instructionalPlatform:
+        description: Technology platform used to manage the administration of the section (e.g., Canvas, Blackboard)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      hours:
+        type: array
+        nullable: true
+        items:
+          type: object
+          properties:
+            administrativeInstructionalMethod:
+              description: The method for which hours are established
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            minimum:
+              type: number
+              description: The minimum number of hours
+            maximum:
+              type: number
+              nullable: true
+              description: The maximum number of hours
+            increment:
+              type: number
+              nullable: true
+              description: The increment for hours
+            interval:
+              description: The interval for hours (e.g., week, term)
+              nullable: true
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Hours that may be assigned to the section by instructional method
+      
+      credits:
+        type: array
+        nullable: true
+        items:
+          type: object
+          properties:
+            measure:
+              description: The unit or standard of measurement (credit, CEU, hours)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            minimum:
+              type: number
+              description: The minimum credits that can be earned
+            maximum:
+              type: number
+              nullable: true
+              description: The maximum credits that can be earned
+            increment:
+              type: number
+              nullable: true
+              description: The increment by which credits can be stepped
+            creditCategory:
+              type: object
+              nullable: true
+              properties:
+                creditType:
+                  description: The type of academic credit (ce, institution, transfer, etc.)
+                  oneOf:
+                    - $ref: "../index.yaml#/components/schemas/cRelation"
+                    - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+                detail:
+                  description: Additional detail about the credit category
+                  nullable: true
+                  oneOf:
+                    - $ref: "../index.yaml#/components/schemas/cRelation"
+                    - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Unit specification that can be awarded for completing the section
+      
+      gradeSchemes:
+        type: array
+        nullable: true
+        items:
+          description: Grading schemes that may be used to award grades in this section
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: The grading schemes available for this section
+      
+      maxEnrollment:
+        type: number
+        nullable: true
+        description: The maximum number of students allowed to enroll in the section
+      
+      waitlist:
+        type: object
+        nullable: true
+        properties:
+          capacity:
+            type: number
+            description: Maximum number of students that can be on the waitlist
+          registrationInterval:
+            description: Time interval for waitlist registration processing
+            nullable: true
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+          registrationDeadline:
+            type: number
+            nullable: true
+            description: Deadline value for waitlist registration
+          eligibility:
+            description: Waitlist eligibility status
+            nullable: true
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Waitlist information for the section
+      
+      institutionUnits:
+        type: array
+        nullable: true
+        items:
+          description: Units (departments, divisions, colleges) responsible for the section
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+        description: The organizational units that own or are responsible for the section
+      
+      courseCategories:
+        type: array
+        nullable: true
+        items:
+          description: Categories the course may belong to (e.g., vocational, lab, music)
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Course categories applicable to this section
+      
+      reportingAcademicPeriod:
+        description: The reporting academic period (may differ from the primary academic period)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+      
+      notes:
+        type: array
+        nullable: true
+        items:
+          allOf:
+            - oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Note"
+            - type: object
+              properties:
+                key:
+                  type: string
+        description: Notes and comments about the section
+      
+      _links:
+        type: object
+        properties:
+          instructors:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to the collection of instructors for this section
+          students:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to the collection of student enrollments
+          meetings:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to scheduled meeting times and rooms
+          materials:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to required or recommended materials
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"

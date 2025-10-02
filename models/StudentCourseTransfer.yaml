@@ -1,0 +1,73 @@
+description: >
+  Represents a transfer of academic course credits from another institution, including equivalency information and credit details.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - type: object
+    properties:
+      student:
+        description: Student receiving the transfer credit
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Student"
+      
+      academicLevel:
+        description: Academic level at time of transfer (e.g., freshman, sophomore, junior, senior)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      academicPeriod:
+        description: Academic period when the transfer was processed
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+      
+      awardGradeScheme:
+        description: Grading scheme used for the awarded credit (e.g., letter grade, pass/fail, numeric)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      credit:
+        type: object
+        properties:
+          awardedCredit:
+            type: number
+            description: Number of credits awarded for the transfer
+            example: 3.0
+          category:
+            description: Category of credit (e.g., general education, major requirement, elective)
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+          unit:
+            description: Unit of measurement for credits (e.g., semester hours, quarter hours, ECTS)
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+        description: Credit information for the transfer
+      
+      equivalencyAppliedAt:
+        type: string
+        format: date
+        description: Date when the credit equivalency was officially applied
+      
+      transferredFrom:
+        description: Institution from which the credit is being transferred
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Organization"
+      
+      equivalentCourse:
+        description: Course at the receiving institution that this transfer credit is equivalent to
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicCourse"
+      
+      grade:
+        description: Grade received in the transferred course (using taxonomy for flexibility across grading systems)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"

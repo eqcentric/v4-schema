@@ -1,40 +1,74 @@
-description: Represents a physical mailing, billing, or operational address. Inherits standard entity fields.
+description: >
+  Represents a physical mailing, billing, or operational address. 
+  Supports both structured references to Country/Locality and free-text fields for flexibility.
 allOf:
   - $ref: "../index.yaml#/components/schemas/cEntity"
   - type: object
     properties:
-      country:
-        type: string
-        description: Country name or ISO 3166-1 alpha-2/alpha-3 code.
-        example: "USA" # Or "US"
-      state:
-        type: string
-        description: State, province, region, or administrative area.
-        example: "CA"
-      city:
-        type: string
-        description: Name of the city, town, or locality.
-        example: "San Francisco"
       addressLines:
         type: array
         items:
           type: string
-          description: Array containing street address lines (e.g., street number, name, suite, apt).
-          example: ["123 Main St", "Suite 456"]
+        description: Street address lines (street number, name, suite, apartment, etc.)
+        example: ["123 Main St", "Suite 456"]
+      
+      locality:
+        description: Structured reference to locality (city, district, etc.)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Locality"
+      
+      region:
+        description: Structured reference to region/state/province
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Locality"
+      
+      country:
+        description: Structured reference to country
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Country"
+      
+      # Free-text fallbacks for unstructured data
+      localityText:
+        type: string
+        nullable: true
+        description: City/locality as free text (when structured locality not available)
+        example: "San Francisco"
+      
+      regionText:
+        type: string
+        nullable: true
+        description: State/region as free text (when structured region not available)
+        example: "California"
+      
+      countryText:
+        type: string
+        nullable: true
+        description: Country as free text (when structured country not available)
+        example: "United States"
+      
       postalCode:
         type: string
-        description: Postal or ZIP code.
+        nullable: true
+        description: Postal or ZIP code
         example: "94105"
+      
       geoLocation:
         type: object
-        description: Optional geographic coordinates using GeoJSON Point format [longitude, latitude].
+        nullable: true
+        description: Geographic coordinates using GeoJSON Point format [longitude, latitude]
         required:
           - type
           - coordinates
         properties:
           type:
             type: string
-            description: The GeoJSON type, must be "Point".
+            description: The GeoJSON type, must be "Point"
             enum: [Point]
             example: "Point"
           coordinates:
@@ -44,23 +78,53 @@ allOf:
             items:
               type: number
               format: double
-              description: Array containing [longitude, latitude] coordinates.
-              example: [-122.4194, 37.7749]
+            description: Array containing [longitude, latitude] coordinates
+            example: [-122.4194, 37.7749]
+      
       recipient:
         type: string
-        description: Optional name of the person or entity intended to receive mail at this address (if different from the owning entity).
+        nullable: true
+        description: Name of person or entity to receive mail at this address
         example: "Jane Smith, Purchasing Dept."
+      
       phone:
         type: string
-        description: Optional phone number associated specifically with this address/recipient.
+        nullable: true
+        description: Phone number associated with this address
         example: "+1-415-555-5555"
+      
       email:
         type: string
         format: email
-        description: Optional email address associated specifically with this address/recipient.
+        nullable: true
+        description: Email address associated with this address
         example: "shipping.sf@example.com"
+      
+      addressType:
+        description: Type of address (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
       isActive:
         type: boolean
-        description: Flag indicating if the address is currently valid and usable.
-        example: true
+        description: Flag indicating if the address is currently valid and usable
         default: true
+      
+      isPrimary:
+        type: boolean
+        description: Flag indicating if this is the primary address
+        default: false
+      
+      validFrom:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date from which this address is valid
+      
+      validTo:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date until which this address is valid

@@ -1,0 +1,94 @@
+description: >
+  Represents a country or sovereign state. Used for addresses, locations, and jurisdictional references.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Common name of the country
+        example: "United States"
+      
+      officialName:
+        type: string
+        nullable: true
+        description: Official or formal name of the country
+        example: "United States of America"
+      
+      iso2:
+        type: string
+        nullable: true
+        description: ISO 3166-1 alpha-2 country code
+        example: "US"
+        pattern: "^[A-Z]{2}$"
+      
+      iso3:
+        type: string
+        nullable: true
+        description: ISO 3166-1 alpha-3 country code
+        example: "USA"
+        pattern: "^[A-Z]{3}$"
+      
+      isoNumeric:
+        type: string
+        nullable: true
+        description: ISO 3166-1 numeric country code
+        example: "840"
+        pattern: "^[0-9]{3}$"
+      
+      region:
+        type: string
+        nullable: true
+        description: Geographic region (e.g., Americas, Europe, Asia)
+        example: "Americas"
+      
+      subregion:
+        type: string
+        nullable: true
+        description: Geographic subregion (e.g., Northern America, Western Europe)
+        example: "Northern America"
+      
+      dialCode:
+        type: string
+        nullable: true
+        description: International dialing code
+        example: "+1"
+      
+      currency:
+        description: Default currency for this country
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      languages:
+        type: array
+        nullable: true
+        items:
+          type: string
+        description: Official or commonly spoken language codes (ISO 639-1)
+        example: ["en", "es"]
+      
+      capital:
+        description: Capital city as a locality reference
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Locality"
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if the country is currently recognized/active
+        default: true
+      
+      _links:
+        type: object
+        properties:
+          localities:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to localities (regions, states, cities) within this country
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - name

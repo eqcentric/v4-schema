@@ -1,0 +1,104 @@
+description: >
+  Represents an academic program, degree program, or course of study offered by an educational institution.
+  Used in academic/educational systems like Ellucian Banner, Workday Student, or similar platforms.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      title:
+        type: string
+        description: Full title or name of the academic program
+        example: "Bachelor of Science in Computer Science"
+      
+      academicLevel:
+        description: Academic level of the program (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      credentials:
+        description: Credential(s) awarded upon completion (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      status:
+        description: Current status of the program (taxonomy with sourceType for connection-specific values)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      startOn:
+        type: string
+        format: date
+        nullable: true
+        description: Date when the program starts or started
+        example: "2024-09-01"
+      
+      institutionalUnit:
+        description: Reference to the academic department, school, or college offering this program
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the academic program
+      
+      durationYears:
+        type: number
+        format: double
+        nullable: true
+        description: Expected duration of the program in years
+        example: 4.0
+      
+      creditHours:
+        type: number
+        format: double
+        nullable: true
+        description: Total credit hours required for completion
+        example: 120.0
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if the program is currently active and accepting students
+        default: true
+      
+      accreditation:
+        type: string
+        nullable: true
+        description: Accreditation information or body
+        example: "ABET-accredited"
+      
+      tuitionAmount:
+        type: number
+        format: decimal
+        nullable: true
+        description: Base tuition amount for the program
+      
+      currency:
+        description: Currency for tuition and fees
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      _links:
+        type: object
+        properties:
+          courses:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to courses in this program
+          students:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to students enrolled in this program
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - title

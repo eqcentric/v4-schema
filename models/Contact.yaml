@@ -1,39 +1,37 @@
-description: Represents a contact person or potentially a contact point within an organization. Inherits standard entity fields.
+description: >
+  Represents a contact person or contact point within an organization. 
+  Inherits standard entity fields and person traits.
 allOf:
-- $ref: "../index.yaml#/components/schemas/cEntity"
-- type: object
-  properties:
-    firstName:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - $ref: "../index.yaml#/components/schemas/tPerson"
+  - type: object
+    properties:
+      companyName:
         type: string
-        description: First name of the contact person.
-        example: "John"
-    lastName:
-        type: string
-        description: Last name of the contact person.
-        example: "Doe"
-    middleName:
-        type: string
-        description: Middle name or initial of the contact person (if applicable).
-        example: "Fitzgerald"
-    companyName:
-        type: string
-        description: Company or organization the contact belongs to (if different from the entity this contact is associated with, or for standalone contacts).
+        nullable: true
+        description: >
+          Company or organization the contact belongs to (if different from the entity 
+          this contact is associated with, or for standalone contacts).
         example: "Acme Corporation"
-    email:
+      
+      jobTitle:
         type: string
-        format: email
-        description: Primary email address for the contact.
-        example: "john.doe@example.com"
-    phone:
-        type: string
-        description: Primary phone number for the contact.
-        example: "+1-212-555-1212"
-    jobTitle:
-        type: string
+        nullable: true
         description: Job title or position of the contact.
         example: "Purchasing Manager"
-    address:
-        description: Optional reference to the primary physical/mailing address of the contact. Can be a relation or embedded object.
-        oneOf:
-        - $ref: "../index.yaml#/components/schemas/cRelation"
-        - $ref: "../index.yaml#/components/schemas/Address"
+      
+      department:
+        type: string
+        nullable: true
+        description: Department within the organization
+        example: "Procurement"
+      
+      isPrimary:
+        type: boolean
+        description: Flag indicating if this is the primary contact
+        default: false
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if the contact is currently active
+        default: true
