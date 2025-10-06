@@ -1,0 +1,74 @@
+description: >
+  Represents a transcript record for a student within an academic context, including period, grade,
+  credit metrics, and categorization details.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      student:
+        description: The student this transcript record belongs to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Student"
+
+      academicPeriod:
+        description: Academic period for this transcript record
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+
+      grade:
+        description: Awarded grade (taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      awardGradeScheme:
+        description: Grading scheme used for the award (taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      changeReason:
+        description: Reason for grade/record change (taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      section:
+        description: Academic section associated with this transcript entry
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicSection"
+
+      creditCategory:
+        description: Category of credit awarded (taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      isRepeated:
+        type: boolean
+        description: Indicates if this course/credit was a repeated attempt
+        default: false
+
+      credit:
+        type: object
+        description: Credit metrics associated with this transcript item
+        properties:
+          attemptedCredit:
+            type: number
+            format: decimal
+            description: Credit attempted
+          earnedCredit:
+            type: number
+            format: decimal
+            description: Credit earned
+          gpaQualityPoints:
+            type: number
+            format: decimal
+            description: Quality points counting toward GPA
+          nonWeightedQualityPoints:
+            type: number
+            format: decimal
+            description: Quality points not weighted in GPA

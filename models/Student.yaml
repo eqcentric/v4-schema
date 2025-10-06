@@ -133,3 +133,30 @@ allOf:
                 - $ref: "../index.yaml#/components/schemas/cRelation"
                 - $ref: "../index.yaml#/components/schemas/iTaxonomy"
         description: List of academic standings over time
+      
+      externalEducation:
+        type: array
+        nullable: true
+        description: External or prior education records for this student
+        items:
+          type: object
+          properties:
+            graduatedOn:
+              type: string
+              format: date
+              nullable: true
+              description: Graduation date at the external institution
+            performanceMeasure:
+              type: string
+              nullable: true
+              description: Performance metric (e.g., GPA, classification)
+            transcriptReceivedAt:
+              type: string
+              format: date-time
+              nullable: true
+              description: Date and time when transcript was received
+            institution:
+              description: External institution (school/college/university)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Partner"

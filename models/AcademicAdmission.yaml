@@ -155,5 +155,8 @@ allOf:
           enrollments:
             $ref: "../index.yaml#/components/schemas/cLink"
             description: Link to course enrollments if matriculated
+          supportingItems:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to supporting items required or used for this admission (e.g., transcripts, test scores, recommendations)
         additionalProperties:
           $ref: "../index.yaml#/components/schemas/cLink"

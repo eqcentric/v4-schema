@@ -184,12 +184,20 @@ components:
       $ref: "models/AcademicCourse.yaml"
     AcademicSection:
       $ref: "models/AcademicSection.yaml"
+    AcademicAdmissionItem:
+      $ref: "models/AcademicAdmissionItem.yaml"
     Student:
       $ref: "models/Student.yaml"
     StudentCohort:
       $ref: "models/StudentCohort.yaml"
     StudentCourseTransfer:
       $ref: "models/StudentCourseTransfer.yaml"
+    StudentAidApplication:
+      $ref: "models/StudentAidApplication.yaml"
+    PersonHold:
+      $ref: "models/PersonHold.yaml"
+    StudentTranscript:
+      $ref: "models/StudentTranscript.yaml"
   responses:
     listOrganizations:
         $ref: "responses/organizations/listOrganizations.yaml"

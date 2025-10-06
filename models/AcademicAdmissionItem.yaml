@@ -1,0 +1,49 @@
+description: >
+  Represents a supporting item for an academic admission, such as transcripts, test scores, recommendations,
+  or other checklist requirements. Tracks assignment, receipt, and status.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      admission:
+        description: Reference to the AcademicAdmission this item supports
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicAdmission"
+
+      assignedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the item was assigned/requested
+
+      receivedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the item was received/fulfilled
+
+      externalReference:
+        type: string
+        nullable: true
+        description: External system reference or identifier
+
+      required:
+        type: boolean
+        description: Indicates whether this item is mandatory for admission processing
+        default: false
+
+      status:
+        description: Current status of this supporting item (taxonomy with sourceType for connector-specific values)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      type:
+        description: Type/category of the supporting item (taxonomy with sourceType for connector-specific values)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+    required:
+      - admission

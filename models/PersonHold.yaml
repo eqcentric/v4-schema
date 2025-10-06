@@ -1,0 +1,29 @@
+description: >
+  Represents a hold placed on a person (e.g., financial, academic, administrative) that may restrict
+  certain actions until resolved. Inherits transaction lifecycle fields (startedAt/endedAt, organization, etc.).
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - type: object
+    properties:
+      person:
+        description: The person this hold applies to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/tPerson"
+
+      description:
+        type: string
+        nullable: true
+        description: Description or notes about the hold
+
+      reason:
+        description: Reason for the hold (taxonomy with sourceType for connector-specific values)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      type:
+        description: Hold type/classification (taxonomy with sourceType for connector-specific values)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"

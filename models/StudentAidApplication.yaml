@@ -1,0 +1,85 @@
+description: >
+  Represents a student financial aid application (e.g., FAFSA/PROFILE or similar),
+  including independence criteria, income sources, preferences, and residency.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - type: object
+    properties:
+      aidYear:
+        description: Aid year applicable to this application (taxonomy with sourceType for connector-specific values)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      applicant:
+        description: The applicant person details or reference
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/tPerson"
+
+      completedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the application was completed/submitted
+
+      applicationSource:
+        type: string
+        nullable: true
+        description: Source or channel through which the application was submitted
+
+      independenceCriteria:
+        type: array
+        nullable: true
+        description: Criteria supporting independent status
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      incomeSources:
+        type: array
+        nullable: true
+        description: Reported income sources contributing to EFC/SAI determination
+        items:
+          type: object
+          properties:
+            sourceType:
+              type: string
+              description: Whose income is reported (e.g., applicant, spouse, custodialParent)
+              example: applicant
+            educationLevel:
+              type: string
+              nullable: true
+              description: Highest education level of the source (if applicable)
+            incomeValue:
+              type: number
+              format: float
+              description: Reported income amount
+            currency:
+              description: Currency of the income amount
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Currency"
+
+      housingPreference:
+        type: string
+        nullable: true
+        description: Student housing preference (e.g., on-campus, off-campus, with-parents)
+
+      maritalStatus:
+        description: Marital status at the time of application (taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      methodology:
+        type: string
+        nullable: true
+        description: Methodology used (e.g., federal, institutional)
+
+      stateOfLegalResidence:
+        description: State/province of legal residence
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Locality"
