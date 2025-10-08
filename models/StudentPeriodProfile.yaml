@@ -1,0 +1,76 @@
+description: >
+  Represents a student's profile and academic standing for a specific academic period.
+  Captures enrollment status, residency, student status, and academic performance measures.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      student:
+        description: The student associated with this period profile
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Student"
+      
+      academicPeriod:
+        description: Academic period for this profile record
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicPeriod"
+      
+      type:
+        description: Classification type for this period profile (e.g., full-time, part-time, online)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      enrollmentStatus:
+        description: Enrollment status (e.g., enrolled, withdrawn, leave of absence, graduated)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      residency:
+        description: Residency status (e.g., on-campus, off-campus, commuter, international)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      studentStatus:
+        description: Student status (e.g., active, inactive, probation, suspended)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      measures:
+        type: array
+        nullable: true
+        description: Academic performance measures for this period (e.g., GPA, credits)
+        items:
+          type: object
+          properties:
+            level:
+              description: Level or type of measure (e.g., term GPA, cumulative GPA, credits attempted, credits earned)
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            score:
+              type: number
+              format: decimal
+              description: Numeric value of the measure
+      
+      _links:
+        type: object
+        properties:
+          transcripts:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to transcript records for this period
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - student
+      - academicPeriod

@@ -1,0 +1,83 @@
+description: >
+  Represents a student's registration for a specific academic section.
+  Captures registration details including academic level, credit information, grade scheme, and status.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      student:
+        description: The student registered for this section
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Student"
+      
+      section:
+        description: The academic section the student is registered for
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AcademicSection"
+      
+      academicLevel:
+        description: Academic level at time of registration (e.g., freshman, sophomore, graduate)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      creditUnit:
+        description: Unit of measure for credits (e.g., semester hours, quarter hours, ECTS)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      creditValue:
+        type: number
+        format: decimal
+        nullable: true
+        description: Number of credits for this registration
+      
+      gradeScheme:
+        description: Grading scheme for this registration (e.g., letter grade, pass/fail, honors)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      registeredAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Timestamp when the student registered for this section
+      
+      status:
+        description: Registration status (e.g., enrolled, waitlisted, dropped, withdrawn, completed)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      statusDate:
+        type: string
+        format: date
+        nullable: true
+        description: Date when the current status was set
+      
+      _links:
+        type: object
+        properties:
+          transcript:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to the transcript record for this registration
+          student:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to the student
+          section:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to the academic section
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - student
+      - section

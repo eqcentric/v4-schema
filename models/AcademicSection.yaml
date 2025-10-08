@@ -46,14 +46,68 @@ allOf:
         nullable: true
         description: Date and time when the section ends
 
-      gradeSchemes:
+      credits:
         type: array
         nullable: true
+        description: Credit configuration options for this section
         items:
-          oneOf:
-            - $ref: "../index.yaml#/components/schemas/cRelation"
-            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
-        description: Grading schemes that may be used to award grades in this section
+          type: object
+          properties:
+            category:
+              description: Category of credit (e.g., lecture, lab, seminar, clinical)
+              nullable: true
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            increment:
+              type: number
+              format: decimal
+              nullable: true
+              description: Credit increment value
+            unit:
+              description: Unit of measure for credits (e.g., semester hours, quarter hours, ECTS)
+              nullable: true
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+            maximum:
+              type: number
+              format: decimal
+              nullable: true
+              description: Maximum credits allowed
+            minimum:
+              type: number
+              format: decimal
+              nullable: true
+              description: Minimum credits required
+
+      gradeOptions:
+        type: array
+        nullable: true
+        description: Detailed grading options configuration for this section
+        items:
+          type: object
+          properties:
+            gradeScheme:
+              description: Grading scheme for this option (e.g., letter grade, pass/fail, numeric, honors)
+              nullable: true
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            grades:
+              type: array
+              nullable: true
+              description: List of available grades for this grading scheme
+              items:
+                oneOf:
+                  - $ref: "../index.yaml#/components/schemas/cRelation"
+                  - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+            status:
+              description: Status of the grade option configuration (e.g., active, inactive, pending, archived)
+              nullable: true
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/iTaxonomy"
 
       maxEnrollment:
         type: integer
@@ -84,7 +138,7 @@ allOf:
           - $ref: "../index.yaml#/components/schemas/iTaxonomy"
 
       instructionalPlatform:
-        description: Technology/LMS platform used (e.g., Canvas, Blackboard)
+        description: Technology/LMS platform used (e.g., Canvas, Blackboard, Moodle)
         nullable: true
         oneOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
