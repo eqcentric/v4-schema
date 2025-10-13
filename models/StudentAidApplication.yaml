@@ -5,11 +5,12 @@ allOf:
   - $ref: "../index.yaml#/components/schemas/iTransaction"
   - type: object
     properties:
-      aidYear:
-        description: Aid year applicable to this application (taxonomy with sourceType for connector-specific values)
+      fiscalYear:
+        description: Fiscal year applicable to this aid application
+        nullable: true
         oneOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
-          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+          - $ref: "../index.yaml#/components/schemas/FiscalYear"
 
       applicant:
         description: The applicant person details or reference
