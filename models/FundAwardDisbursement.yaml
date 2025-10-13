@@ -1,0 +1,63 @@
+description: >
+  Represents a disbursement or payment made from a fund award, tracking scheduled and actual payment processing.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      award:
+        description: Fund award this disbursement belongs to.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FundAward"
+      
+      fiscalPeriod:
+        description: Fiscal period for this disbursement.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalPeriod"
+      
+      currency:
+        description: Currency for the disbursement amount.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      amount:
+        type: number
+        format: float
+        nullable: true
+        description: Amount to be disbursed
+        example: 15000.00
+      
+      status:
+        description: Status of the disbursement (e.g., Scheduled, Processing, Completed, Failed, Cancelled).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      scheduledAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the disbursement is scheduled
+        example: "2024-04-01T00:00:00Z"
+      
+      processedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the disbursement was actually processed
+        example: "2024-04-01T10:15:30Z"
+      
+      disbursementMethod:
+        description: Method of disbursement (e.g., ACH, Wire Transfer, Check, Direct Deposit).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+    
+    required:
+      - award

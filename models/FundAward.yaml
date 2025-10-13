@@ -1,0 +1,85 @@
+description: >
+  Represents an award or allocation of funds from a fund to a recipient, tracking offered and accepted amounts along with response timeline.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      fund:
+        description: Fund from which the award is made.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Fund"
+      
+      recipient:
+        description: Recipient of the fund award (Partner or Person).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Partner"
+          - $ref: "../index.yaml#/components/schemas/tPerson"
+      
+      fiscalYear:
+        description: Fiscal year for this award.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalYear"
+      
+      fiscalPeriod:
+        description: Fiscal period for this award.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalPeriod"
+      
+      status:
+        description: Status of the award (e.g., Offered, Accepted, Declined, Pending, Cancelled).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      currency:
+        description: Currency for the award amounts.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      amountOffered:
+        type: number
+        format: float
+        nullable: true
+        description: Amount offered to the recipient
+        example: 50000.00
+      
+      amountAccepted:
+        type: number
+        format: float
+        nullable: true
+        description: Amount accepted by the recipient (may differ from offered amount)
+        example: 45000.00
+      
+      offeredAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the award was offered
+        example: "2024-03-15T10:00:00Z"
+      
+      respondedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the recipient responded to the offer
+        example: "2024-03-20T14:30:00Z"
+      
+      responseDueAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time by which a response is required
+        example: "2024-04-15T23:59:59Z"
+    
+    required:
+      - fund

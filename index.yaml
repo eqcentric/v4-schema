@@ -192,6 +192,10 @@ components:
       $ref: "models/Fund.yaml"
     FundFinancials:
       $ref: "models/FundFinancials.yaml"
+    FundAward:
+      $ref: "models/FundAward.yaml"
+    FundAwardDisbursement:
+      $ref: "models/FundAwardDisbursement.yaml"
     # === Misc ===
     Note:
       $ref: "models/Note.yaml"
