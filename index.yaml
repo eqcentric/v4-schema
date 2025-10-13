@@ -186,6 +186,12 @@ components:
       $ref: "models/Event.yaml"
     EventParticipation:
       $ref: "models/EventParticipation.yaml"
+    Project:
+      $ref: "models/Project.yaml"
+    Fund:
+      $ref: "models/Fund.yaml"
+    FundFinancials:
+      $ref: "models/FundFinancials.yaml"
     # === Misc ===
     Note:
       $ref: "models/Note.yaml"

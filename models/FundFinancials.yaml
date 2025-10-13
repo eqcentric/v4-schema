@@ -1,0 +1,70 @@
+description: >
+  Represents financial details and balances for a fund within a specific fiscal year, tracking budgets, disbursements, and awards.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      fund:
+        description: Fund these financials belong to.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Fund"
+      
+      fiscalYear:
+        description: Fiscal year for these financial records.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalYear"
+      
+      currency:
+        description: Currency for all amounts in this record.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      startingBalance:
+        type: number
+        format: float
+        nullable: true
+        description: Starting balance at the beginning of the fiscal year
+        example: 500000.00
+      
+      endingBalance:
+        type: number
+        format: float
+        nullable: true
+        description: Ending balance at the end of the fiscal year
+        example: 325000.00
+      
+      budgetedAmount:
+        type: number
+        format: float
+        nullable: true
+        description: Total budgeted amount for the fiscal year
+        example: 1000000.00
+      
+      disbursedAmount:
+        type: number
+        format: float
+        nullable: true
+        description: Total amount disbursed during the fiscal year
+        example: 175000.00
+      
+      maximumAwardAmount:
+        type: number
+        format: float
+        nullable: true
+        description: Maximum amount that can be awarded from the fund
+        example: 2000000.00
+      
+      maximumOfferedBudgetAmount:
+        type: number
+        format: float
+        nullable: true
+        description: Maximum budget amount that can be offered
+        example: 1500000.00
+    
+    required:
+      - fund

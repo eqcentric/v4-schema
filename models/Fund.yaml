@@ -1,0 +1,41 @@
+description: >
+  Represents a fund, which is a specialized project type used for tracking restricted or designated financial resources with specific purposes and grantors.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/Project"
+  - type: object
+    properties:
+      purpose:
+        type: string
+        nullable: true
+        description: Detailed purpose or intended use of the fund
+        example: "Research funding for renewable energy studies"
+      
+      restrictionType:
+        description: Type of restriction on fund usage (e.g., Restricted, Unrestricted, Temporarily Restricted, Permanently Restricted).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      grantor:
+        description: Partner organization providing the grant or funding.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Partner"
+      
+      budget:
+        description: Budget associated with this fund.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Budget"
+      
+      _links:
+        type: object
+        properties:
+          financials:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to fund financial records
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"

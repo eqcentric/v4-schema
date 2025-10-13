@@ -1,0 +1,94 @@
+description: >
+  Represents a project or initiative undertaken by an organization, with planning and execution tracking.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      organization:
+        description: Organization responsible for the project.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Organization"
+      
+      customer:
+        description: Customer or client for the project.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Customer"
+      
+      name:
+        type: string
+        description: Name of the project
+        example: "Campus Modernization Phase 2"
+      
+      type:
+        description: Type of project (e.g., Construction, Research, IT Implementation, Grant-Funded).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      status:
+        description: Project status (e.g., Planning, Active, On Hold, Completed, Cancelled).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      manager:
+        description: Project manager or lead person.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/tPerson"
+      
+      account:
+        description: Account for project financial tracking.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      
+      plannedStartDate:
+        type: string
+        format: date
+        nullable: true
+        description: Planned start date of the project
+        example: "2024-01-15"
+      
+      plannedEndDate:
+        type: string
+        format: date
+        nullable: true
+        description: Planned end date of the project
+        example: "2024-12-31"
+      
+      startedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Actual start date and time of the project
+        example: "2024-01-20T09:00:00Z"
+      
+      endedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Actual end date and time of the project
+        example: "2024-12-28T17:00:00Z"
+      
+      identifiers:
+        type: object
+        nullable: true
+        additionalProperties:
+          type: string
+        description: Object containing various identifiers for the project, keyed by identifier type (e.g., 'projectNumber', 'grantNumber', 'contractId').
+        example:
+          projectNumber: "PRJ-2024-001"
+          grantNumber: "NSF-12345"
+          contractId: "CNT-789"
+    
+    required:
+      - name
