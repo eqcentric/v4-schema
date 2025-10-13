@@ -1,0 +1,91 @@
+description: >
+  Represents a physical space within a property, such as an office, room, storage area, or production floor.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name or identifier of the space
+        example: "Conference Room A"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the space
+      
+      property:
+        description: Parent property containing this space.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Property"
+      
+      parent:
+        description: Parent space for hierarchical organization (e.g., wing > floor > room).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Space"
+      
+      spaceType:
+        description: Relation to iTaxonomy for space type (e.g., Office, Conference Room, Storage, Production Floor, Common Area).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      status:
+        description: Relation to iTaxonomy for space status (e.g., Available, Occupied, Under Renovation, Reserved).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      floorNumber:
+        type: string
+        nullable: true
+        description: Floor identifier (e.g., "1", "2", "Mezzanine", "Basement")
+        example: "3"
+      
+      area:
+        type: number
+        format: float
+        nullable: true
+        description: Area of the space
+        example: 250.0
+      
+      areaUnit:
+        description: Unit of measurement for area.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      capacity:
+        type: integer
+        nullable: true
+        description: Occupancy capacity (people, desks, equipment units, etc.)
+        example: 12
+      
+      businessUnit:
+        description: Business unit using or responsible for this space.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      account:
+        description: Account for space-related costs and allocation.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if the space is currently active
+        default: true
+    
+    required:
+      - name
+      - property

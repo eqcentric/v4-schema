@@ -1,0 +1,39 @@
+description: >
+  Represents a fiscal calendar template defining the structure of fiscal years, including the number of regular and adjustment periods.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name of the fiscal calendar
+        example: "Standard Calendar"
+      organization:
+        description: Relation to Organization.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Organization"
+      yearPeriods:
+        type: integer
+        description: Number of regular periods in a fiscal year
+        example: 12
+      adjustmentPeriods:
+        type: integer
+        description: Number of adjustment periods allowed
+        example: 1
+      isYearDependent:
+        type: boolean
+        description: Whether the calendar structure changes based on the specific year
+        example: false
+      _links:
+        type: object
+        properties:
+          fiscalYears:
+            $ref: "../index.yaml#/components/schemas/cLink"
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    required:
+      - name
+      - yearPeriods
+      - adjustmentPeriods
+      - isYearDependent

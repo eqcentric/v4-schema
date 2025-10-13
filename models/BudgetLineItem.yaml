@@ -1,0 +1,75 @@
+description: >
+  Represents a line item within a budget, containing the detailed allocation for a specific account, period, and organizational unit.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      budget:
+        description: Relation to parent Budget.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Budget"
+      
+      parent:
+        description: Optional reference to a parent budget line item for hierarchical structures.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BudgetLineItem"
+      
+      fiscalPeriod:
+        description: Relation to FiscalPeriod.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalPeriod"
+      
+      account:
+        description: Relation to Account.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      
+      currency:
+        description: Currency for the budget amount.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      amount:
+        type: number
+        format: float
+        description: Budget line item amount
+        example: 50000.00
+      
+      businessUnit:
+        description: Relation to BusinessUnit.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      location:
+        description: Relation to Location.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Location"
+      
+      notes:
+        type: array
+        items:
+          allOf:
+            - oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Note"
+            - type: object
+              properties:
+                key:
+                  type: string
+        description: Array of notes with optional key for categorization
+    
+    required:
+      - budget

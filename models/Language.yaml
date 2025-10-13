@@ -1,0 +1,77 @@
+description: >
+  Represents a language with ISO standard codes and linguistic classification.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Common name of the language
+        example: "English"
+      
+      nativeName:
+        type: string
+        nullable: true
+        description: Name in the language's own script
+        example: "English"
+      
+      iso6391:
+        type: string
+        nullable: true
+        description: ISO 639-1 two-letter code
+        example: "en"
+        pattern: "^[a-z]{2}$"
+      
+      iso6392:
+        type: string
+        nullable: true
+        description: ISO 639-2/T three-letter code (terminology)
+        example: "eng"
+        pattern: "^[a-z]{3}$"
+      
+      iso6393:
+        type: string
+        nullable: true
+        description: ISO 639-3 three-letter code (more comprehensive)
+        example: "eng"
+        pattern: "^[a-z]{3}$"
+      
+      languageFamily:
+        type: string
+        nullable: true
+        description: Language family classification
+        example: "Indo-European"
+      
+      languageBranch:
+        type: string
+        nullable: true
+        description: Branch within the language family
+        example: "Germanic"
+      
+      scriptType:
+        type: string
+        nullable: true
+        description: Writing system used
+        example: "Latin"
+      
+      isRtl:
+        type: boolean
+        description: Right-to-left writing direction
+        default: false
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if language is actively used
+        default: true
+      
+      _links:
+        type: object
+        properties:
+          countries:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to countries where this language is official/spoken
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - name

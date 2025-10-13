@@ -45,6 +45,31 @@ allOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
           - $ref: "../index.yaml#/components/schemas/iTaxonomy"
       
+      academicLevels:
+        type: array
+        nullable: true
+        description: Academic levels or classifications for this student in this period (e.g., Freshman, Sophomore, Junior, Senior, Graduate)
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      academicStatuses:
+        type: array
+        nullable: true
+        description: Academic statuses for this student in this period (e.g., Dean's List, Academic Probation, Good Standing, Honors)
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      academicStanding:
+        description: Overall academic standing for this period (e.g., Good Standing, Academic Warning, Academic Probation, Academic Suspension)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
       measures:
         type: array
         nullable: true

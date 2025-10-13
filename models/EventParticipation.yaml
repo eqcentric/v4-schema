@@ -1,0 +1,42 @@
+description: >
+  Represents a person's participation in an event, including their role and attendance period.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      person:
+        description: Person participating in the event (e.g., Employee, Student, Contact).
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/tPerson"
+      
+      event:
+        description: Event being attended.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Event"
+      
+      role:
+        description: Role of the participant in the event (e.g., Organizer, Attendee, Speaker, Moderator, Optional).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      startOn:
+        type: string
+        format: date-time
+        nullable: true
+        description: When the person's participation started (may differ from event start time)
+        example: "2024-10-15T14:30:00Z"
+      
+      endOn:
+        type: string
+        format: date-time
+        nullable: true
+        description: When the person's participation ended (may differ from event end time)
+        example: "2024-10-15T15:45:00Z"
+    
+    required:
+      - person
+      - event

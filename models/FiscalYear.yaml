@@ -1,0 +1,42 @@
+description: >
+  Represents a specific fiscal year within a fiscal calendar, defining the time period and operational status.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      calendar:
+        description: Relation to FiscalCalendar.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalCalendar"
+      name:
+        type: string
+        description: Name or identifier of the fiscal year
+        example: "FY 2024"
+      startDate:
+        type: string
+        format: date
+        description: Start date of the fiscal year
+        example: "2024-01-01"
+      endDate:
+        type: string
+        format: date
+        description: End date of the fiscal year
+        example: "2024-12-31"
+      status:
+        description: Relation to iTaxonomy for fiscal year status (e.g., Open, Closed, Locked).
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      _links:
+        type: object
+        properties:
+          fiscalPeriods:
+            $ref: "../index.yaml#/components/schemas/cLink"
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    required:
+      - calendar
+      - name
+      - startDate
+      - endDate

@@ -1,0 +1,76 @@
+description: >
+  Represents a scoring or grading scale used for assessments, evaluations, or performance measurements.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name of the scoring scale
+        example: "Letter Grade Scale"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the scoring scale
+      
+      type:
+        description: Relation to iTaxonomy for scale type (e.g., Numeric, Letter, Pass/Fail, Descriptive, Custom).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      numericMinimum:
+        type: number
+        format: float
+        nullable: true
+        description: Minimum value for numeric scales
+        example: 0
+      
+      numericMaximum:
+        type: number
+        format: float
+        nullable: true
+        description: Maximum value for numeric scales
+        example: 100
+      
+      numericIncrement:
+        type: number
+        format: float
+        nullable: true
+        description: Increment step for numeric scales
+        example: 1
+      
+      values:
+        type: array
+        nullable: true
+        items:
+          type: object
+          properties:
+            value:
+              type: string
+              description: The score value (e.g., "A", "Pass", "Excellent")
+              example: "A"
+            numericEquivalent:
+              type: number
+              format: float
+              nullable: true
+              description: Optional numeric mapping for GPA calculations or comparisons
+              example: 4.0
+            displayOrder:
+              type: integer
+              description: Order for display and comparison purposes
+              example: 1
+            description:
+              type: string
+              nullable: true
+              description: Optional explanation of this score value
+              example: "Excellent performance"
+          required:
+            - value
+            - displayOrder
+        description: For non-numeric scales, ordered list of possible score values
+    
+    required:
+      - name

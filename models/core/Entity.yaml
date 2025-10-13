@@ -56,6 +56,14 @@ properties:
     example:
       customField1: "value"
       sourceSystemId: "12345"
+  tags:
+    type: array
+    nullable: true
+    description: Tags or labels for categorization and filtering of entities
+    items:
+      oneOf:
+        - $ref: "../../index.yaml#/components/schemas/cRelation"
+        - $ref: "../../index.yaml#/components/schemas/iTaxonomy"
   _links:
     type: object
     additionalProperties:

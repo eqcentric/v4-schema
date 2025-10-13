@@ -1,0 +1,107 @@
+description: >
+  Represents a real estate asset such as a building, land, or facility with ownership and physical characteristics.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name of the property
+        example: "Main Office Building"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the property
+      
+      organization:
+        description: Organization that owns or manages this property.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Organization"
+      
+      site:
+        description: Optional reference to the operational site this property is part of.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Site"
+      
+      propertyType:
+        description: Relation to iTaxonomy for property type (e.g., Office, Warehouse, Retail, Industrial, Land, Mixed-Use).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      status:
+        description: Relation to iTaxonomy for property status (e.g., Owned, Leased, Under Construction, Sold).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      address:
+        description: Physical address of the property.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Address"
+      
+      totalArea:
+        type: number
+        format: float
+        nullable: true
+        description: Total area of the property
+        example: 50000.0
+      
+      areaUnit:
+        description: Unit of measurement for area.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      floors:
+        type: integer
+        nullable: true
+        description: Number of floors or levels in the property
+        example: 5
+      
+      yearBuilt:
+        type: integer
+        nullable: true
+        description: Year the property was constructed
+        example: 2010
+      
+      account:
+        description: Account for property-related financial tracking.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      
+      businessUnit:
+        description: Business unit responsible for the property.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      isActive:
+        type: boolean
+        description: Flag indicating if the property is currently active
+        default: true
+      
+      _links:
+        type: object
+        properties:
+          spaces:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to spaces within this property
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - name
+      - organization

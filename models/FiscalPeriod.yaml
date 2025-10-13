@@ -1,0 +1,61 @@
+description: >
+  Represents a specific period within a fiscal year (e.g., month, quarter), including metadata about its position and boundaries.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      fiscalYear:
+        description: Relation to FiscalYear.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalYear"
+      name:
+        type: string
+        description: Name or identifier of the fiscal period
+        example: "Period 1"
+      type:
+        description: Relation to iTaxonomy for period type (e.g., Regular, Adjustment).
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      periodNumber:
+        type: string
+        description: Sequential number or identifier of the period within the fiscal year
+        example: "01"
+      isQuarterStart:
+        type: boolean
+        description: Whether this period marks the start of a fiscal quarter
+        example: true
+      isQuarterEnd:
+        type: boolean
+        description: Whether this period marks the end of a fiscal quarter
+        example: false
+      isYearStart:
+        type: boolean
+        description: Whether this period marks the start of the fiscal year
+        example: true
+      isYearEnd:
+        type: boolean
+        description: Whether this period marks the end of the fiscal year
+        example: false
+      startDate:
+        type: string
+        format: date
+        description: Start date of the fiscal period
+        example: "2024-01-01"
+      endDate:
+        type: string
+        format: date
+        description: End date of the fiscal period
+        example: "2024-01-31"
+      status:
+        description: Relation to iTaxonomy for fiscal period status (e.g., Open, Closed, Locked).
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+    required:
+      - fiscalYear
+      - name
+      - periodNumber
+      - startDate
+      - endDate

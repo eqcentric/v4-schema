@@ -1,0 +1,50 @@
+description: >
+  Represents a budget for a specific fiscal year and organization.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name or identifier of the budget
+        example: "Operations Budget 2024"
+      
+      organization:
+        description: Relation to Organization.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Organization"
+      
+      fiscalYear:
+        description: Relation to FiscalYear.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalYear"
+      
+      type:
+        description: Relation to iTaxonomy for budget type (e.g., Operating, Capital, Revenue).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      status:
+        description: Relation to iTaxonomy for budget status (e.g., Draft, Approved, Active, Closed).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      _links:
+        type: object
+        properties:
+          lineItems:
+            $ref: "../index.yaml#/components/schemas/cLink"
+            description: Link to budget line items
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - name

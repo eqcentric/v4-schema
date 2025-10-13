@@ -1,0 +1,109 @@
+description: >
+  Represents a scheduled or historical event such as a meeting, class session, maintenance window, or organizational activity.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name or title of the event
+        example: "Q4 Planning Meeting"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the event
+      
+      organization:
+        description: Organization hosting or responsible for the event.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Organization"
+      
+      businessUnit:
+        description: Business unit associated with the event.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      eventType:
+        description: Type of event (e.g., Meeting, Class, Maintenance, Social, Training).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      status:
+        description: Event status (e.g., Scheduled, In Progress, Completed, Cancelled, Postponed).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      startedAt:
+        type: string
+        format: date-time
+        description: Start date and time of the event
+        example: "2024-10-15T14:00:00Z"
+      
+      endedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: End date and time of the event
+        example: "2024-10-15T16:00:00Z"
+      
+      location:
+        description: Physical or logical location of the event.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Location"
+      
+      space:
+        description: Specific space/room where the event takes place.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Space"
+      
+      isAllDay:
+        type: boolean
+        description: Whether the event spans all day
+        default: false
+      
+      isRecurring:
+        type: boolean
+        description: Whether the event is part of a recurring series
+        default: false
+      
+      recurrenceSchedule:
+        type: object
+        nullable: true
+        description: Schedule definition for recurring events
+        additionalProperties: true
+        example:
+          frequency: "weekly"
+          interval: 1
+          daysOfWeek: ["Monday", "Wednesday"]
+          endDate: "2024-12-31"
+      
+      notes:
+        type: array
+        nullable: true
+        items:
+          allOf:
+            - oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Note"
+            - type: object
+              properties:
+                key:
+                  type: string
+        description: Array of notes with optional key for categorization
+    
+    required:
+      - name
+      - startedAt

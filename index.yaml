@@ -68,6 +68,8 @@ components:
       $ref: "models/Currency.yaml"
     Country:
       $ref: "models/Country.yaml"
+    Language:
+      $ref: "models/Language.yaml"
     Locality:
       $ref: "models/Locality.yaml"
     Address:
@@ -103,6 +105,10 @@ components:
       $ref: "models/traits/UnderWarranty.yaml"
     Site:
       $ref: "models/Site.yaml"
+    Property:
+      $ref: "models/Property.yaml"
+    Space:
+      $ref: "models/Space.yaml"
     Asset:
       $ref: "models/Asset.yaml"
     # === Inventory ===
@@ -163,6 +169,23 @@ components:
       $ref: "models/MaintenanceTrigger.yaml"
     MaintenanceTemplate:
       $ref: "models/MaintenanceTemplate.yaml"
+    # === Fiscal ===
+    FiscalCalendar:
+      $ref: "models/FiscalCalendar.yaml"
+    FiscalYear:
+      $ref: "models/FiscalYear.yaml"
+    FiscalPeriod:
+      $ref: "models/FiscalPeriod.yaml"
+    Budget:
+      $ref: "models/Budget.yaml"
+    BudgetLineItem:
+      $ref: "models/BudgetLineItem.yaml"
+    ScoringScale:
+      $ref: "models/ScoringScale.yaml"
+    Event:
+      $ref: "models/Event.yaml"
+    EventParticipation:
+      $ref: "models/EventParticipation.yaml"
     # === Misc ===
     Note:
       $ref: "models/Note.yaml"
@@ -198,6 +221,8 @@ components:
       $ref: "models/PersonHold.yaml"
     StudentTranscript:
       $ref: "models/StudentTranscript.yaml"
+    StudentCredentials:
+      $ref: "models/StudentCredentials.yaml"
   responses:
     listOrganizations:
         $ref: "responses/organizations/listOrganizations.yaml"
