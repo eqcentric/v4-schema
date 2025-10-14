@@ -25,9 +25,9 @@ allOf:
         description: Date and time when the application was completed/submitted
 
       applicationSource:
-        type: string
-        nullable: true
-        description: Source or channel through which the application was submitted
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
 
       independenceCriteria:
         type: array
@@ -37,6 +37,19 @@ allOf:
           oneOf:
             - $ref: "../index.yaml#/components/schemas/cRelation"
             - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+
+      totalIncome:
+        type: object
+        properties:
+          incomeValue:
+            type: number
+            format: float
+            description: Reported income amount
+          currency:
+            description: Currency of the income amount
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/Currency"
 
       incomeSources:
         type: array
@@ -84,3 +97,43 @@ allOf:
         oneOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
           - $ref: "../index.yaml#/components/schemas/Locality"
+
+      outcome:
+        type: object
+        properties:
+          pellEligibility:
+            type: boolean
+            nullable: true
+            description: Pell Grant eligibility
+          
+          rejectionStatus:
+            type: string
+            nullable: true
+          
+          verificationCategory:
+            type: string
+            nullable: true
+
+          verificationStatus:
+            type: string
+            nullable: true
+
+          contributions:
+            type: array
+            nullable: true
+            items:
+              type: object
+              properties:
+                sourceType:
+                  type: string
+                  description: Whose income is reported (e.g., applicant, spouse, custodialParent)
+                  example: applicant
+                value:
+                  type: number
+                  format: float
+                  description: Reported income amount
+                currency:
+                  description: Currency of the income amount
+                  oneOf:
+                    - $ref: "../index.yaml#/components/schemas/cRelation"
+                    - $ref: "../index.yaml#/components/schemas/Currency"
