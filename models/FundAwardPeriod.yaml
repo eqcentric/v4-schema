@@ -1,0 +1,49 @@
+description: >
+  Represents the allocation of a fund award for a specific fiscal period, tracking offered and accepted amounts per period.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      award:
+        description: Fund award this period allocation belongs to.
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FundAward"
+      
+      fiscalPeriod:
+        description: Fiscal period for this award allocation.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/FiscalPeriod"
+      
+      status:
+        description: Status of the award for this period (e.g., Offered, Accepted, Declined, Pending, Cancelled).
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      currency:
+        description: Currency for the award amounts.
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      amountOffered:
+        type: number
+        format: float
+        nullable: true
+        description: Amount offered for this period
+        example: 15000.00
+      
+      amountAccepted:
+        type: number
+        format: float
+        nullable: true
+        description: Amount accepted for this period (may differ from offered amount)
+        example: 15000.00
+    
+    required:
+      - award

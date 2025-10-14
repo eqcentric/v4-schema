@@ -25,41 +25,6 @@ allOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
           - $ref: "../index.yaml#/components/schemas/FiscalYear"
       
-      fiscalPeriod:
-        description: Fiscal period for this award.
-        nullable: true
-        oneOf:
-          - $ref: "../index.yaml#/components/schemas/cRelation"
-          - $ref: "../index.yaml#/components/schemas/FiscalPeriod"
-      
-      status:
-        description: Status of the award (e.g., Offered, Accepted, Declined, Pending, Cancelled).
-        nullable: true
-        oneOf:
-          - $ref: "../index.yaml#/components/schemas/cRelation"
-          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
-      
-      currency:
-        description: Currency for the award amounts.
-        nullable: true
-        oneOf:
-          - $ref: "../index.yaml#/components/schemas/cRelation"
-          - $ref: "../index.yaml#/components/schemas/Currency"
-      
-      amountOffered:
-        type: number
-        format: float
-        nullable: true
-        description: Amount offered to the recipient
-        example: 50000.00
-      
-      amountAccepted:
-        type: number
-        format: float
-        nullable: true
-        description: Amount accepted by the recipient (may differ from offered amount)
-        example: 45000.00
-      
       offeredAt:
         type: string
         format: date-time
