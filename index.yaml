@@ -187,6 +187,8 @@ components:
       $ref: "models/ProductionRoutingMaterial.yaml"
     ProductionRoutingResource:
       $ref: "models/ProductionRoutingResource.yaml"
+    TimeEntry:
+      $ref: "models/TimeEntry.yaml"
     MaintenanceTrigger:
       $ref: "models/MaintenanceTrigger.yaml"
     MaintenanceTemplate:

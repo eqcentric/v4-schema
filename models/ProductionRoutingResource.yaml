@@ -10,16 +10,6 @@ allOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
           - $ref: "../index.yaml#/components/schemas/ProductionRoutingOperation"
       
-      resourceType:
-        type: string
-        enum:
-          - equipment
-          - tooling
-          - labor
-          - consumable
-        description: Type of resource
-        example: "equipment"
-      
       asset:
         nullable: true
         description: Specific equipment if applicable
@@ -66,4 +56,3 @@ allOf:
     
     required:
       - operation
-      - resourceType

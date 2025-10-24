@@ -1,0 +1,281 @@
+description: >
+  Represents a time entry recording labor hours spent on work activities.
+  Tracks employee time against production orders, operations, or other work.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      employee:
+        description: Employee who performed the work
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      entryDate:
+        type: string
+        format: date
+        description: Date of the time entry
+        example: "2024-10-24"
+      
+      startTime:
+        type: string
+        format: date-time
+        nullable: true
+        description: Start time of work
+      
+      endTime:
+        type: string
+        format: date-time
+        nullable: true
+        description: End time of work
+      
+      duration:
+        type: number
+        format: float
+        nullable: true
+        description: Duration in hours
+        example: 8.5
+      
+      durationUom:
+        nullable: true
+        description: Unit of measure for duration (typically hours or minutes)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      workType:
+        nullable: true
+        description: Type of work performed (uses taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      productionOrder:
+        nullable: true
+        description: Production order this time relates to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/ProductionOrder"
+      
+      productionOrderOperation:
+        nullable: true
+        description: Specific operation this time relates to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/ProductionOrderOperation"
+      
+      workOrder:
+        nullable: true
+        description: Work order this time relates to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/WorkOrder"
+      
+      workTask:
+        nullable: true
+        description: Work task this time relates to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/WorkTask"
+      
+      workCenter:
+        nullable: true
+        description: Work center where work was performed
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Location"
+      
+      asset:
+        nullable: true
+        description: Equipment/asset used during this time
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Asset"
+      
+      setupTime:
+        type: number
+        format: float
+        nullable: true
+        description: Setup time in hours
+        example: 0.5
+      
+      runTime:
+        type: number
+        format: float
+        nullable: true
+        description: Run/cycle time in hours
+        example: 7.5
+      
+      teardownTime:
+        type: number
+        format: float
+        nullable: true
+        description: Teardown time in hours
+        example: 0.5
+      
+      idleTime:
+        type: number
+        format: float
+        nullable: true
+        description: Idle/waiting time in hours
+        example: 0.0
+      
+      quantityProduced:
+        type: number
+        format: double
+        nullable: true
+        description: Quantity of goods produced during this time
+        example: 100
+      
+      quantityRejected:
+        type: number
+        format: double
+        nullable: true
+        description: Quantity rejected during this time
+        example: 2
+      
+      quantityScrap:
+        type: number
+        format: double
+        nullable: true
+        description: Quantity scrapped during this time
+        example: 1
+      
+      shift:
+        type: integer
+        nullable: true
+        description: Shift number (1, 2, 3)
+        example: 1
+      
+      isOvertime:
+        type: boolean
+        description: Whether this entry represents overtime
+        default: false
+      
+      payRate:
+        type: number
+        format: decimal
+        nullable: true
+        description: Pay rate for this time entry
+      
+      payRateCode:
+        nullable: true
+        description: Pay rate code or classification
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      billingRate:
+        type: number
+        format: decimal
+        nullable: true
+        description: Billing rate for this time (if billable)
+      
+      burdenRate:
+        type: number
+        format: decimal
+        nullable: true
+        description: Burden/overhead rate applied
+      
+      laborCost:
+        type: number
+        format: decimal
+        nullable: true
+        readOnly: true
+        description: Calculated labor cost (duration × payRate)
+      
+      burdenCost:
+        type: number
+        format: decimal
+        nullable: true
+        readOnly: true
+        description: Calculated burden cost (duration × burdenRate)
+      
+      totalCost:
+        type: number
+        format: decimal
+        nullable: true
+        readOnly: true
+        description: Total cost (laborCost + burdenCost)
+      
+      currency:
+        nullable: true
+        description: Currency for cost/rate fields
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      account:
+        nullable: true
+        description: GL account for cost allocation
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      
+      department:
+        nullable: true
+        description: Department charging this time
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      status:
+        nullable: true
+        description: Status of the time entry (uses taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      isPosted:
+        type: boolean
+        description: Whether entry has been posted to accounting
+        default: false
+      
+      postedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: When entry was posted
+      
+      approvedBy:
+        nullable: true
+        description: Employee who approved this entry
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      approvedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: When entry was approved
+      
+      enteredBy:
+        nullable: true
+        description: User who entered this time entry
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      comments:
+        type: string
+        nullable: true
+        description: Additional comments about this time entry
+      
+      deviceNumber:
+        type: integer
+        nullable: true
+        description: Device/terminal ID where entry was recorded
+      
+      _links:
+        type: object
+        properties:
+          related:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Link to related work (order, operation, task)
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - employee
+      - entryDate

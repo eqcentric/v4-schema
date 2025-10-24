@@ -1,0 +1,309 @@
+description: >
+  Represents a work center where manufacturing or production operations are performed.
+  A work center is a production resource or group of resources (machines, equipment, labor)
+  that performs specific operations. Unlike a Location which represents physical space,
+  a WorkCenter represents production capacity and capability.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name of the work center
+        example: "CNC Milling Center 1"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the work center
+      
+      shortName:
+        type: string
+        nullable: true
+        description: Short name or abbreviation
+        example: "CNC-1"
+      
+      workCenterNumber:
+        type: string
+        nullable: true
+        description: Work center number or identifier
+        example: "WC-100"
+      
+      isActive:
+        type: boolean
+        description: Whether the work center is currently active
+        default: true
+      
+      site:
+        nullable: true
+        description: Site where this work center is located
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Site"
+      
+      location:
+        nullable: true
+        description: Physical location of the work center
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Location"
+      
+      department:
+        nullable: true
+        description: Department or business unit this work center belongs to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      operationCode:
+        nullable: true
+        description: Default operation code for this work center
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      asset:
+        nullable: true
+        description: Primary asset/equipment at this work center
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Asset"
+      
+      # Capacity and scheduling
+      capacityFactor:
+        type: number
+        format: float
+        nullable: true
+        description: Capacity factor or efficiency rating (e.g., 0.85 = 85% efficiency)
+        example: 0.85
+      
+      utilizationPercent:
+        type: number
+        format: float
+        nullable: true
+        readOnly: true
+        description: Current utilization percentage
+        example: 72.5
+      
+      hoursAvailable:
+        type: number
+        format: float
+        nullable: true
+        description: Total hours available per day/period
+        example: 24.0
+      
+      # Shifts configuration
+      shifts:
+        type: array
+        nullable: true
+        items:
+          type: object
+          properties:
+            shiftNumber:
+              type: integer
+              description: Shift number identifier
+              example: 1
+            
+            isActive:
+              type: boolean
+              description: Whether this shift is active
+              default: true
+            
+            hoursAvailable:
+              type: number
+              format: float
+              nullable: true
+              description: Hours available for this shift
+              example: 8.0
+            
+            capacityFactor:
+              type: number
+              format: float
+              nullable: true
+              description: Capacity factor specific to this shift
+              example: 0.9
+            
+            startTime:
+              type: string
+              nullable: true
+              description: Shift start time (HH:MM format)
+              example: "06:00"
+            
+            endTime:
+              type: string
+              nullable: true
+              description: Shift end time (HH:MM format)
+              example: "14:00"
+            
+            defaultEmployee:
+              nullable: true
+              description: Default operator for this shift
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Employee"
+          
+          required:
+            - shiftNumber
+        description: Array of shift configurations for this work center
+      
+      # Operating schedule
+      scheduleBegin:
+        type: string
+        nullable: true
+        description: Start time of operating schedule (HH:MM format)
+        example: "06:00"
+      
+      scheduleEnd:
+        type: string
+        nullable: true
+        description: End time of operating schedule (HH:MM format)
+        example: "22:00"
+      
+      # Operating days
+      operatingDays:
+        type: array
+        nullable: true
+        items:
+          type: boolean
+        minItems: 7
+        maxItems: 7
+        description: Days of the week this work center operates (Monday=0, Sunday=6)
+        example: [true, true, true, true, true, false, false]
+      
+      # Labor and rates
+      defaultEmployee:
+        nullable: true
+        description: Default operator for this work center
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      laborRate:
+        type: number
+        format: decimal
+        nullable: true
+        description: Standard labor rate per hour for this work center
+      
+      burdenRate:
+        type: number
+        format: decimal
+        nullable: true
+        description: Burden/overhead rate per hour
+      
+      # Setup and cycle rates
+      setupRate:
+        type: number
+        format: decimal
+        nullable: true
+        description: Standard rate for setup operations
+      
+      cycleRate:
+        type: number
+        format: decimal
+        nullable: true
+        description: Standard rate for cycle/run operations
+      
+      # Multiple rate tiers (for different billing/costing levels)
+      setupRates:
+        type: array
+        nullable: true
+        items:
+          type: number
+          format: decimal
+        description: Array of setup rate tiers
+        example: [50.0, 55.0, 60.0, 65.0, 70.0]
+      
+      cycleRates:
+        type: array
+        nullable: true
+        items:
+          type: number
+          format: decimal
+        description: Array of cycle rate tiers
+        example: [40.0, 45.0, 50.0, 55.0, 60.0]
+      
+      currency:
+        nullable: true
+        description: Currency for rates
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      # Accounting
+      laborAccount:
+        nullable: true
+        description: GL account for labor costs
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      
+      # Queue and timing
+      queueTime:
+        type: number
+        format: float
+        nullable: true
+        description: Standard queue time before operation starts
+      
+      queueTimeUnit:
+        nullable: true
+        description: Unit for queue time
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      defaultSetupTime:
+        type: number
+        format: float
+        nullable: true
+        description: Default setup time for operations at this work center
+      
+      defaultTimeUnit:
+        nullable: true
+        description: Default time unit (hours, minutes, etc.)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      # Loading and scheduling
+      loadingMethod:
+        type: string
+        nullable: true
+        enum:
+          - infinite
+          - finite
+        description: Capacity loading method for scheduling
+        example: "finite"
+      
+      # Shop floor visualization
+      imageFile:
+        type: string
+        nullable: true
+        description: Image file path or URL for work center visualization
+      
+      locationLeft:
+        type: integer
+        nullable: true
+        description: X coordinate for shop floor layout visualization
+      
+      locationTop:
+        type: integer
+        nullable: true
+        description: Y coordinate for shop floor layout visualization
+      
+      _links:
+        type: object
+        properties:
+          calendar:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Link to work center calendar/schedule
+          maintenance:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Link to maintenance schedules
+          operations:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Link to operations using this work center
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - name

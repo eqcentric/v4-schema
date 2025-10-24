@@ -108,6 +108,7 @@ allOf:
                 - $ref: "../index.yaml#/components/schemas/ProductionRoutingOperation"
             dependencyType:
               type: string
+              nullable: true
               enum:
                 - finish-to-start
                 - start-to-start

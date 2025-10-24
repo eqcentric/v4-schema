@@ -90,9 +90,11 @@ allOf:
         default: 0
       
       downtimeReason:
-        type: string
         nullable: true
-        description: Reason for downtime if applicable
+        description: Reason for downtime if applicable (uses taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
       
       # Quantity tracking
       quantityPlanned:
@@ -139,15 +141,11 @@ allOf:
         description: Whether quality check was completed
         default: false
       
-      qualityCheckResult:
-        type: string
+      qualityCheckSuccess:
+        type: boolean
         nullable: true
-        enum:
-          - pass
-          - fail
-          - conditional
-          - pending
-        description: Result of quality check
+        description: Whether quality check passed (true) or failed (false)
+        example: true
       
       qualityNotes:
         type: string
