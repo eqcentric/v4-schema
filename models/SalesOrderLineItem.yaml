@@ -1,0 +1,71 @@
+description: >
+  Represents an individual line item within a sales order, containing details about 
+  a specific item being sold including quantities, pricing, fulfillment status, and optional notes.
+  Links to the parent SalesOrder and includes sales-specific attributes.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransactionLineItem"
+  - type: object
+    properties:
+      salesOrder:
+        description: Reference to the parent sales order
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/SalesOrder"
+      
+      salesAccount:
+        description: GL account for revenue recognition
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      
+      itemCode:
+        type: string
+        description: Item code or SKU for this line
+        example: "ITM-12345"
+      
+      quantityOrdered:
+        type: number
+        format: decimal
+        description: Quantity ordered by customer
+        example: 100.00
+      
+      quantityFulfilled:
+        type: number
+        format: decimal
+        description: Quantity already fulfilled/shipped
+        example: 50.00
+        default: 0.00
+      
+      quantityReserved:
+        type: number
+        format: decimal
+        description: Quantity reserved in inventory for this order
+        example: 100.00
+        default: 0.00
+      
+      requestedDeliveryDate:
+        type: string
+        format: date-time
+        nullable: true
+        description: Requested delivery date for this line item
+      
+      promisedDeliveryDate:
+        type: string
+        format: date-time
+        nullable: true
+        description: Promised delivery date for this line item
+      
+      lineStatus:
+        description: Status of this line item (Open, Reserved, Fulfilled, Cancelled)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      notes:
+        type: string
+        description: Additional notes specific to this line item
+    
+    required:
+      - salesOrder

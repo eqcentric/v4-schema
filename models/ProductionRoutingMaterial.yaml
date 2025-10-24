@@ -1,0 +1,63 @@
+description: >
+  Defines materials required at a specific routing operation.
+  Similar to OrderMaterial but for master routing definition.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      routing:
+        description: Parent routing
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/ProductionRouting"
+      
+      operation:
+        nullable: true
+        description: Specific operation where material is consumed (null = any/first)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/ProductionRoutingOperation"
+      
+      item:
+        description: Material item required
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/InventoryItem"
+      
+      quantity:
+        type: number
+        format: double
+        description: Quantity required per output unit
+      
+      unitOfMeasure:
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      scrapFactor:
+        type: number
+        format: float
+        nullable: true
+        description: Expected scrap percentage
+        example: 5.0
+      
+      isOptional:
+        type: boolean
+        description: Whether this material is optional
+        default: false
+      
+      position:
+        type: string
+        nullable: true
+        description: Position in assembly (for reference drawings)
+      
+      notes:
+        type: string
+        nullable: true
+        description: Additional notes about material usage
+    
+    required:
+      - routing
+      - item
+      - quantity
+      - unitOfMeasure

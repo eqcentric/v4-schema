@@ -1,0 +1,74 @@
+description: >
+  Represents a comment or note associated with another entity. Comments provide a way to add 
+  contextual information, discussions, or annotations to various business objects.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      title:
+        type: string
+        nullable: true
+        description: Optional title or subject for the comment
+        example: "Issue with delivery"
+      
+      content:
+        type: string
+        description: The actual comment text/content
+        example: "Customer requested expedited shipping due to urgent need"
+      
+      target:
+        description: >
+          Reference to the entity this comment is associated with. 
+          Can be any entity type (Asset, WorkOrder, PurchaseOrder, etc.)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/cEntity"
+      
+      author:
+        description: User or contact who created the comment
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/User"
+          - $ref: "../index.yaml#/components/schemas/Contact"
+      
+      parent:
+        description: Optional reference to a parent comment for threading/replies
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Comment"
+      
+      isInternal:
+        type: boolean
+        description: Flag indicating if this is an internal comment (not visible to external parties)
+        default: false
+      
+      isPinned:
+        type: boolean
+        description: Flag indicating if this comment should be prominently displayed
+        default: false
+      
+      attachments:
+        type: array
+        nullable: true
+        items:
+          type: object
+          properties:
+            fileName:
+              type: string
+              description: Name of the attached file
+            fileUrl:
+              type: string
+              format: uri
+              description: URL to access the attached file
+            fileSize:
+              type: integer
+              description: Size of the file in bytes
+            mimeType:
+              type: string
+              description: MIME type of the file
+        description: Optional list of file attachments associated with this comment
+    
+    required:
+      - content
+      - target

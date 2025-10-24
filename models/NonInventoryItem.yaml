@@ -1,0 +1,35 @@
+description: >
+  Represents items that are not tracked in inventory such as services, fees, charges, 
+  or other non-physical items that can be sold or purchased but don't require stock management.
+  Examples include consulting services, shipping fees, installation charges, warranties, etc.
+  Like InventoryItem, this entity can implement various traits (tSalesItem, tPurchaseItem, etc.)
+  to define its capabilities.
+allOf:
+- $ref: "../index.yaml#/components/schemas/cEntity"
+- type: object
+  properties:
+    name:
+      type: string
+      description: Name or title of the non-inventory item
+      example: "Consulting Services"
+    
+    description:
+      type: string
+      description: Detailed description of the non-inventory item
+      example: "Professional consulting services billed hourly"
+    
+    uom:
+      description: Unit of measure for billing/pricing (e.g., hour, day, each, month)
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+    
+    itemType:
+      description: Type/category of non-inventory item (Service, Fee, Charge, etc.) - taxonomy
+      oneOf:
+        - $ref: "../index.yaml#/components/schemas/cRelation"
+        - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+    
+  required:
+    - name
+    - uom

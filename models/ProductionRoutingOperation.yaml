@@ -1,0 +1,190 @@
+description: >
+  Defines a single operation/step within a production routing. Specifies what work is done,
+  where it's done, required resources, duration, and quality requirements. Extends WorkTask
+  to inherit standard work unit capabilities.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/WorkTask"
+  - type: object
+    properties:
+      routing:
+        description: Parent routing this operation belongs to
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/ProductionRouting"
+      
+      operationNumber:
+        type: string
+        description: Sequential operation number within routing
+        example: "10"
+      
+      operationType:
+        nullable: true
+        description: Type of operation being performed (uses taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      workCenter:
+        nullable: true
+        description: Work center or location where operation is performed
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Location"
+      
+      asset:
+        nullable: true
+        description: Specific equipment/machine required for this operation
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Asset"
+      
+      setupTime:
+        type: number
+        format: float
+        nullable: true
+        description: Setup time in hours
+        example: 0.5
+      
+      runTime:
+        type: number
+        format: float
+        nullable: true
+        description: Run time per unit in hours
+        example: 0.25
+      
+      waitTime:
+        type: number
+        format: float
+        nullable: true
+        description: Wait time before next operation in hours
+        example: 0
+      
+      teardownTime:
+        type: number
+        format: float
+        nullable: true
+        description: Teardown time in hours
+        example: 0.25
+      
+      totalTime:
+        type: number
+        format: float
+        readOnly: true
+        description: Calculated total time (setup + run + wait + teardown)
+      
+      timeUom:
+        nullable: true
+        description: Unit of measure for time values
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      laborRequired:
+        type: number
+        format: float
+        nullable: true
+        description: Number of workers required
+        example: 2
+      
+      skillsRequired:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Required skills or certifications
+      
+      sequenceDependencies:
+        type: array
+        nullable: true
+        items:
+          type: object
+          properties:
+            operation:
+              description: Operation that must complete before this one
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/ProductionRoutingOperation"
+            dependencyType:
+              type: string
+              enum:
+                - finish-to-start
+                - start-to-start
+                - finish-to-finish
+              description: Type of dependency
+              example: "finish-to-start"
+              default: "finish-to-start"
+            lagTime:
+              type: number
+              format: float
+              nullable: true
+              description: Lag time in hours after dependency is met
+          required:
+            - operation
+        description: Operations that must complete before this operation can start
+      
+      isOptional:
+        type: boolean
+        description: Whether this operation is optional
+        default: false
+      
+      isParallel:
+        type: boolean
+        description: Whether this operation can run in parallel with others
+        default: false
+      
+      qualityCheckRequired:
+        type: boolean
+        description: Whether quality inspection is required after this operation
+        default: false
+      
+      qualityCheckpoint:
+        nullable: true
+        description: Reference to quality checkpoint definition
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/cEntity"
+      
+      instructions:
+        type: string
+        nullable: true
+        description: Detailed work instructions for this operation
+      
+      estimatedCost:
+        type: number
+        format: decimal
+        nullable: true
+        description: Estimated cost for this operation
+      
+      costingMethod:
+        type: string
+        nullable: true
+        enum:
+          - per_unit
+          - per_hour
+          - fixed
+        description: How cost is calculated
+        example: "per_hour"
+      
+      _links:
+        type: object
+        properties:
+          materials:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Materials consumed at this operation
+          resources:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Resources required for this operation
+          tooling:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Tools required for this operation
+          documents:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Work instructions, drawings, etc.
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - routing
+      - operationNumber

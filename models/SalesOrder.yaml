@@ -1,0 +1,159 @@
+description: >
+  Represents a sales order confirming a customer's commitment to purchase goods or services.
+  A sales order can be created from an accepted quotation or directly. It serves as the 
+  authoritative document for fulfillment and invoicing.
+  The issuing organization is specified in the `organization` field.
+  The customer is specified in the `destination` field from tOutbound.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - $ref: "../index.yaml#/components/schemas/tOutbound"
+  - $ref: "../index.yaml#/components/schemas/tOrderHeader"
+  - type: object
+    properties:
+      salesOrderNumber:
+        type: string
+        description: Unique sales order number or identifier
+        example: "SO-2024-001"
+      
+      salesOrderDate:
+        type: string
+        format: date-time
+        description: Date when the sales order was created
+      
+      requestedDeliveryDate:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date requested by customer for delivery
+      
+      promisedDeliveryDate:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date promised to customer for delivery
+      
+      totalAmount:
+        type: number
+        format: decimal
+        description: Total amount of the sales order including tax
+        example: 1250.00
+      
+      subtotal:
+        type: number
+        format: decimal
+        description: Subtotal before tax and other charges
+        example: 1000.00
+      
+      taxAmount:
+        type: number
+        format: decimal
+        description: Total tax amount
+        example: 200.00
+      
+      discountAmount:
+        type: number
+        format: decimal
+        description: Total discount applied
+        example: 50.00
+      
+      shippingAmount:
+        type: number
+        format: decimal
+        description: Shipping/freight charges
+        example: 25.00
+        default: 0.00
+      
+      currency:
+        description: Currency for the sales order amounts
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      salesOrderStatus:
+        description: Current status of the sales order (Draft, Confirmed, In Progress, Fulfilled, Cancelled)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      paymentTerms:
+        type: string
+        description: Payment terms for the sales order (e.g., "Net 30", "Due on receipt")
+        example: "Net 30"
+      
+      deliveryTerms:
+        type: string
+        description: Delivery terms or shipping method (e.g., "FOB Destination", "Ex Works")
+        example: "FOB Destination"
+      
+      description:
+        type: string
+        description: Description or memo for the sales order
+      
+      createdFromQuotation:
+        description: Reference to the quotation that was converted to this sales order
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/SalesQuotation"
+      
+      salesPerson:
+        description: Employee responsible for this sales order
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      approvedBy:
+        description: Employee who approved the sales order
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      approvedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the sales order was approved
+      
+      fulfilledAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the sales order was fully fulfilled
+      
+      cancelledAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the sales order was cancelled
+      
+      lineItems:
+        type: array
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/SalesOrderLineItem"
+        description: Line items on the sales order
+      
+      notes:
+        type: array
+        items:
+          allOf:
+            - oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Note"
+            - type: object
+              properties:
+                key:
+                  type: string
+        description: Notes related to the sales order
+      
+      termsAndConditions:
+        type: string
+        description: Terms and conditions text for the sales order
+        nullable: true
+    
+    required:
+      - salesOrderNumber
+      - salesOrderDate

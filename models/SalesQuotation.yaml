@@ -1,0 +1,137 @@
+description: >
+  Represents a sales quotation (quote) issued to potential customers for goods or services.
+  A quotation is a preliminary document that can be converted to an Invoice or Sales Order once accepted.
+  The issuing organization is specified in the `organization` field.
+  The customer/recipient is specified in the `destination` field from tOutbound.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransaction"
+  - $ref: "../index.yaml#/components/schemas/tOutbound"
+  - $ref: "../index.yaml#/components/schemas/tOrderHeader"
+  - type: object
+    properties:
+      quotationNumber:
+        type: string
+        description: Unique quotation number or identifier
+        example: "QUOT-2024-001"
+      
+      quotationDate:
+        type: string
+        format: date-time
+        description: Date when the quotation was issued
+      
+      validUntil:
+        type: string
+        format: date-time
+        description: Date until which the quotation is valid
+      
+      expiresAt:
+        type: string
+        format: date-time
+        description: Expiration date of the quotation (deprecated, use validUntil)
+        deprecated: true
+      
+      totalAmount:
+        type: number
+        format: decimal
+        description: Total amount of the quotation including tax
+        example: 1250.00
+      
+      subtotal:
+        type: number
+        format: decimal
+        description: Subtotal before tax and other charges
+        example: 1000.00
+      
+      taxAmount:
+        type: number
+        format: decimal
+        description: Total tax amount
+        example: 200.00
+      
+      discountAmount:
+        type: number
+        format: decimal
+        description: Total discount applied
+        example: 50.00
+      
+      currency:
+        description: Currency for the quotation amounts
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      quotationStatus:
+        description: Current status of the quotation (Draft, Sent, Accepted, Rejected, Expired, Converted)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      paymentTerms:
+        type: string
+        description: Payment terms for the quotation (e.g., "Net 30", "Due on receipt")
+        example: "Net 30"
+      
+      deliveryTerms:
+        type: string
+        description: Delivery terms or shipping method
+        example: "FOB Destination"
+      
+      description:
+        type: string
+        description: Description or memo for the quotation
+      
+      acceptedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the quotation was accepted by the customer
+      
+      rejectedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when the quotation was rejected by the customer
+      
+      convertedToInvoice:
+        description: Reference to the invoice created from this quotation (if converted)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Invoice"
+      
+      salesPerson:
+        description: Employee responsible for this quotation
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      lineItems:
+        type: array
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/SalesQuotationLineItem"
+        description: Line items on the quotation
+      
+      notes:
+        type: array
+        items:
+          allOf:
+            - oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Note"
+            - type: object
+              properties:
+                key:
+                  type: string
+        description: Notes related to the quotation
+      
+      termsAndConditions:
+        type: string
+        description: Terms and conditions text for the quotation
+        nullable: true
+    
+    required:
+      - quotationNumber
+      - quotationDate

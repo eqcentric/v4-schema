@@ -64,6 +64,8 @@ components:
       $ref: "models/traits/Consumable.yaml"
     tWorkTarget:
       $ref: "models/traits/WorkTarget.yaml"
+    tCommentable:
+      $ref: "models/traits/Commentable.yaml"
     Currency:
       $ref: "models/Currency.yaml"
     Country:
@@ -122,6 +124,8 @@ components:
       $ref: "models/SupplyOption.yaml"
     InventoryItem:
       $ref: "models/InventoryItem.yaml"
+    NonInventoryItem:
+      $ref: "models/NonInventoryItem.yaml"
     StockStorage:
       $ref: "models/StockStorage.yaml"
     StockItem:
@@ -155,6 +159,14 @@ components:
       $ref: "models/Bill.yaml"
     BillLineItem:
       $ref: "models/BillLineItem.yaml"
+    SalesQuotation:
+      $ref: "models/SalesQuotation.yaml"
+    SalesQuotationLineItem:
+      $ref: "models/SalesQuotationLineItem.yaml"
+    SalesOrder:
+      $ref: "models/SalesOrder.yaml"
+    SalesOrderLineItem:
+      $ref: "models/SalesOrderLineItem.yaml"
     PaymentInbound:
       $ref: "models/PaymentInbound.yaml"
     PaymentOutbound:
@@ -165,6 +177,16 @@ components:
       $ref: "models/WorkOrder.yaml"
     ProductionOrder:
       $ref: "models/ProductionOrder.yaml"
+    ProductionRouting:
+      $ref: "models/ProductionRouting.yaml"
+    ProductionRoutingOperation:
+      $ref: "models/ProductionRoutingOperation.yaml"
+    ProductionOrderOperation:
+      $ref: "models/ProductionOrderOperation.yaml"
+    ProductionRoutingMaterial:
+      $ref: "models/ProductionRoutingMaterial.yaml"
+    ProductionRoutingResource:
+      $ref: "models/ProductionRoutingResource.yaml"
     MaintenanceTrigger:
       $ref: "models/MaintenanceTrigger.yaml"
     MaintenanceTemplate:
@@ -199,6 +221,8 @@ components:
     FundAwardDisbursement:
       $ref: "models/FundAwardDisbursement.yaml"
     # === Misc ===
+    Comment:
+      $ref: "models/Comment.yaml"
     Note:
       $ref: "models/Note.yaml"
     UnitOfMeasure:

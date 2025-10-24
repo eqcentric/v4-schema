@@ -1,0 +1,12 @@
+type: object
+description: >
+  Trait for entities that support comments. Adds a comments collection link to enable 
+  commenting functionality on any entity. Can be implemented by Asset, WorkOrder, 
+  PurchaseOrder, Invoice, Project, and other commentable entities.
+properties:
+  _links:
+    type: object
+    properties:
+      comments:
+        $ref: "../../index.yaml#/components/schemas/cLink"
+        description: Link to the collection of Comments associated with this entity

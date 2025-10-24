@@ -1,0 +1,145 @@
+description: >
+  Master definition of how to manufacture an item. Defines the sequence of operations,
+  required resources, materials (BOM), and quality checks needed to produce a specific
+  item. Analogous to a recipe or master process definition.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      name:
+        type: string
+        description: Name of this routing/process
+        example: "Standard Assembly - Widget A"
+      
+      description:
+        type: string
+        nullable: true
+        description: Detailed description of the manufacturing process
+      
+            # Production-specific output with quantities
+      output:
+        type: object
+        description: The product or item being produced by this order with quantity tracking
+        properties:
+          item:
+            description: The inventory item being produced
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/InventoryItem"
+          quantityProduced:
+            type: number
+            format: double
+            description: Actual quantity produced
+            default: 0
+          unitOfMeasure:
+            description: Unit of measure for the output quantities
+            oneOf:
+              - $ref: "../index.yaml#/components/schemas/cRelation"
+              - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+        required:
+          - item
+          - quantityPlanned
+          - unitOfMeasure
+      
+      version:
+        type: string
+        nullable: true
+        description: Version number of this routing
+        example: "2.1"
+      
+      effectiveFrom:
+        type: string
+        format: date
+        nullable: true
+        description: Date from which this routing is effective
+      
+      effectiveTo:
+        type: string
+        format: date
+        nullable: true
+        description: Date until which this routing is effective
+      
+      isActive:
+        type: boolean
+        description: Whether this routing is currently active
+        default: true
+      
+      isDefault:
+        type: boolean
+        description: Whether this is the default routing for the output item
+        default: false
+      
+      site:
+        nullable: true
+        description: Site where this routing is applicable
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Site"
+      
+      businessUnit:
+        nullable: true
+        description: Business unit responsible for this routing
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/BusinessUnit"
+      
+      estimatedDuration:
+        type: number
+        format: float
+        nullable: true
+        description: Estimated total duration in hours
+      
+      estimatedCost:
+        type: number
+        format: decimal
+        nullable: true
+        description: Estimated total cost per production cycle
+      
+      currency:
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Currency"
+      
+      approvedBy:
+        nullable: true
+        description: Employee who approved this routing
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      approvedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: Date and time when routing was approved
+      
+      classifications:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+        description: Classifications for this routing (process type, complexity, etc.)
+      
+      _links:
+        type: object
+        properties:
+          operations:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Link to routing operations collection
+          materials:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Link to bill of materials
+          alternativeRoutings:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Link to alternative routings for same output
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - name
+      - outputItem
+      - outputQuantity
+      - outputUom

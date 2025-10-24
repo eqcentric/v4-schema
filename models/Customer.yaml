@@ -2,3 +2,17 @@ description: >
   Represents an external customer that purchases goods or services.
 allOf:
 - $ref: "../index.yaml#/components/schemas/Partner"
+- type: object
+  properties:
+    notes:
+      type: array
+      items:
+        allOf:
+        - oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Note"
+        - type: object
+          properties:
+            key:
+              type: string
+      description: Notes or comments associated with the customer

@@ -1,0 +1,57 @@
+description: >
+  Represents an individual line item within a sales quotation, containing details about 
+  a specific item being quoted including quantities, pricing, and optional notes.
+  Links to the parent SalesQuotation and includes sales-specific attributes.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/iTransactionLineItem"
+  - type: object
+    properties:
+      quotation:
+        description: Reference to the parent sales quotation
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/SalesQuotation"
+      
+      salesAccount:
+        description: GL account for revenue recognition (if converted to invoice)
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Account"
+      
+      itemCode:
+        type: string
+        description: Item code or SKU for this line
+        example: "ITM-12345"
+      
+      leadTime:
+        type: integer
+        description: Estimated lead time in days for this item
+        example: 14
+      
+      notes:
+        type: string
+        description: Additional notes specific to this line item
+      
+      alternatives:
+        type: array
+        nullable: true
+        items:
+          type: object
+          properties:
+            item:
+              description: Alternative item that can be offered
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/cEntity"
+            unitPrice:
+              type: number
+              format: decimal
+              description: Price for the alternative item
+            description:
+              type: string
+              description: Description of the alternative
+        description: Optional list of alternative items that can be offered to the customer
+    
+    required:
+      - quotation

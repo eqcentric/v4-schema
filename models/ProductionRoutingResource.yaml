@@ -1,0 +1,69 @@
+description: >
+  Defines resources (equipment, tooling, labor) required at a routing operation.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/cEntity"
+  - type: object
+    properties:
+      operation:
+        description: Operation requiring this resource
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/ProductionRoutingOperation"
+      
+      resourceType:
+        type: string
+        enum:
+          - equipment
+          - tooling
+          - labor
+          - consumable
+        description: Type of resource
+        example: "equipment"
+      
+      asset:
+        nullable: true
+        description: Specific equipment if applicable
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Asset"
+      
+      assetClassification:
+        nullable: true
+        description: Classification of required asset (if specific asset not defined)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/AssetClassification"
+      
+      laborResource:
+        nullable: true
+        description: Required labor type
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/LaborResource"
+      
+      quantity:
+        type: number
+        format: double
+        nullable: true
+        description: Quantity of resource required
+        default: 1
+      
+      unitOfMeasure:
+        nullable: true
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+      
+      isRequired:
+        type: boolean
+        description: Whether resource is mandatory
+        default: true
+      
+      notes:
+        type: string
+        nullable: true
+        description: Additional notes about resource requirements
+    
+    required:
+      - operation
+      - resourceType

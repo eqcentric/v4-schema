@@ -1,0 +1,216 @@
+description: >
+  Represents actual execution of a routing operation within a production order.
+  Tracks status, timing, resources, materials consumed, and quality results.
+  Extends WorkTask to inherit standard work unit capabilities.
+allOf:
+  - $ref: "../index.yaml#/components/schemas/WorkTask"
+  - type: object
+    properties:
+      productionOrder:
+        description: Parent production order
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/ProductionOrder"
+      
+      routingOperation:
+        nullable: true
+        description: Master routing operation this execution is based on
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/ProductionRoutingOperation"
+      
+      operationNumber:
+        type: string
+        description: Operation number within production order
+        example: "10"
+      
+      operationType:
+        nullable: true
+        description: Type of operation (uses taxonomy)
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/iTaxonomy"
+      
+      workCenter:
+        nullable: true
+        description: Actual work center where operation was performed
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Location"
+      
+      asset:
+        nullable: true
+        description: Actual equipment used
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Asset"
+      
+      # Time tracking
+      plannedSetupTime:
+        type: number
+        format: float
+        nullable: true
+        description: Planned setup time in hours
+      
+      actualSetupTime:
+        type: number
+        format: float
+        nullable: true
+        description: Actual setup time in hours
+      
+      plannedRunTime:
+        type: number
+        format: float
+        nullable: true
+        description: Planned run time in hours
+      
+      actualRunTime:
+        type: number
+        format: float
+        nullable: true
+        description: Actual run time in hours
+      
+      plannedTeardownTime:
+        type: number
+        format: float
+        nullable: true
+        description: Planned teardown time in hours
+      
+      actualTeardownTime:
+        type: number
+        format: float
+        nullable: true
+        description: Actual teardown time in hours
+      
+      downtimeHours:
+        type: number
+        format: float
+        nullable: true
+        description: Unplanned downtime in hours
+        default: 0
+      
+      downtimeReason:
+        type: string
+        nullable: true
+        description: Reason for downtime if applicable
+      
+      # Quantity tracking
+      quantityPlanned:
+        type: number
+        format: double
+        nullable: true
+        description: Planned quantity to process
+      
+      quantityCompleted:
+        type: number
+        format: double
+        nullable: true
+        description: Quantity successfully completed
+        default: 0
+      
+      quantityRejected:
+        type: number
+        format: double
+        nullable: true
+        description: Quantity rejected due to quality issues
+        default: 0
+      
+      quantityScrap:
+        type: number
+        format: double
+        nullable: true
+        description: Quantity scrapped
+        default: 0
+      
+      yieldPercentage:
+        type: number
+        format: float
+        readOnly: true
+        description: Calculated yield (completed / planned * 100)
+      
+      # Quality tracking
+      qualityCheckRequired:
+        type: boolean
+        description: Whether quality check is required
+        default: false
+      
+      qualityCheckCompleted:
+        type: boolean
+        description: Whether quality check was completed
+        default: false
+      
+      qualityCheckResult:
+        type: string
+        nullable: true
+        enum:
+          - pass
+          - fail
+          - conditional
+          - pending
+        description: Result of quality check
+      
+      qualityNotes:
+        type: string
+        nullable: true
+        description: Notes from quality inspection
+      
+      # Sequencing
+      sequenceNumber:
+        type: integer
+        nullable: true
+        description: Execution sequence number
+      
+      predecessorOperations:
+        type: array
+        nullable: true
+        items:
+          oneOf:
+            - $ref: "../index.yaml#/components/schemas/cRelation"
+            - $ref: "../index.yaml#/components/schemas/ProductionOrderOperation"
+        description: Operations that must complete before this one
+      
+      # Reporting
+      reportedBy:
+        nullable: true
+        description: Employee who reported completion
+        oneOf:
+          - $ref: "../index.yaml#/components/schemas/cRelation"
+          - $ref: "../index.yaml#/components/schemas/Employee"
+      
+      reportedAt:
+        type: string
+        format: date-time
+        nullable: true
+        description: When operation completion was reported
+      
+      backflush:
+        type: boolean
+        description: Whether materials were backflushed at this operation
+        default: false
+      
+      notes:
+        type: string
+        nullable: true
+        description: Additional notes about execution
+      
+      _links:
+        type: object
+        properties:
+          materials:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Materials actually consumed (OrderMaterial)
+          resources:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Resources actually used (OrderResource)
+          timeEntries:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Detailed time tracking entries
+          qualityRecords:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Quality inspection records
+        additionalProperties:
+          $ref: "../index.yaml#/components/schemas/cLink"
+    
+    required:
+      - productionOrder
+      - operationNumber
