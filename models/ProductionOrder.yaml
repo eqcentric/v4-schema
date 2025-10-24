@@ -14,50 +14,78 @@ allOf:
           - $ref: "../index.yaml#/components/schemas/cRelation"
           - $ref: "../index.yaml#/components/schemas/ProductionRouting"
       
-      # Production-specific output with quantities
-      output:
-        type: object
-        description: The product or item being produced by this order with quantity tracking
-        properties:
-          item:
-            description: The inventory item being produced
-            oneOf:
-              - $ref: "../index.yaml#/components/schemas/cRelation"
-              - $ref: "../index.yaml#/components/schemas/InventoryItem"
-          quantityPlanned:
-            type: number
-            format: double
-            description: Planned quantity to be produced
-          quantityProduced:
-            type: number
-            format: double
-            description: Actual quantity produced
-            default: 0
-          quantityYield:
-            type: number
-            format: double
-            description: Yield percentage (produced/planned * 100)
-            readOnly: true
-          unitOfMeasure:
-            description: Unit of measure for the output quantities
-            oneOf:
-              - $ref: "../index.yaml#/components/schemas/cRelation"
-              - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
-        required:
-          - item
-          - quantityPlanned
-          - unitOfMeasure
+      # Production outputs - supports multiple outputs (main, co-products, by-products)
+      outputs:
+        type: array
+        description: Products and items produced by this order
+        minItems: 1
+        items:
+          type: object
+          properties:
+            outputType:
+              type: string
+              description: Type of output produced
+              enum:
+                - main
+                - co-product
+                - by-product
+                - scrap
+              default: main
+              example: "main"
+            item:
+              description: The inventory item being produced
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/InventoryItem"
+            quantityPlanned:
+              type: number
+              format: double
+              description: Planned quantity to be produced
+            quantityProduced:
+              type: number
+              format: double
+              description: Actual quantity produced
+              default: 0
+            quantityYield:
+              type: number
+              format: double
+              description: Yield percentage (produced/planned * 100)
+              readOnly: true
+            unitOfMeasure:
+              description: Unit of measure for the output quantities
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+            batchNumber:
+              type: string
+              nullable: true
+              description: Batch number for this specific output
+            lotNumber:
+              type: string
+              nullable: true
+              description: Lot number for this specific output
+            storageLocation:
+              nullable: true
+              description: Where this output should be stored
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Location"
+          required:
+            - outputType
+            - item
+            - quantityPlanned
+            - unitOfMeasure
       
-      # Production batch and lot tracking
+      # Production batch tracking (order-level, can be overridden at output level)
       batchNumber:
         type: string
         nullable: true
-        description: Production batch number for tracking and quality control
+        description: Default production batch number for all outputs
       
       lotNumber:
         type: string
         nullable: true
-        description: Lot number for inventory tracking and traceability
+        description: Default lot number for all outputs
       
       # Enhanced operation tracking
       currentOperation:
@@ -110,8 +138,9 @@ allOf:
             $ref: "../../index.yaml#/components/schemas/cLink" # OrderMaterial
           resources:
             $ref: "../../index.yaml#/components/schemas/cLink" # OrderResource
-          output:
-            $ref: "../../index.yaml#/components/schemas/cLink"    # Link to output inventory item
+          outputs:
+            $ref: "../../index.yaml#/components/schemas/cLink"
+            description: Link to all output items produced
           routing:
             $ref: "../../index.yaml#/components/schemas/cLink"
             description: Master routing reference

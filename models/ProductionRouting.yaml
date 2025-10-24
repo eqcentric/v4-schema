@@ -16,30 +16,55 @@ allOf:
         nullable: true
         description: Detailed description of the manufacturing process
       
-            # Production-specific output with quantities
-      output:
-        type: object
-        description: The product or item being produced by this order with quantity tracking
-        properties:
-          item:
-            description: The inventory item being produced
-            oneOf:
-              - $ref: "../index.yaml#/components/schemas/cRelation"
-              - $ref: "../index.yaml#/components/schemas/InventoryItem"
-          quantityProduced:
-            type: number
-            format: double
-            description: Actual quantity produced
-            default: 0
-          unitOfMeasure:
-            description: Unit of measure for the output quantities
-            oneOf:
-              - $ref: "../index.yaml#/components/schemas/cRelation"
-              - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
-        required:
-          - item
-          - quantityPlanned
-          - unitOfMeasure
+      # Production outputs - master definition supports multiple outputs
+      outputs:
+        type: array
+        description: Products and items produced by this routing
+        minItems: 1
+        items:
+          type: object
+          properties:
+            outputType:
+              type: string
+              description: Type of output produced
+              enum:
+                - main
+                - co-product
+                - by-product
+                - scrap
+              default: main
+              example: "main"
+            item:
+              description: The inventory item being produced
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/InventoryItem"
+            quantityPerCycle:
+              type: number
+              format: double
+              description: Standard quantity produced per production cycle
+            unitOfMeasure:
+              description: Unit of measure for the output quantities
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/UnitOfMeasure"
+            yieldPercentage:
+              type: number
+              format: float
+              nullable: true
+              description: Expected yield percentage for this output
+              example: 98.5
+            storageLocation:
+              nullable: true
+              description: Default storage location for this output
+              oneOf:
+                - $ref: "../index.yaml#/components/schemas/cRelation"
+                - $ref: "../index.yaml#/components/schemas/Location"
+          required:
+            - outputType
+            - item
+            - quantityPerCycle
+            - unitOfMeasure
       
       version:
         type: string
@@ -140,6 +165,4 @@ allOf:
     
     required:
       - name
-      - outputItem
-      - outputQuantity
-      - outputUom
+      - outputs
